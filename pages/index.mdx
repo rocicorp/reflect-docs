@@ -1,11 +1,41 @@
-# Introduction
- 
-Welcome to Nextra! This is a basic docs template. You can use it as a starting point for your own project :)
+import Image from 'next/image'
+import Card from '../components/card'
 
-## What is Nextra?
+<object
+    type="image/svg+xml"
+    className="docs-icon"
+    data="/docs-anim.svg"
+    width={152}
+    height={220}
+></object>
 
-A **simple**, **powerful** and **flexible** site generation framework with everything you love from Next.js.
+<h1 className="overview-masthead">
+    <span>Reflect<br/>Docs</span>
+</h1>
 
-## Documentation
+<p className="overview-byline">
+    <span>Welcome to the Reflect documentation.</span>
+</p>
 
-The documentation is available at [https://nextra.site](https://nextra.site).
+
+<div className="cardContainer">
+    <Card
+        title="Tutorial"
+        className="cardTutorial"
+    />
+    <Card
+        title="Quickstarts"
+        className="cardQuickstarts"
+    />
+    <Card
+        title="Samples"
+        className="cardSamples"
+    />
+    <Card
+        title="How to"
+        className="cardHowto"
+    />
+</div>
+
+Have a question? Feel free to [reach out to us](#).
+

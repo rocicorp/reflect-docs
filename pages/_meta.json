@@ -1,15 +1,18 @@
 {
-  "index": "Quick Start",
-  "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
-  "about": {
-    "title": "About",
-    "type": "page"
+  "-- Get Started": {
+    "type": "separator",
+    "title": "Get Started"
   },
-  "contact": {
-    "title": "Contact ↗",
-    "type": "page",
-    "href": "https://twitter.com/shuding_",
-    "newWindow": true
+  "index": {
+    "title": "Overview",
+    "theme": {
+      "toc": false
+    }
+  },
+  "get-started": {
+    "title": "Get Started"
+  },
+  "examples": {
+    "title": "Examples"
   }
 }

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import FeaturedCard from '../components/featuredCard'
 import { Cards, Card } from 'nextra/components'
+import { Tutorial } from '../components/icons/tutorial'
 import { QuickStarts } from '../components/icons/quickstarts'
 import { Examples } from '../components/icons/examples'
 import { HowTo } from '../components/icons/howto'
@@ -21,19 +22,12 @@ import { HowTo } from '../components/icons/howto'
     <span>Welcome to the Reflect documentation.</span>
 </p>
 
-
-<FeaturedCard
-    title="Interactive Tutorial"
-    link="interactive-tutorial"
-    className="cardTutorial"
-/>
-
-
 <Cards>
-  <Card icon={<QuickStarts />} title="Quickstarts" href="#" />
-  <Card icon={<Examples />} title="Examples" href="#" />
-  <Card icon={<HowTo />} title="How To" href="#" />
+    <Card icon={<Tutorial />} title="Tutorial" href="/tutorial" />
+    <Card icon={<QuickStarts />} title="Quickstarts" href="/quickstarts" />
+    <Card icon={<Examples />} title="Examples" href="/examples" />
+    <Card icon={<HowTo />} title="How To" href="/howto" />
 </Cards>
 
-Have a question? Feel free to [reach out to us](#).
+Have a question? Feel free to [reach out to us](mailto://hi@reflect.net).
 

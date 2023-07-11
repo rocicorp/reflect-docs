@@ -16,6 +16,18 @@
     --nextra-navbar-height: 5.5rem;
     --base-color: #2a2c2e;
     --link-color: #fc208a;
+    --shiki-color-text: #414141;
+    --shiki-color-background: #2a2c2e;
+    --shiki-token-constant: #1976d2;
+    --shiki-token-string: #22863a;
+    --shiki-token-comment: #aaa;
+    --shiki-token-keyword: #d32f2f;
+    --shiki-token-parameter: #ff9800;
+    --shiki-token-function: #6f42c1;
+    --shiki-token-string-expression: #22863a;
+    --shiki-token-punctuation: #212121;
+    --shiki-token-link: #22863a;
+    --rows-2: 2;
 }
 
 html {
@@ -46,7 +58,7 @@ html {
     text-align: center;
     font-size: 1.5rem;
     line-height: 40px;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 }
 
 a {
@@ -64,6 +76,21 @@ li.active a {
 
 .nextra-nav-container {
     margin-bottom: 1rem;
+}
+
+.nextra-nav-container a {
+    transition-property: all;
+    transition-duration: .2s;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    color: var(--base-color) !important;
+}
+
+.nextra-nav-container a:hover {
+    color: var(--link-color) !important;
+}
+
+.nextra-cards {
+    grid-template-columns: repeat(auto-fill,minmax(max(250px,calc((100% - 1rem*2)/var(--rows-2))),1fr)) !important;
 }
 
 .nx-mx-auto {
@@ -89,7 +116,7 @@ nav a:first-child {
     position: relative;
 }
 
-nav a:first-child::after {
+.nextra-nav-container a:first-child::after {
     content: "Docs";
     position: absolute;
     left: 100%;

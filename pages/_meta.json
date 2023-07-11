@@ -9,8 +9,8 @@
       "toc": false
     }
   },
-  "interactive-tutorial": {
-    "title": "Interactive Tutorial"
+  "tutorial": {
+    "title": "Tutorial"
   },
   "quickstarts": {
     "title": "Quickstarts"
@@ -20,5 +20,21 @@
   },
   "howto": {
     "title": "How To"
+  },
+  "-- Contact Us": {
+    "type": "separator",
+    "title": "Contact Us"
+  },
+  "Email": {
+    "title": "Email ↪",
+    "href": "mailto://hi@reflect.net"
+  },
+  "Twitter": {
+    "title": "Twitter ↪",
+    "href": "https://twitter.com/rocicorp"
+  },
+  "Discord": {
+    "title": "Discord ↪",
+    "href": "https://discord.replicache.dev/"
   }
 }

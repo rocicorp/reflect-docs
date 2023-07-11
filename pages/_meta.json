@@ -9,10 +9,16 @@
       "toc": false
     }
   },
-  "get-started": {
-    "title": "Get Started"
+  "interactive-tutorial": {
+    "title": "Interactive Tutorial"
+  },
+  "quickstarts": {
+    "title": "Quickstarts"
   },
   "examples": {
     "title": "Examples"
+  },
+  "howto": {
+    "title": "How To"
   }
 }

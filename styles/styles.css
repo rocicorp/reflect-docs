@@ -46,11 +46,20 @@ html {
     text-align: center;
     font-size: 1.5rem;
     line-height: 40px;
+    margin-bottom: 4rem;
 }
 
 a {
     color: var(--link-color) !important;
     text-decoration: none !important;
+}
+
+li.active a {
+    color: rgba(255, 255, 255, 1) !important;
+}
+
+.nx-bg-primary-100 {
+    background-color: rgba(252, 32, 138, 1) !important;
 }
 
 .nextra-nav-container {
@@ -90,4 +99,12 @@ nav a:first-child::after {
     color: rgba(255, 255, 255, 1);
     border-radius: 0.5rem;
     font-weight: 700;
+}
+
+.nextra-cards {
+    margin-bottom: 4rem;
+}
+
+.sp-wrapper {
+    margin: 4rem 0 !important;
 }

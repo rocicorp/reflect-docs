@@ -1,5 +1,9 @@
 import Image from 'next/image'
-import Card from '../components/card'
+import FeaturedCard from '../components/featuredCard'
+import { Cards, Card } from 'nextra/components'
+import { QuickStarts } from '../components/icons/quickstarts'
+import { Examples } from '../components/icons/examples'
+import { HowTo } from '../components/icons/howto'
 
 <object
     type="image/svg+xml"
@@ -18,24 +22,18 @@ import Card from '../components/card'
 </p>
 
 
-<div className="cardContainer">
-    <Card
-        title="Tutorial"
-        className="cardTutorial"
-    />
-    <Card
-        title="Quickstarts"
-        className="cardQuickstarts"
-    />
-    <Card
-        title="Samples"
-        className="cardSamples"
-    />
-    <Card
-        title="How to"
-        className="cardHowto"
-    />
-</div>
+<FeaturedCard
+    title="Interactive Tutorial"
+    link="interactive-tutorial"
+    className="cardTutorial"
+/>
+
+
+<Cards>
+  <Card icon={<QuickStarts />} title="Quickstarts" href="#" />
+  <Card icon={<Examples />} title="Examples" href="#" />
+  <Card icon={<HowTo />} title="How To" href="#" />
+</Cards>
 
 Have a question? Feel free to [reach out to us](#).
 

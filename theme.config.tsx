@@ -19,12 +19,6 @@ const config: DocsThemeConfig = {
   sidebar: {
     defaultMenuCollapseLevel: 1
   },
-  project: {
-    link: 'https://github.com/rocicorp',
-  },
-  chat: {
-    link: 'https://discord.com',
-  },
   darkMode: false,
   docsRepositoryBase: 'https://docs.reflect.net',
   footer: {

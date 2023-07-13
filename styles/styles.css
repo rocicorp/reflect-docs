@@ -135,3 +135,12 @@ nav a:first-child {
 .sp-wrapper {
     margin: 4rem 0 !important;
 }
+
+.nextra-card svg {
+    opacity: 0.2;
+    transition: opacity .3s;
+}
+
+.nextra-card:hover svg {
+    opacity: 1;
+}

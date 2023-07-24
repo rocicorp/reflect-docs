@@ -3,5 +3,13 @@ import { monokaiPro } from '@codesandbox/sandpack-themes'
 
 
 export default function Sandbox() {
-  return <Sandpack template="react" theme={monokaiPro} />
+  return <Sandpack 
+    options={{
+      showTabs: true,
+      showLineNumbers: true,
+      layout: "console", // preview | tests | console
+    }}
+    template="node"
+    theme={monokaiPro}
+  />
 }

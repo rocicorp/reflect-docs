@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 import styles from '/styles/config.module.css'
 
@@ -24,6 +25,19 @@ const config: DocsThemeConfig = {
   footer: {
     text: 'Rocicorp',
   },
+  useNextSeoProps() {
+    const { asPath } = useRouter()
+    if (asPath == '/') {
+      return {
+        titleTemplate: 'Hello, Reflect'
+      }
+    }
+    if (asPath !== '/') {
+      return {
+        titleTemplate: '%s - Hello, Reflect'
+      }
+    }
+  }
 }
 
 export default config

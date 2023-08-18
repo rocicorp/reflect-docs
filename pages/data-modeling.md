@@ -1,4 +1,4 @@
-## Data Modeling
+# Data Modeling
 
 Reflect is a key/value store. Keys are strings and values are any JSON-compatible value.
 

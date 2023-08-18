@@ -1,4 +1,4 @@
-## Authentication
+# Authentication
 
 Reflect can optionally authenticate users who connect to rooms with your server. You can control which users can connect to which rooms.
 

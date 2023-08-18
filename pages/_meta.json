@@ -19,14 +19,11 @@
     "type": "separator",
     "title": "How To"
   },
-  "auth": {
+  "authentication": {
     "title": "Authentication"
   },
-  "data": {
+  "data-modeling": {
     "title": "Data Modeling"
-  },
-  "server-api": {
-    "title": "Server API"
   },
   "-- Contact Us": {
     "type": "separator",

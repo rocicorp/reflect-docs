@@ -9,17 +9,24 @@
       "toc": false
     }
   },
-  "tutorial": {
-    "title": "Tutorial"
-  },
-  "quickstarts": {
-    "title": "Quickstarts"
+  "quickstart": {
+    "title": "LFG"
   },
   "examples": {
     "title": "Examples"
   },
-  "howto": {
+  "-- How To": {
+    "type": "separator",
     "title": "How To"
+  },
+  "auth": {
+    "title": "Authentication"
+  },
+  "data": {
+    "title": "Data Modeling"
+  },
+  "server-api": {
+    "title": "Server API"
   },
   "-- Contact Us": {
     "type": "separator",

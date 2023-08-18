@@ -1,0 +1,39 @@
+# Quickstart
+
+## Scaffold
+
+Creates a Vite/React/Reflect starter app.
+
+```bash copy
+npx @rocicorp/reflect create my-app
+cd my-app
+npm install
+```
+
+## Develop
+
+Runs a fully local development environment for fast iteration.
+
+```bash copy
+npm run dev
+```
+
+## Publish
+
+Deploys the Reflect server to [reflect.net](https://reflect.net/) and the UI to Vercel.
+
+```bash copy
+npm run publish
+```
+
+Monitor production logs:
+
+```bash copy
+npx reflect tail
+```
+
+## Quick Code Tour
+
+- Change Reflect data by using _mutators_. Mutators are defined in `reflect/mutators.ts` and called via `reflect.mutate.foo()` in the UI.
+- Mutators run on the client optimistically, and then later on the server. Despite mutators being `async` they almost always complete in one frame.
+- Render data reactively using `useSubscribe()` in React or `reflect.subscribe()` in other frameworks.

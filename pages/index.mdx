@@ -1,33 +1,34 @@
-import Image from 'next/image'
-import FeaturedCard from '../components/featuredCard'
-import { Cards, Card } from 'nextra/components'
-import { Tutorial } from '../components/icons/tutorial'
-import { QuickStarts } from '../components/icons/quickstarts'
-import { Examples } from '../components/icons/examples'
-import { HowTo } from '../components/icons/howto'
+import Image from "next/image";
+import FeaturedCard from "../components/featuredCard";
+import { Cards, Card } from "nextra/components";
+import { Tutorial } from "../components/icons/tutorial";
+import { QuickStarts } from "../components/icons/quickstarts";
+import { Examples } from "../components/icons/examples";
+import { HowTo } from "../components/icons/howto";
 
 <object
-    type="image/svg+xml"
-    className="docs-icon"
-    data="/docs-anim.svg"
-    width={152}
-    height={220}
+  type="image/svg+xml"
+  className="docs-icon"
+  data="/docs-anim.svg"
+  width={152}
+  height={220}
 ></object>
 
 <h1 className="overview-masthead">
-    <span>Hello,<br/>Reflect</span>
+  <span>
+    Hello,
+    <br />
+    Reflect
+  </span>
 </h1>
 
 <p className="overview-byline">
-    <span>Welcome to the Reflect documentation.</span>
+  <span>Welcome to the Reflect documentation.</span>
 </p>
 
 <Cards>
-    <Card icon={<Tutorial />} title="Tutorial" href="/tutorial" />
-    <Card icon={<QuickStarts />} title="Quickstarts" href="/quickstarts" />
-    <Card icon={<Examples />} title="Examples" href="/examples" />
-    <Card icon={<HowTo />} title="How To" href="/howto" />
+  <Card icon={<QuickStarts />} title="Quickstart" href="/quickstart" />
+  <Card icon={<Examples />} title="Examples" href="/examples" />
 </Cards>
 
 Have a question? Feel free to [reach out to us](mailto://hi@reflect.net).
-

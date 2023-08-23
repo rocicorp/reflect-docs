@@ -94,8 +94,8 @@ li.active a {
 }
 
 
-.nextra-sidebar-container {
-   
+.nextra-sidebar-container ul li:last-child {
+   opacity: 0.5;
 }
 
 .nextra-cards {

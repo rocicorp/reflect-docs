@@ -93,11 +93,6 @@ li.active a {
     color: var(--link-color) !important;
 }
 
-
-.nextra-sidebar-container ul li:last-child {
-   opacity: 0.5;
-}
-
 .nextra-cards {
     grid-template-columns: repeat(auto-fill,minmax(max(250px,calc((100% - 1rem*2)/var(--rows-2))),1fr)) !important;
 }
@@ -164,4 +159,11 @@ h2 {
 
 footer {
     display: none;
+}
+
+@media (max-width: 767px) {
+    .nextra-sidebar-container li.active ul li a {
+        background: transparent !important;
+        color: var(--link-color) !important;
+    }
 }

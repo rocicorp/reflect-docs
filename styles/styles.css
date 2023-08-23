@@ -144,3 +144,7 @@ nav a:first-child {
 .nextra-card:hover svg {
     opacity: 1;
 }
+
+h2 {
+    border-bottom: none !important;
+}

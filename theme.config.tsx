@@ -21,6 +21,15 @@ const config: DocsThemeConfig = {
     defaultMenuCollapseLevel: 1
   },
   darkMode: false,
+  feedback: {
+    content: null
+  },
+  editLink: {
+    text: null
+  },
+  nextThemes: {
+    defaultTheme: 'light'
+  },
   docsRepositoryBase: 'https://docs.reflect.net',
   footer: {
     text: 'Rocicorp',

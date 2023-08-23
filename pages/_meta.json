@@ -40,5 +40,9 @@
   "Discord": {
     "title": "Discord ↪",
     "href": "https://discord.replicache.dev/"
+  },
+  "-- Rocicorp": {
+    "type": "separator",
+    "title": "© 2023 Rocicorp, LLC"
   }
 }

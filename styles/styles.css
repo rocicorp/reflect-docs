@@ -78,6 +78,10 @@ li.active a {
     margin-bottom: 1rem;
 }
 
+.nextra-nav-container div:first-child {
+    box-shadow: none;
+}
+
 .nextra-nav-container a {
     transition-property: all;
     transition-duration: .2s;
@@ -87,6 +91,11 @@ li.active a {
 
 .nextra-nav-container a:hover {
     color: var(--link-color) !important;
+}
+
+
+.nextra-sidebar-container {
+   
 }
 
 .nextra-cards {
@@ -117,7 +126,7 @@ nav a:first-child {
 }
 
 .nextra-nav-container a:first-child::after {
-    content: "Docs";
+    content: "Hello";
     position: absolute;
     left: 100%;
     margin-left: 1rem;
@@ -147,4 +156,8 @@ nav a:first-child {
 
 h2 {
     border-bottom: none !important;
+}
+
+footer {
+    display: none;
 }

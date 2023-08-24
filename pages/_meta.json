@@ -31,15 +31,18 @@
   },
   "Email": {
     "title": "Email ↪",
-    "href": "mailto://hi@reflect.net"
+    "href": "mailto:hi@reflect.net",
+    "newWindow": true
   },
   "Twitter": {
     "title": "Twitter ↪",
-    "href": "https://twitter.com/rocicorp"
+    "href": "https://twitter.com/rocicorp",
+    "newWindow": true
   },
   "Discord": {
     "title": "Discord ↪",
-    "href": "https://discord.replicache.dev/"
+    "href": "https://discord.replicache.dev/",
+    "newWindow": true
   },
   "-- Rocicorp": {
     "type": "separator",

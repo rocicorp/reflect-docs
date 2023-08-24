@@ -1,169 +1,176 @@
 @font-face {
-    font-family: 'Muoto 205tf';
-    font-style: normal;
-    font-weight: 100 900;
-    src: url('/fonts/muoto-var.ttf') format('truetype-variations');
+  font-family: "Muoto 205tf";
+  font-style: normal;
+  font-weight: 100 900;
+  src: url("/fonts/muoto-var.ttf") format("truetype-variations");
 }
-  
+
 @font-face {
-    font-family: 'Muoto 205tf italic';
-    font-style: italic;
-    font-weight: 100 900;
-    src: url('/fonts/muoto-var-italic.ttf') format('truetype-variations');
+  font-family: "Muoto 205tf italic";
+  font-style: italic;
+  font-weight: 100 900;
+  src: url("/fonts/muoto-var-italic.ttf") format("truetype-variations");
 }
 
 :root {
-    --nextra-navbar-height: 5.5rem;
-    --base-color: #2a2c2e;
-    --link-color: #fc208a;
-    --shiki-color-text: #414141;
-    --shiki-color-background: #2a2c2e;
-    --shiki-token-constant: #1976d2;
-    --shiki-token-string: #22863a;
-    --shiki-token-comment: #aaa;
-    --shiki-token-keyword: #d32f2f;
-    --shiki-token-parameter: #ff9800;
-    --shiki-token-function: #6f42c1;
-    --shiki-token-string-expression: #22863a;
-    --shiki-token-punctuation: #212121;
-    --shiki-token-link: #22863a;
-    --rows-2: 2;
+  --nextra-navbar-height: 5.5rem;
+  --base-color: #2a2c2e;
+  --link-color: #fc208a;
+  --shiki-color-text: #414141;
+  --shiki-color-background: #2a2c2e;
+  --shiki-token-constant: #1976d2;
+  --shiki-token-string: #22863a;
+  --shiki-token-comment: #aaa;
+  --shiki-token-keyword: #d32f2f;
+  --shiki-token-parameter: #ff9800;
+  --shiki-token-function: #6f42c1;
+  --shiki-token-string-expression: #22863a;
+  --shiki-token-punctuation: #212121;
+  --shiki-token-link: #22863a;
+  --rows-2: 2;
 }
 
 html {
-    font-family: 'Muoto 205tf', -apple-system, BlinkMacSystemFont, Segoe UI,
+  font-family: "Muoto 205tf", -apple-system, BlinkMacSystemFont, Segoe UI,
     Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
     sans-serif !important;
 }
 
 .nextra-breadcrumb {
-    display: none !important;
+  display: none !important;
 }
 
 .nextra-content {
-    color: var(--base-color) !important;
-    padding-top: 1rem;
+  color: var(--base-color) !important;
+  padding-top: 1rem;
 }
 
 .overview-masthead {
-    text-align: center;
-    font-size: 6rem;
-    line-height: 6rem;
-    font-weight: 800;
-    letter-spacing: -2px;
-    margin-bottom: 2rem;
+  text-align: center;
+  font-size: 6rem;
+  line-height: 6rem;
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin-bottom: 2rem;
+}
+
+.overview-masthead span {
+  display: block;
 }
 
 .overview-byline {
-    text-align: center;
-    font-size: 1.5rem;
-    line-height: 40px;
-    margin-bottom: 3rem;
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 40px;
+  margin-bottom: 3rem;
 }
 
 a {
-    color: var(--link-color) !important;
-    text-decoration: none !important;
+  color: var(--link-color) !important;
+  text-decoration: none !important;
 }
 
 li.active a {
-    color: rgba(255, 255, 255, 1) !important;
+  color: rgba(255, 255, 255, 1) !important;
 }
 
 .nx-bg-primary-100 {
-    background-color: rgba(252, 32, 138, 1) !important;
+  background-color: rgba(252, 32, 138, 1) !important;
 }
 
 .nextra-nav-container {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .nextra-nav-container div:first-child {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 .nextra-nav-container a {
-    transition-property: all;
-    transition-duration: .2s;
-    transition-timing-function: cubic-bezier(.4,0,.2,1);
-    color: var(--base-color) !important;
+  transition-property: all;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--base-color) !important;
 }
 
 .nextra-nav-container a:hover {
-    color: var(--link-color) !important;
+  color: var(--link-color) !important;
 }
 
 .nextra-cards {
-    grid-template-columns: repeat(auto-fill,minmax(max(250px,calc((100% - 1rem*2)/var(--rows-2))),1fr)) !important;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(max(250px, calc((100% - 1rem * 2) / var(--rows-2))), 1fr)
+  ) !important;
 }
 
 .nx-mx-auto {
-    max-width: 100% !important;
+  max-width: 100% !important;
 }
 
 .docs-icon {
-    margin: 0 auto;
-    transform: scale(0.75);
-    margin-bottom: 1rem;
+  margin: 0 auto;
+  transform: scale(0.75);
+  margin-bottom: 1rem;
 }
 
 .cardContainer {
-    margin: 4rem 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 4rem;
-    grid-row-gap: 4rem;
+  margin: 4rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 4rem;
+  grid-row-gap: 4rem;
 }
 
 nav a:first-child {
-    position: relative;
+  position: relative;
 }
 
 .nextra-nav-container a:first-child::after {
-    content: "Hello";
-    position: absolute;
-    left: 100%;
-    margin-left: 1rem;
-    padding: 0.25rem 0.5rem;
-    background: var(--base-color);
-    color: rgba(255, 255, 255, 1);
-    border-radius: 0.5rem;
-    font-weight: 700;
+  content: "Hello";
+  position: absolute;
+  left: 100%;
+  margin-left: 1rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--base-color);
+  color: rgba(255, 255, 255, 1);
+  border-radius: 0.5rem;
+  font-weight: 700;
 }
 
 .nextra-cards {
-    margin-bottom: 4rem;
+  margin-bottom: 4rem;
 }
 
 .nx-border-t {
-    border-top: none;
+  border-top: none;
 }
 
 .sp-wrapper {
-    margin: 4rem 0 !important;
+  margin: 4rem 0 !important;
 }
 
 .nextra-card svg {
-    opacity: 0.2;
-    transition: opacity .3s;
+  opacity: 0.2;
+  transition: opacity 0.3s;
 }
 
 .nextra-card:hover svg {
-    opacity: 1;
+  opacity: 1;
 }
 
 h2 {
-    border-bottom: none !important;
+  border-bottom: none !important;
 }
 
 footer {
-    display: none;
+  display: none;
 }
 
 @media (max-width: 767px) {
-    .nextra-sidebar-container li.active ul li a {
-        background: transparent !important;
-        color: var(--link-color) !important;
-    }
+  .nextra-sidebar-container li.active ul li a {
+    background: transparent !important;
+    color: var(--link-color) !important;
+  }
 }

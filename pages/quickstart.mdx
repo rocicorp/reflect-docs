@@ -5,7 +5,7 @@
 Creates a Vite/React/Reflect starter app.
 
 ```bash copy
-npx @rocicorp/reflect create my-app
+npx @rocicorp/reflect@latest create my-app
 cd my-app
 npm install
 ```
@@ -15,7 +15,12 @@ npm install
 Runs a fully local development environment for fast iteration.
 
 ```bash copy
-npm run dev
+# Run the Reflect dev server.
+# NOTE: This doesn't HMR on changes yet, you need to restart. Coming soon.
+npx reflect dev src/reflect/index.ts
+
+# Run the UI dev server.
+VITE_WORKER_URL="ws://127.0.0.1:8080/" npm run dev
 ```
 
 ## Publish
@@ -23,19 +28,24 @@ npm run dev
 Deploys the Reflect server to [reflect.net](https://reflect.net/) and the UI to Vercel.
 
 ```bash copy
-npm run publish
+# Publish the Reflect server to reflect.net.
+npx reflect publish src/reflect/index.ts
+
+# You can run the UI wherever you want but Vercel works.
+# You'll need to set the VITE_WORKER_URL (see .env).
+npx vercel
 ```
 
-Monitor production logs:
-
-```bash copy
-npx reflect tail
-```
+Currently there is no way to tail the logs from production, but that is coming soon.
 
 ## Quick Code Tour
 
-- Change Reflect data by using _mutators_. Mutators are defined in `reflect/mutators.ts` and called via `reflect.mutate.foo()` in the UI.
-- Mutators run on the client optimistically, and then later on the server. Despite mutators being `async` they almost always complete in one frame.
-- Render data reactively using `useSubscribe()` in React or `reflect.subscribe()` in other frameworks.
+`reflect/index.ts` is the entry point for the Reflect server. Reflect works by running **your code** on the server.
 
-<div className="showFooter"></div>
+`reflect/client-state.ts` defines the synced data model. This example uses the Reflect API directly, but we advise most applications to use [Rails](https://github.com/rocicorp/rails), which generates handy CRUD functions.
+
+`reflect/mutators.ts` defines the _mutators_. Mutators are how data is changed in Reflect. A mutator runs immediately (optimistically) on the client, and then later on the server as part of sync. Mutators are atomic – they have access to the entire synced data model and can make arbitrary changes to it, which are guaranteed to run completely or not at all. Mutators do not need to be pure – they can do something different on client than server. For example, you can enforce permissions and validation on the server, just like a classic web application would. If the server computes a different results than a client, the client will snap into agreement with the server.
+
+`subscriptions.ts` defines the _subscriptions_. As in other modern data systems, you render Reflect apps reactively. These subscriptions fire when synced data is changed either locally or by other collaborators.
+
+For more information about Reflect's design and its benefits please see [this recent talk](https://www.youtube.com/live/7Bb0KRLL8FI?si=O_tO27zgpoxPIrHW&t=1830) or the [associated slides](https://pitch.com/public/a49fccb0-da65-4d64-966e-e519674d951f).

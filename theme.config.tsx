@@ -20,6 +20,57 @@ const config: DocsThemeConfig = {
   sidebar: {
     defaultMenuCollapseLevel: 1
   },
+  head: (
+    <>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta property="og:description" content="Welcome to the Reflect documentation." />
+      <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          href="favicon.svg"
+          type="image/svg+xml"
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="icon"
+          href="favicon-dm.svg"
+          type="image/svg+xml"
+          media="(prefers-color-scheme: dark)"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32-dm.png"
+          media="(prefers-color-scheme: dark)"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16-dm.png"
+          media="(prefers-color-scheme: dark)"
+        />
+    </>
+  ),
   darkMode: false,
   feedback: {
     content: null
@@ -30,7 +81,7 @@ const config: DocsThemeConfig = {
   nextThemes: {
     defaultTheme: 'light'
   },
-  docsRepositoryBase: 'https://docs.reflect.net',
+  docsRepositoryBase: 'https://hello.reflect.net',
   footer: {
     text: 'Rocicorp',
   },

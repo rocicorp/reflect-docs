@@ -23,7 +23,8 @@ const config: DocsThemeConfig = {
   head: (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="og:description" content="Welcome to the Reflect documentation." />
+      <meta property="og:description" content="Learn to build multiplayer apps with Reflect." />
+      <meta property="og:image" content="https://hello.reflect.net/reflect-docs-og.png"></meta>
       <link
           rel="apple-touch-icon"
           sizes="180x180"

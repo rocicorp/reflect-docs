@@ -12,13 +12,18 @@ npm install
 
 ## Develop
 
-Runs a fully local development environment for fast iteration.
+Reflect has a fully local development environment for fast-iteration.
+
+First, start the Reflect dev server:
 
 ```bash copy
-# Run the Reflect dev server.
 # NOTE: This doesn't HMR on changes yet, you need to restart. Coming soon.
 npx reflect dev src/reflect/index.ts
+```
 
+In a different tab, start the UI dev server:
+
+```bash copy
 # Run the UI dev server.
 VITE_WORKER_URL="ws://127.0.0.1:8080/" npm run dev
 ```

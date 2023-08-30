@@ -19,9 +19,11 @@ import { HowTo } from "../components/icons/howto";
   <span>Reflect</span>
 </h1>
 
-<p className="overview-byline">
-  <span>Learn to build multiplayer apps with Reflect.</span>
-</p>
+{/* if prettier formats next block it causes a rehydration error in next.js */}
+
+{/* prettier-ignore */}
+<p className="overview-byline"><span>Learn to build multiplayer apps
+  with <a href="https://reflect.net/">Reflect</a>.</span></p>
 
 <Cards>
   <Card icon={<QuickStarts />} title="Quickstart" href="/quickstart" />

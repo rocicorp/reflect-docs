@@ -15,6 +15,9 @@
   "examples": {
     "title": "Examples"
   },
+  "status": {
+    "title": "Status"
+  },
   "-- How To": {
     "type": "separator",
     "title": "How To"

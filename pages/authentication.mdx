@@ -22,39 +22,39 @@ The signature for the auth handler is as follows:
  * and can be used to implement fine-grained server-side authorization of
  * mutations.
  */
-export type AuthHandler = (auth: string, roomID: string) => Promise<UserData>;
+export type AuthHandler = (auth: string, roomID: string) => Promise<AuthData>;
 
 /**
- * `UserData` must include a `userID` which is unique stable identifier
+ * `AuthData` must include a `userID` which is unique stable identifier
  * for the user.
- * `UserData` has a size limit of 6 KB.
+ * `AuthData` has a size limit of 6 KB.
  * `AuthData` is passed via {@link WriteTransaction.auth} to mutators
  * when they are run on the server, which can use it to supplement
  * mutator args and to authorize the mutation.
  */
-export type UserData = ReadonlyJSONObject & { userID: string };
+export type AuthData = ReadonlyJSONObject & { userID: string };
 ```
 
 ## Implementing `AuthHandler`
 
-The more common implementation is to call an endpoint on your server that validates the `authToken` and returns the `UserData` for the user. Something like:
+The most common implementation is to call an endpoint on your server that validates the `authToken` and returns the `AuthData` for the user. Something like:
 
 ```ts
 async function fetchAuthHandler(
   auth: string,
   roomID: string
-): Promise<UserData> {
+): Promise<AuthData> {
   const response = await fetch(`/reflect-auth?auth=${auth}&roomID=${roomID}`);
-  return (await response.json()) as UserData;
+  return (await response.json()) as AuthData;
 }
 ```
 
 However, you can also use <a href="https://jwt.io/">JWTs</a> or similar to implement auth. In that case, the `auth` string would be a JWT which would be verified in the `AuthHandler`:
 
 ```ts
-async function jwtAuthHandler(auth: string, roomID: string): Promise<UserData> {
+async function jwtAuthHandler(auth: string, roomID: string): Promise<AuthData> {
   const decoded = await jwt.verify(auth, publicKey);
-  return decoded as UserData;
+  return decoded as AuthData;
 }
 ```
 
@@ -62,17 +62,17 @@ async function jwtAuthHandler(auth: string, roomID: string): Promise<UserData> {
 
 Returning `{userID: $userID}` from the `AuthHandler` authorizes the connecting user to access the room.
 
-However, it is also possible to control whether each individual mutation is allowed. To do so, return additional data as part of the `UserData` object. This data will be passed to mutators via the `WriteTransaction.auth` parameter. You can then use this data to decide whether to allow the mutation:
+It is also possible to control whether each individual mutation is allowed. To do so, return additional data as part of the `AuthData` object. This data will be passed to mutators via the `WriteTransaction.auth` parameter. You can then use this data to decide whether to allow the mutation:
 
 ```ts
-type MyUserData = UserData & { access: "read" | "write" };
+type MyAuthData = AuthData & { access: "read" | "write" };
 
 async function detailedAuthHandler(
   auth: string,
   roomID: string
-): Promise<MyUserData> {
+): Promise<MyAuthData> {
   const response = await fetch(`/reflect-auth?auth=${auth}&roomID=${roomID}`);
-  return (await response.json()) as MyUserData;
+  return (await response.json()) as MyAuthData;
 }
 ```
 
@@ -83,7 +83,7 @@ const mutators = {
   editNodeContent: async (tx: WriteTransaction,
       {nodeID, content}: {nodeID: string, content: string}) {
     const node = await getNode(tx, nodeID);
-    const auth = tx.auth as MyUserData;
+    const auth = tx.auth as MyAuthData;
     if (auth === undefined || // auth is always undefined on client
         auth.access === 'write') {
       // Allow the mutation

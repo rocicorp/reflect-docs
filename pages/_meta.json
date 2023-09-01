@@ -3,20 +3,21 @@
     "type": "separator",
     "title": "Get Started"
   },
-  "index": {
-    "title": "Overview",
-    "theme": {
-      "toc": false
-    }
-  },
   "quickstart": {
     "title": "Quickstart"
   },
   "examples": {
     "title": "Examples"
   },
+  "-- Understand Reflect": {
+    "type": "separator",
+    "title": "Understand Reflect"
+  },
+  "not-crdt": {
+    "title": "Not a CRDT"
+  },
   "status": {
-    "title": "Status"
+    "title": "Project Status"
   },
   "-- How To": {
     "type": "separator",

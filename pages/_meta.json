@@ -3,8 +3,11 @@
     "type": "separator",
     "title": "Get Started"
   },
-  "quickstart": {
-    "title": "Quickstart"
+  "scaffold": {
+    "title": "Scaffold New Project"
+  },
+  "add-to-existing": {
+    "title": "Add to Existing Project"
   },
   "examples": {
     "title": "Examples"

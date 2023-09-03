@@ -1,0 +1,85 @@
+# Add Reflect to an Existing Project
+
+## Install
+
+```bash copy
+npm add '@rocicorp/reflect'
+```
+
+If using React, also do:
+
+```bash copy
+npm add 'replicache-react'
+```
+
+## Server Setup
+
+1. Download [reflect.zip](/reflect.zip) and unzip it into `/reflect` in your project. This contains a sample mutator and server entrypoint.
+2. Download [reflect.config.json](/reflect.config.json) and put it in the root of your project.
+
+## Use Reflect
+
+Instantiate Reflect:
+
+```ts
+import { Reflect } from "@rocicorp/reflect/client";
+import { mutators } from "../reflect/mutators.ts";
+
+const r = new Reflect({
+  userID: "someUser",
+  roomID: "myRoom",
+  socketOrigin: "ws://localhost:8080",
+  mutators,
+});
+```
+
+The `/reflect` directory contains a sample `increment` mutator. Call it from some event handler:
+
+```ts
+const onClick = () => {
+  r.mutate.increment({ key: "count", delta: 1 });
+};
+```
+
+Use `useSubscribe` (or `r.subscribe` outside of React) to monitor Reflect data:
+
+```ts
+import { useSubscribe } from "replicache-react";
+
+const count = useSubscribe(
+  r,
+  // blech, the dx here will get nicer soon.
+  async (tx) => ((await tx.get("count")) ?? 0) as number,
+  0
+);
+```
+
+For more complex data modeling needs, use [Rails](https://github.com/rocicorp/rails).
+
+## Develop
+
+Start the local dev environment:
+
+```bash copy
+npx reflect dev
+```
+
+In a different tab, start the UI dev server:
+
+```bash copy
+VITE_WORKER_URL="ws://127.0.0.1:8080/" npm run dev
+```
+
+## Publish
+
+Deploy the Reflect server to [reflect.net](https://reflect.net/):
+
+```bash copy
+npx reflect publish
+```
+
+Deploy the UI. You can use any hosting provider, we'll use Vercel here:
+
+```bash copy
+npx vercel
+```

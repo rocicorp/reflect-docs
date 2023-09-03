@@ -12,36 +12,37 @@ npm install
 
 ## Develop
 
-Reflect has a fully local development environment for fast-iteration.
-
-First, start the Reflect dev server:
+Reflect has a fully local development environment for fast iteration:
 
 ```bash copy
-# NOTE: This doesn't HMR on changes yet, you need to restart. Coming soon.
-npx reflect dev src/reflect/index.ts
+npx reflect dev
 ```
 
 In a different tab, start the UI dev server:
 
 ```bash copy
-# Run the UI dev server.
 VITE_WORKER_URL="ws://127.0.0.1:8080/" npm run dev
 ```
 
 ## Publish
 
-Deploys the Reflect server to [reflect.net](https://reflect.net/) and the UI to Vercel.
+Deploy the Reflect server to [reflect.net](https://reflect.net/):
 
 ```bash copy
-# Publish the Reflect server to reflect.net.
-npx reflect publish src/reflect/index.ts
+npx reflect publish
+```
 
-# You can run the UI wherever you want but Vercel works.
-# You'll need to set the VITE_WORKER_URL (see .env).
+Deploy the UI. You can use any hosting provider, we'll use Vercel here:
+
+```bash copy
 npx vercel
 ```
 
-Currently there is no way to tail the logs from production, but that is coming soon.
+Watch the logs from production:
+
+```bash copy
+npx reflect tail
+```
 
 ## Quick Code Tour
 

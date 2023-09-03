@@ -13,8 +13,8 @@
     "type": "separator",
     "title": "Understand Reflect"
   },
-  "not-crdt": {
-    "title": "Not a CRDT"
+  "server-authority": {
+    "title": "Server Authority"
   },
   "status": {
     "title": "Project Status"

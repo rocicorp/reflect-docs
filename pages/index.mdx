@@ -3,8 +3,6 @@ import FeaturedCard from "../components/featuredCard";
 import { Cards, Card } from "nextra/components";
 import { Tutorial } from "../components/icons/tutorial";
 import { QuickStarts } from "../components/icons/quickstarts";
-import { Examples } from "../components/icons/examples";
-import { HowTo } from "../components/icons/howto";
 
 <object
   type="image/svg+xml"
@@ -26,8 +24,12 @@ import { HowTo } from "../components/icons/howto";
   with <a href="https://reflect.net/">Reflect</a>.</span></p>
 
 <Cards>
-  <Card icon={<QuickStarts />} title="Quickstart" href="/quickstart" />
-  <Card icon={<Examples />} title="Examples" href="/examples" />
+  <Card icon={<QuickStarts />} title="Scaffold New Project" href="/scaffold" />
+  <Card
+    icon={<Tutorial />}
+    title="Add to Existing Project"
+    href="/add-to-existing"
+  />
 </Cards>
 
 Have a question? Feel free to [reach out to us](mailto://hi@reflect.net).

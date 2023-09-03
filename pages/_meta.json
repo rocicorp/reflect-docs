@@ -3,6 +3,9 @@
     "type": "separator",
     "title": "Get Started"
   },
+  "index": {
+    "display": "hidden"
+  },
   "scaffold": {
     "title": "Scaffold New Project"
   },

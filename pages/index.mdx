@@ -3,6 +3,7 @@ import FeaturedCard from "../components/featuredCard";
 import { Cards, Card } from "nextra/components";
 import { Tutorial } from "../components/icons/tutorial";
 import { QuickStarts } from "../components/icons/quickstarts";
+import { Callout } from "nextra/components";
 
 <object
   type="image/svg+xml"
@@ -22,6 +23,13 @@ import { QuickStarts } from "../components/icons/quickstarts";
 {/* prettier-ignore */}
 <p className="overview-byline"><span>Learn to build multiplayer apps
   with <a href="https://reflect.net/">Reflect</a>.</span></p>
+
+<Callout type="warning">
+  Reflect is in beta. We are planning for a 1.0 release in Q4 2023. See
+  [status](/status) for more information.
+</Callout>
+
+<br />
 
 <Cards>
   <Card icon={<QuickStarts />} title="Scaffold New Project" href="/scaffold" />

@@ -12,24 +12,24 @@ Creates a simple multiplayer starter app with Reflect, Vite, and React.
 
 ## Develop
 
+Reflect has a local dev mode for fast iteration. The `watch` script of this starter app runs both the Reflect dev server and the Vite UI server:
+
 ```bash copy
 cd my-app
 npm run watch
 ```
 
-Starts the local Reflect dev server and the Vite UI server. Open [http://localhost:5173/](http://localhost:5173/) in two tabs to see it in action.
-
-Reflect's dev server is fully local, for fast iteration, and has watch-mode built in.
+Open [http://localhost:5173/](http://localhost:5173/) in two tabs to see it in action.
 
 ## Publish
+
+When you are happy with your app, publish the Reflect server to [reflect.net](https://reflect.net/):
 
 ```bash copy
 npx reflect publish
 ```
 
-Deploys the Reflect server to [reflect.net](https://reflect.net/).
-
-This also updates the local `.env` file, so you can run against the production Reflect server with just:
+This writes a local `.env` file containing the URL of the live server, so once it's done you can run against prodution with just:
 
 ```bash copy
 npx vite
@@ -39,6 +39,12 @@ Watch the logs from production with:
 
 ```bash copy
 npx reflect tail
+```
+
+You can host the app UI just about anywhere since it's just static JS. For example, to use Vercel:
+
+```bash copy
+npx vercel
 ```
 
 ## Quick Code Tour

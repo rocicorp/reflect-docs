@@ -20,6 +20,7 @@
   "dependencies": {
     "@codesandbox/sandpack-react": "^2.6.9",
     "@codesandbox/sandpack-themes": "^2.0.21",
+    "@types/react-router": "^5.1.20",
     "lottie-react": "^2.4.0",
     "next": "^13.0.6",
     "nextra": "latest",

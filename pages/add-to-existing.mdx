@@ -3,8 +3,10 @@
 ## Install
 
 ```bash copy
-npm add '@rocicorp/reflect'
+npx @rocicorp/reflect@latest init
 ```
+
+This installs `@rocicorp/reflect` and creates a sample `/reflect` directory containing a basic Reflect server.
 
 If using React, also do:
 
@@ -12,16 +14,11 @@ If using React, also do:
 npm add 'replicache-react'
 ```
 
-## Server Setup
-
-1. Download [reflect.zip](/reflect.zip) and unzip it into `/reflect` in your project. This contains a sample mutator and server entrypoint.
-2. Download [reflect.config.json](/reflect.config.json) and put it in the root of your project.
-
 ## Use Reflect
 
 Instantiate Reflect:
 
-```ts
+```ts copy
 import { Reflect } from "@rocicorp/reflect/client";
 import { mutators } from "../reflect/mutators.ts";
 
@@ -35,7 +32,7 @@ const r = new Reflect({
 
 The `/reflect` directory contains a sample `increment` mutator. Call it from some event handler:
 
-```ts
+```ts copy
 const onClick = () => {
   r.mutate.increment({ key: "count", delta: 1 });
 };
@@ -43,7 +40,7 @@ const onClick = () => {
 
 Use `useSubscribe` (or `r.subscribe` outside of React) to monitor Reflect data:
 
-```ts
+```ts copy
 import { useSubscribe } from "replicache-react";
 
 const count = useSubscribe(
@@ -67,7 +64,7 @@ npx reflect dev
 In a different tab, start the UI dev server:
 
 ```bash copy
-VITE_WORKER_URL="ws://127.0.0.1:8080/" npm run dev
+npm run dev
 ```
 
 ## Publish

@@ -4,43 +4,38 @@ Multiplayer in about sixty seconds (depending on how peppy npm is feeling today)
 
 ## Install
 
-Create a Vite/React/Reflect starter app:
-
 ```bash copy
 npx @rocicorp/reflect@latest create my-app
-cd my-app
-npm install
 ```
+
+Creates a simple multiplayer starter app with Reflect, Vite, and React.
 
 ## Develop
 
-Reflect has a fully local development environment for fast iteration:
-
 ```bash copy
-npx reflect dev
+cd my-app
+npm run watch
 ```
 
-In a different tab, start the UI dev server:
+Starts the local Reflect dev server and the Vite UI server. Open [http://localhost:5173/](http://localhost:5173/) in two tabs to see it in action.
 
-```bash copy
-VITE_WORKER_URL="ws://127.0.0.1:8080/" npm run dev
-```
+Reflect's dev server is fully local, for fast iteration, and has watch-mode built in.
 
 ## Publish
-
-Deploy the Reflect server to [reflect.net](https://reflect.net/):
 
 ```bash copy
 npx reflect publish
 ```
 
-Deploy the UI. You can use any hosting provider, we'll use Vercel here:
+Deploys the Reflect server to [reflect.net](https://reflect.net/).
+
+This also updates the local `.env` file, so you can run against the production Reflect server with just:
 
 ```bash copy
-npx vercel
+npx vite
 ```
 
-Watch the logs from production:
+Watch the logs from production with:
 
 ```bash copy
 npx reflect tail
@@ -48,12 +43,12 @@ npx reflect tail
 
 ## Quick Code Tour
 
-`reflect/index.ts` is the entry point for the Reflect server. Reflect works by running **your code** on the server.
+`src/reflect/index.ts` is the entry point for the Reflect server. Reflect works by running **your code** on the server.
 
-`reflect/client-state.ts` defines the synced data model. This example uses the Reflect API directly, but we advise most applications to use [Rails](https://github.com/rocicorp/rails), which generates handy CRUD functions.
+`src/reflect/client-state.ts` defines the synced data model. This example uses the Reflect API directly, but we advise most applications to use [Rails](https://github.com/rocicorp/rails), which generates handy CRUD functions.
 
-`reflect/mutators.ts` defines the _mutators_. Mutators are how data is changed in Reflect. A mutator runs immediately (optimistically) on the client, and then later on the server as part of sync. Mutators are atomic – they have access to the entire synced data model and can make arbitrary changes to it, which are guaranteed to run completely or not at all. Mutators do not need to be pure – they can do something different on client than server. For example, you can enforce permissions and validation on the server, just like a classic web application would. If the server computes a different results than a client, the client will snap into agreement with the server.
+`src/reflect/mutators.ts` defines the _mutators_. Mutators are how data is changed in Reflect. A mutator runs immediately (optimistically) on the client, and then later on the server as part of sync. Mutators are atomic – they have access to the entire synced data model and can make arbitrary changes to it, which are guaranteed to run completely or not at all. Mutators do not need to be pure – they can do something different on client than server. For example, you can enforce permissions and validation on the server, just like a classic web application would. If the server computes a different results than a client, the client will snap into agreement with the server.
 
-`subscriptions.ts` defines the _subscriptions_. As in other modern data systems, you render Reflect apps reactively. These subscriptions fire when synced data is changed either locally or by other collaborators.
+`src/subscriptions.ts` defines the _subscriptions_. As in other modern data systems, you render Reflect apps reactively. These subscriptions fire when synced data is changed either locally or by other collaborators.
 
 For more information about Reflect's design and its benefits please see [this recent talk](https://www.youtube.com/live/7Bb0KRLL8FI?si=O_tO27zgpoxPIrHW&t=1830) or the [associated slides](https://pitch.com/public/a49fccb0-da65-4d64-966e-e519674d951f).

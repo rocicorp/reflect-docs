@@ -52,7 +52,7 @@ npx vercel
 Here are the key files in this starter app.
 
 - `src/reflect/index.ts` is the entry point for the Reflect server. This is where the mutators are registered and where authentication can be optionally implemented.
-- `src/reflect/client-state.ts` defines the synced data model. This example uses the Reflect API directly, but we advise most applications to use [Rails](https://github.com/rocicorp/rails), which generates handy CRUD functions.
+- `src/reflect/client-state.ts` defines the synced data model. This example uses [Rails](https://github.com/rocicorp/rails) to generates handy CRUD functions.
 - `src/reflect/mutators.ts` defines the _mutators_. Mutators are how data is changed in Reflect. A mutator runs immediately (optimistically) on the client, and then later on the server as part of sync.
 - `src/subscriptions.ts` defines the _subscriptions_. Reflect apps are rendered reactively. These subscriptions fire when synced data is changed either locally or by other collaborators.
 

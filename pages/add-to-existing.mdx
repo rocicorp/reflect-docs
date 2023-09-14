@@ -47,8 +47,7 @@ import { useSubscribe } from "replicache-react";
 
 const count = useSubscribe(
   r,
-  // blech, the dx here will get nicer soon.
-  async (tx) => ((await tx.get("count")) ?? 0) as number,
+  async (tx) => (await tx.get<number>("count")) ?? 0,
   0
 );
 ```

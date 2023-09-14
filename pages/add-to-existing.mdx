@@ -81,3 +81,5 @@ Deploy the UI. You can use any hosting provider, we'll use Vercel here:
 ```bash copy
 npx vercel
 ```
+
+Note that you will have to change the `socketOrigin` in the `Reflect` constructor to point to your remote Reflect server (i.e., `wss://my-app.my-user.reflect-server.net`).

@@ -1,0 +1,103 @@
+import { Callout } from "nextra/components";
+
+# Mutators
+
+Mutators are how you make changes to data in Reflect. A mutator is a JavaScript function with a special signature:
+
+```ts
+import { WriteTransaction } from "@rocicorp/reflect";
+
+async function myMutator(tx: WriteTransaction, arg: JSONValue) {
+  // ...
+}
+```
+
+By convention, mutators are defined in a file called `mutators.ts`. Here's an example containing two mutators:
+
+```ts filename="mutators.ts"
+export const mutators = {
+  setHighScore,
+  appendTodo,
+};
+
+async function setHighScore(tx: WriteTransaction, score: number) {
+  const prev = (await tx.get<number>("highScore")) ?? 0;
+  const next = Math.max(prev, score);
+  await tx.put("highScore", score);
+}
+
+async function appendTodo(tx: WriteTransaction, item: string) {
+  const prev = (await tx.get<string[]>("todos")) ?? [];
+  const next = [].concat(...prev, item);
+  await tx.put(key, next);
+}
+```
+
+The `tx` parameter provides access to the room data. The `arg` parameter is any JSON-compatible value, and is data passed to the mutator by the application.
+
+<Callout type="info">
+  Mutators are fast. Despite being `async`, mutators almost always complete
+  synchronously, triggering UI updates in the same frame. Mutators are `async`
+  because when client-side persistence is enabled, they can ocassionally take
+  longer than one frame. But even then, mutations should be fast enough that
+  progress UI is not needed.
+</Callout>
+
+## Registering Mutators
+
+To tell Reflect about your mutators, pass them to the client:
+
+```ts
+import { mutators } from "./mutators";
+
+const r = new Reflect({
+  roomID: "myRoom",
+  mutators,
+});
+```
+
+You can then invoke them like so:
+
+```ts
+r.mutate.setHighScore(4200);
+```
+
+Mutators are typesafe. You will get compile errors if you try and pass data incompatible with their declared arguments.
+
+## Server-Side Registration
+
+You must also make your mutators available to the server. To do this, register them in the server entrypoint, which is conventionally `/reflect/index.ts`:
+
+```ts filename="/reflect/index.ts"
+import { mutators } from "../src/mutators";
+
+export default function makeOptions() {
+  return {
+    mutators,
+  };
+}
+```
+
+## How Mutators Work
+
+The key idea in Reflect is that mutators actually run twice:
+
+1. When the application calls a mutator, it runs immediately and updates the UI without waiting for a response from the server. We call these mutations _optimistic_.
+1. A few moments later, during sync, the mutator runs again on the server against the _server's_ latest state. We call these mutations _authoritative_. They record the final result for a mutation that all clients will see.
+
+<Callout type="info">
+  The authoritative mutation can compute a different result than the optimistic
+  mutation. This is a feature. The server might have newer or different
+  information than the client. Reflect automatically rolls back optimistic
+  results on the clients, and replaces them with authoritative results as soon
+  as they are known.
+</Callout>
+
+By re-running mutators on the server, we provide the application the ability to
+run any custom validation, authorization, merge, or other business logic it wants as part of sync.
+
+This is far more flexible than typical multiplayer systems,
+which expose only a few built-in datatypes and operations with no way to
+extend or customize them.
+
+For more information on the benefits of this model, see [Server Authority](./server-authority).

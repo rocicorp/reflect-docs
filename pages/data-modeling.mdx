@@ -1,15 +1,12 @@
 # Data Modeling
 
-Reflect is a key/value store. Keys are strings and values are any JSON-compatible value.
-
-Values can be up to 128KB in length, but ~1KB is best for performance. Each room can store up to 50MB of data. Writes are automatically persisted continuously.
-
-Use the [Rails helper library](https://www.npmjs.com/package/@rocicorp/rails) to generate typesafe storage functions. For example to generate a `Todo` entity and common functions:
+Use the [Rails helper library](https://www.npmjs.com/package/@rocicorp/rails) to generate handy typesafe storage functions for your data model. For example to generate functions for a `Todo` entity:
 
 ```ts
 import { generate } from "@rocicorp/rails";
 
 // Define an entity.
+// Must contain id:string.
 type Todo = {
   id: string;
   text: string;
@@ -26,6 +23,8 @@ export const {
   list: listTodos,
 } = generate<Todo>("todo");
 ```
+
+## Using Generated Functions
 
 The generated functions can be used directly as simple mutators and subscriptions:
 
@@ -46,6 +45,44 @@ r.mutate.putTodo({
 r.subscribe(listTodos, ...);
 ```
 
-See the [library's README](https://github.com/rocicorp/rails) for more information.
+But they can also be composed to create more interesting things:
+
+```ts
+async function getTodosByCategory(tx: ReadTransaction, category: string) {
+  const todos = await listTodos(tx);
+  return todos.filter((t) => t.category === category);
+}
+
+async function setCategoryStatus(
+  tx: WriteTransaction,
+  arg: { category: string; status: string }
+) {
+  const { category, status } = arg;
+  const todos = await getTodosByCategory(tx, category);
+  for (const prev of todos) {
+    const next = {
+      ...prev,
+      status,
+    };
+    await putTodo(next);
+  }
+}
+
+// ...
+
+const r = new Reflect({
+  mutators: {
+    setCategoryStatus,
+  },
+});
+
+// ...
+
+const todos = useSubscribe(r, getTodosByCategory);
+```
+
+## Learn More
+
+See the [Rails README](https://github.com/rocicorp/rails) for more information.
 
 <div className="showFooter"></div>

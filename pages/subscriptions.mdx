@@ -1,0 +1,51 @@
+import { Callout } from "nextra/components";
+
+# Subscriptions
+
+Use the `subscribe` method of Reflect to watch for changes to data in the room:
+
+```ts
+r.subscribe(
+  (tx) => tx.get("counter"),
+  (value) => {
+    myElm.textContent = value;
+  }
+);
+```
+
+## Queries
+
+The function that is passed to `subscribe` is called a _query_. Queries can do multiple reads from Reflect and return any JSON-compatible value.
+
+For example to subscribe to all incomplete todos:
+
+```ts
+r.subscribe(
+  async (tx) => {
+    const todos = await tx.scan({ prefix: `/todo/` }).toArray();
+    return todos.filter((t) => !t.complete);
+  },
+  (todos) => {
+    // render todos
+  }
+);
+```
+
+<Callout type="info">
+  Subscriptions are fast. Queries are only re-run when data they depend on
+  changes. And the subscription doesn't fire its callback unless the value
+  returned from the query changes, reducing re-renders.
+</Callout>
+
+## React
+
+In React, you can also use the `useSubscribe` hook from [`replicache-react`](https://www.npmjs.com/package/replicache-react):
+
+```ts
+import { useSubscribe } from "replicache-react";
+
+const numTodos = useSubscribe(async (tx) => {
+  const todos = await tx.scan({ prefix: "/todo/" }).keys().toArray();
+  return todos.length;
+});
+```

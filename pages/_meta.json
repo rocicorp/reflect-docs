@@ -15,25 +15,30 @@
   "examples": {
     "title": "Examples"
   },
-  "-- Understand Reflect": {
-    "type": "separator",
-    "title": "Understand Reflect"
-  },
-  "server-authority": {
-    "title": "Server Authority"
-  },
   "status": {
     "title": "Project Status"
   },
-  "-- How To": {
+  "-- Learn Reflect": {
     "type": "separator",
-    "title": "How To"
+    "title": "Learn Reflect"
+  },
+  "rooms": {
+    "title": "Rooms"
+  },
+  "mutators": {
+    "title": "Mutators"
+  },
+  "subscriptions": {
+    "title": "Subscriptions"
+  },
+  "data-modeling": {
+    "title": "Data Modeling"
   },
   "authentication": {
     "title": "Authentication"
   },
-  "data-modeling": {
-    "title": "Data Modeling"
+  "server-authority": {
+    "title": "Server Authority"
   },
   "-- Contact Us": {
     "type": "separator",

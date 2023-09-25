@@ -1,0 +1,24 @@
+# Rooms
+
+In Reflect, data is stored in _rooms_.
+
+Rooms are also the unit of collaboration. Every user connected to the same room sees the same data, and changes made by one user are replicated to everyone else in the room instantly.
+
+Specify a room using the `roomID` constructor parameter. If the room doesn't exist yet, it is created automatically.
+
+```ts
+const r = new Reflect({
+  roomID: "myRoom",
+  // ...
+});
+```
+
+## Data model
+
+Each room stores a set of key/value pairs. The keys are strings, and the values are any JSON-compatible value.
+
+The maximum size of a value is 128 KB, but Reflect currently works best for values smaller than 1KB. The maximum total data supported per room is 50MB.
+
+## Clients
+
+Each instance of the `Reflect` class is called a _client_. Multiple clients can exist on a page at the same time. Clients also can run in workers, service workers, or other JavaScript contexts.

@@ -1,29 +1,74 @@
-import Link from 'next/link';
+import Link from "next/link";
+import FeaturedCard from "../components/featuredCard";
+import { Cards, Card } from "nextra/components";
+import { Examples } from "../components/icons/examples";
+import { HowTo } from "../components/icons/howto";
+import { QuickStarts } from "../components/icons/quickstarts";
+import { Tutorial } from "../components/icons/tutorial";
 
 # Examples
 
 ## Replidraw
 
 <Link href="https://replidraw-do.vercel.app/">
-    <video autoPlay loop muted playsInline>
+  <video autoPlay loop muted playsInline>
     <source src="/videos/replidraw-example.mp4" type="video/mp4" />
     Your browser does not support the video tag.
-    </video>
+  </video>
 </Link>
 
-Try it: https://replidraw-do.vercel.app/
-
-Repo: https://github.com/rocicorp/replidraw-do
+<Cards>
+  <Card
+    icon={<Tutorial />}
+    title="Live demo"
+    href="https://replidraw-do.vercel.app/"
+  />
+  <Card
+    icon={<HowTo />}
+    title="Source code"
+    href="https://github.com/rocicorp/replidraw-do"
+  />
+</Cards>
 
 ## Todo
 
 <Link href="https://reflect-todo.vercel.app/">
-    <video autoPlay loop muted playsInline>
+  <video autoPlay loop muted playsInline>
     <source src="/videos/todo-example.mp4" type="video/mp4" />
     Your browser does not support the video tag.
-    </video>
+  </video>
 </Link>
 
-Try it: https://reflect-todo.vercel.app/
+<Cards>
+  <Card
+    icon={<Tutorial />}
+    title="Live demo"
+    href="https://reflect-todo.vercel.app/"
+  />
+  <Card
+    icon={<HowTo />}
+    title="Source code"
+    href="https://github.com/rocicorp/reflect-todo"
+  />
+</Cards>
 
-Repo: https://github.com/rocicorp/reflect-todo
+## Next Steps
+
+<Cards>
+  <Card
+    icon={<QuickStarts />}
+    title="Scaffold new Reflect app"
+    href="/scaffold"
+  />
+  <Card
+    icon={<Tutorial />}
+    title="Add Reflect to existing project"
+    href="/add-to-existing"
+  />
+  <Card icon={<HowTo />} title="Learn to use Reflect" href="/rooms" />
+  <Card
+    icon={<HowTo />}
+    title="Understand Reflect's design"
+    href="/server-authority"
+  />
+</Cards>

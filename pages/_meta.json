@@ -7,13 +7,22 @@
     "display": "hidden"
   },
   "scaffold": {
-    "title": "Scaffold New Project"
+    "title": "Scaffold New Project",
+    "theme": {
+      "pagination": false
+    }
   },
   "add-to-existing": {
-    "title": "Add to Existing Project"
+    "title": "Add to Existing Project",
+    "theme": {
+      "pagination": false
+    }
   },
   "examples": {
-    "title": "Examples"
+    "title": "Examples",
+    "theme": {
+      "pagination": false
+    }
   },
   "status": {
     "title": "Project Status"

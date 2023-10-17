@@ -16,17 +16,16 @@ Reflect works with just about any client-side web framework like React, Svelte, 
   [reflect-starter-vanilla](https://github.com/rocicorp/reflect-starter-vanilla).
 </Callout>
 
-## Install and Setup
+## Setup
 
-### Setup
-
-Setup a boilerplate vite project for your framework of choice:
+For this tutorial, we'll use Vite to create a new app. When it asks, choose whatever framework you like.
 
 ```bash copy
 npm create vite
 ```
 
-### Install
+## Install Reflect
+
 Run the following command in your project directory:
 
 ```bash copy
@@ -49,13 +48,13 @@ The generated `reflect.config.json` file looks like:
 
 ```json
 {
-  "server": "./reflect/index.ts"
+  "server": "reflect/index.ts"
 }
 ```
 
-This tells `reflect dev` and `reflect publish` where the entrypoint to your Reflect server is. The convention is to put your server in `/reflect`, but that's optional.
+This tells `reflect dev` and `reflect publish` where the entrypoint to your Reflect server is. The convention is to put your server in the `/reflect` directory, but that's optional.
 
-`reflect.config.json` should be checked into source control as it contains shared information about the project necessary for the Reflect CLI to work.
+`reflect.config.json` should be checked into source control, as it contains shared information about the project necessary for the Reflect CLI to work.
 
 ### `/reflect`
 
@@ -75,9 +74,9 @@ function makeOptions(): ReflectServerOptions<M> {
 
 See [authentication](/authentication) and [mutators](/mutators) to learn more about these options.
 
-## Use Reflect
+## Instantiate Reflect
 
-Somewhere in the client-side of your app, instantiate Reflect:
+Somewhere in the client-side of your app, create an instance of Reflect:
 
 ```ts copy
 import { Reflect } from "@rocicorp/reflect/client";
@@ -92,10 +91,13 @@ const r = new Reflect({
 ```
 
 <Callout type="info">
-  Reflect does not build or run on servers because it depends on DOM APIs. In
-  Next.js, you can use Reflect in the browser by wrapping it in a `useEffect`
-  hook.
+  Reflect does not build or run on servers because it depends on DOM APIs. If
+  you use a full-stack framework, you'll need to ensure Reflect only runs
+  client-side. For example, in Next.js, this can be accomplished by loading
+  Reflect in a `useEffect` hook.
 </Callout>
+
+## Change Data with Mutators
 
 The `/reflect` directory contains a sample `increment` mutator. Call it from some event handler:
 
@@ -105,23 +107,11 @@ const onClick = () => {
 };
 ```
 
+## Render UI with Subscriptions
+
 Use `r.subscribe` or (`useSubscribe` if using React) to monitor Reflect data:
 
-<Callout>
-Don't see your framework of choice? [Let us know](https://discord.reflect.net/) what we should add next.
-</Callout>
-
-<Tabs items={['vanilla', 'React',  'Solid', 'Vue', 'Svelte']}>
-  <Tabs.Tab>
-    ```js copy
-    r.subscribe(
-      (tx) => tx.get("count"),
-      (value) => {
-        myElm.textContent = value ?? 0;
-      }
-    );
-    ````
-  </Tabs.Tab>
+<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']}>
   <Tabs.Tab>
     ```ts copy
     import { useSubscribe } from "@rocicorp/reflect/react";
@@ -132,6 +122,7 @@ Don't see your framework of choice? [Let us know](https://discord.reflect.net/) 
       0
     );
     ```
+
   </Tabs.Tab>
   <Tabs.Tab>
     ```ts copy
@@ -146,6 +137,7 @@ Don't see your framework of choice? [Let us know](https://discord.reflect.net/) 
       }
     );
     ```
+
   </Tabs.Tab>
   <Tabs.Tab>
       ```ts copy
@@ -160,6 +152,7 @@ Don't see your framework of choice? [Let us know](https://discord.reflect.net/) 
         },
       );
     ```
+
   </Tabs.Tab>
   <Tabs.Tab>
     ```ts copy
@@ -172,10 +165,24 @@ Don't see your framework of choice? [Let us know](https://discord.reflect.net/) 
       }
     );
     ```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```js copy
+    r.subscribe(
+      (tx) => tx.get("count"),
+      (value) => {
+        myElm.textContent = value ?? 0;
+      }
+    );
+    ````
   </Tabs.Tab>
 </Tabs>
 
-
+<Callout>
+  Don't see your framework of choice? [Let us
+  know](https://discord.reflect.net/) what we should add next.
+</Callout>
 
 See [Data Modeling](./data-modeling) for more complex data storage needs.
 

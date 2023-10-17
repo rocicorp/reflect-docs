@@ -1,3 +1,4 @@
+import { Callout } from "nextra/components";
 import FeaturedCard from "../components/featuredCard";
 import { Cards, Card } from "nextra/components";
 import { Examples } from "../components/icons/examples";
@@ -6,7 +7,12 @@ import { Tutorial } from "../components/icons/tutorial";
 
 # Scaffold a New Reflect Project
 
-Follow these instructions to create a simple Reflect starter app based on Vite and React. It takes about 60 seconds (depending on how peppy npm is feeling today).
+Follow these instructions to create a simple Reflect starter app based on Vite and React. It takes about 15 seconds (depending on how peppy npm is feeling today).
+
+<Callout>
+  Not a React fan? See [Add to Existing Project](/add-to-existing) for other
+  frameworks.
+</Callout>
 
 ## Install
 
@@ -44,7 +50,7 @@ npx vite
 Watch the logs from production with:
 
 ```bash copy
-npx reflect tail
+npx reflect tail --room-id='my-room'
 ```
 
 You can host the app UI just about anywhere since it's just static JS. For example, to use Vercel:

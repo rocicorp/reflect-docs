@@ -4,10 +4,11 @@ import { Cards, Card } from "nextra/components";
 import { Examples } from "../components/icons/examples";
 import { HowTo } from "../components/icons/howto";
 import { Tutorial } from "../components/icons/tutorial";
+import { Tabs } from "nextra/components";
 
 # Add Reflect to an Existing Project
 
-Reflect works with just about any client-side web framework like React, Svelte, Solid or Vue. Follow these steps to add Reflect to an existing project.
+Reflect works with just about any client-side web framework like React, Svelte, Solid or Vue. These steps show how to add Reflect to a few popular frameworks, but you should be able to adapt them to others.
 
 <Callout type="warning">
   These instructions currently only work for TypeScript-based projects. For
@@ -15,8 +16,17 @@ Reflect works with just about any client-side web framework like React, Svelte, 
   [reflect-starter-vanilla](https://github.com/rocicorp/reflect-starter-vanilla).
 </Callout>
 
-## Install
+## Install and Setup
 
+### Setup
+
+Setup a boilerplate vite project for your framework of choice:
+
+```bash copy
+npm create vite
+```
+
+### Install
 Run the following command in your project directory:
 
 ```bash copy
@@ -95,17 +105,77 @@ const onClick = () => {
 };
 ```
 
-Use `useSubscribe` (or `r.subscribe` outside of React) to monitor Reflect data:
+Use `r.subscribe` or (`useSubscribe` if using React) to monitor Reflect data:
 
-```ts copy
-import { useSubscribe } from "@rocicorp/reflect/react";
+<Callout>
+Don't see your framework of choice? [Let us know](https://discord.reflect.net/) what we should add next.
+</Callout>
 
-const count = useSubscribe(
-  r,
-  async (tx) => (await tx.get<number>("count")) ?? 0,
-  0
-);
-```
+<Tabs items={['vanilla', 'React',  'Solid', 'Vue', 'Svelte']}>
+  <Tabs.Tab>
+    ```js copy
+    r.subscribe(
+      (tx) => tx.get("count"),
+      (value) => {
+        myElm.textContent = value ?? 0;
+      }
+    );
+    ````
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```ts copy
+    import { useSubscribe } from "@rocicorp/reflect/react";
+
+    const count = useSubscribe(
+      r,
+      async (tx) => (await tx.get<number>("count")) ?? 0,
+      0
+    );
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```ts copy
+    import { createSignal } from "solid-js";
+
+    const [count, setCount] = createSignal(0);
+
+    r.subscribe(
+      (tx) => tx.get("count"),
+      (data) => {
+        setCount((data ?? 0) as number);
+      }
+    );
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+      ```ts copy
+      import { ref } from 'vue'
+
+      const count = ref(0)
+
+      r.subscribe(
+        (tx) => tx.get("count"),
+        (data) => {
+          count.value = (data ?? 0) as number;
+        },
+      );
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```ts copy
+    let count: number = 0
+
+    r.subscribe(
+      (tx) => tx.get("count"),
+      (data) => {
+          count = (data ?? 0) as number;
+      }
+    );
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+
 
 See [Data Modeling](./data-modeling) for more complex data storage needs.
 

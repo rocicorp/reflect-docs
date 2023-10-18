@@ -407,7 +407,7 @@ Use `r.subscribe` or (`useSubscribe` if using React) to monitor Reflect data:
 
     r.subscribe(
       (tx) => tx.get("count"),
-      (count) => (element.innerText = (count ?? 0).toString())
+      (count) => (element.textContent = (count ?? 0).toString())
     );
   }
   ```

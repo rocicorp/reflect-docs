@@ -55,7 +55,7 @@ async function getTodosByCategory(tx: ReadTransaction, category: string) {
 
 async function setCategoryStatus(
   tx: WriteTransaction,
-  arg: { category: string; status: string }
+  arg: { category: string; status: string },
 ) {
   const { category, status } = arg;
   const todos = await getTodosByCategory(tx, category);

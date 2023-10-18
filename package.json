@@ -2,10 +2,13 @@
   "name": "nextra-docs-template",
   "version": "0.0.1",
   "description": "Nextra docs template",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "format": "prettier --write *",
+    "check-format": "prettier --check *"
   },
   "repository": {
     "type": "git",
@@ -31,6 +34,7 @@
   "devDependencies": {
     "@types/gtag.js": "^0.0.13",
     "@types/node": "18.11.10",
+    "prettier": "^3.0.3",
     "typescript": "^4.9.3"
   }
 }

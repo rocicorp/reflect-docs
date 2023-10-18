@@ -83,7 +83,7 @@ In the main entrypoint of the client-side of your app, create an instance of Ref
     ```ts copy
     // add to ./src/main.tsx
     import { Reflect } from "@rocicorp/reflect/client";
-    import { mutators } from "../reflect/mutators.ts";
+    import { mutators } from "../reflect/mutators.js";
 
     export const r = new Reflect({
       userID: "someUser",
@@ -98,7 +98,7 @@ In the main entrypoint of the client-side of your app, create an instance of Ref
     ```ts copy
     // add to ./src/index.tsx
     import { Reflect } from "@rocicorp/reflect/client";
-    import { mutators } from "../reflect/mutators.ts";
+    import { mutators } from "../reflect/mutators.js";
 
     export const r = new Reflect({
       userID: "someUser",
@@ -113,7 +113,7 @@ In the main entrypoint of the client-side of your app, create an instance of Ref
     ```ts copy
     // add to ./src/main.ts
     import { Reflect } from "@rocicorp/reflect/client";
-    import { mutators } from "../reflect/mutators.ts";
+    import { mutators } from "../reflect/mutators.js";
 
     export const r = new Reflect({
       userID: "someUser",
@@ -128,7 +128,7 @@ In the main entrypoint of the client-side of your app, create an instance of Ref
     ```ts copy
     // add to ./src/main.ts
     import { Reflect } from "@rocicorp/reflect/client";
-    import { mutators } from "../reflect/mutators.ts";
+    import { mutators } from "../reflect/mutators.js";
 
     export const r = new Reflect({
       userID: "someUser",
@@ -140,10 +140,10 @@ In the main entrypoint of the client-side of your app, create an instance of Ref
 
   </Tabs.Tab>
   <Tabs.Tab>
-  ```ts copy
+  ```js copy
   // add to ./src/main.ts
   import { Reflect } from "@rocicorp/reflect/client";
-  import { mutators } from "../reflect/mutators.ts";
+  import { mutators } from "../reflect/mutators.js";
 
 export const r = new Reflect({
   userID: "someUser",
@@ -174,7 +174,7 @@ The `/reflect` directory contains a sample `increment` mutator. Call it from you
 <Tabs.Tab>
   ```tsx copy {2,6-8,12}
   //./src/App.tsx
-  import {r} from "./main.tsx";
+  import {r} from "./main.jsx";
 
   function App() {
 
@@ -195,7 +195,7 @@ The `/reflect` directory contains a sample `increment` mutator. Call it from you
   ```tsx copy {3,8-10, 14}
   //./src/App.tsx
   import { createSignal } from "solid-js";
-  import { r } from "./index.tsx";
+  import { r } from "./index.jsx";
 
   function App() {
     const [count, setCount] = createSignal(0);
@@ -254,7 +254,7 @@ The `/reflect` directory contains a sample `increment` mutator. Call it from you
 <Tabs.Tab>
 ```ts copy {2,4-6,9}
 //./src/counter.ts
-import {r} from './main.ts'
+import {r} from './main.js'
 
 const onClick = () => {
   r.mutate.increment({ key: "count", delta: 1 });
@@ -277,7 +277,7 @@ Use `r.subscribe` or (`useSubscribe` if using React) to monitor Reflect data:
   <Tabs.Tab>
   ```tsx copy {2-3, 11-15, 20}
   // ./src/App.tsx
-  import {r} from "./main.tsx";
+  import {r} from "./main.jsx";
   import { useSubscribe } from "@rocicorp/reflect/react";
   
   function App() {
@@ -308,7 +308,7 @@ Use `r.subscribe` or (`useSubscribe` if using React) to monitor Reflect data:
   ```tsx copy {3, 13-18, 23}
   // ./src/App.tsx
   import { createSignal } from "solid-js";
-  import { r } from "./index.tsx";
+  import { r } from "./index.jsx";
 
   function App() {
     const [count, setCount] = createSignal(0);
@@ -396,7 +396,7 @@ Use `r.subscribe` or (`useSubscribe` if using React) to monitor Reflect data:
 <Tabs.Tab>
   ```js copy {2, 11-14}
   // ./src/counter.ts
-  import {r} from './main.ts'
+  import {r} from './main.js'
 
   const onClick = () => {
     r.mutate.increment({ key: "count", delta: 1 });

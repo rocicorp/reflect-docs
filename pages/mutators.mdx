@@ -23,13 +23,13 @@ export const mutators = {
 async function setHighScore(tx: WriteTransaction, score: number) {
   const prev = (await tx.get<number>("highScore")) ?? 0;
   const next = Math.max(prev, score);
-  await tx.put("highScore", score);
+  await tx.set("highScore", score);
 }
 
 async function appendTodo(tx: WriteTransaction, item: string) {
   const prev = (await tx.get<string[]>("todos")) ?? [];
-  const next = [].concat(...prev, item);
-  await tx.put(key, next);
+  const next = [...prev, item];
+  await tx.set(key, next);
 }
 ```
 

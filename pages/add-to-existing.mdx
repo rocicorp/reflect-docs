@@ -78,7 +78,7 @@ See [authentication](/authentication) and [mutators](/mutators) to learn more ab
 
 In the main entrypoint of the client-side of your app, create an instance of Reflect:
 
-<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']}>
+<Tabs id="entry" items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']} storageKey="tabs_existing">
   <Tabs.Tab>
     ```ts copy
     // add to ./src/main.tsx
@@ -170,7 +170,7 @@ Reflect in a `useEffect` hook.
 ## Change Data with Mutators
 The `/reflect` directory contains a sample `increment` mutator. Call it from your button click event handler:
 
-<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']}>
+<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']} storageKey="tabs_existing">
 <Tabs.Tab>
   ```tsx copy {2,6-8,12}
   //./src/App.tsx
@@ -273,7 +273,7 @@ export function setupCounter(element: HTMLButtonElement) {
 
 Use `r.subscribe` or (`useSubscribe` if using React) to monitor Reflect data:
 
-<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']}>
+<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']} storageKey="tabs_existing">
   <Tabs.Tab>
   ```tsx copy {2-3, 11-15, 20}
   // ./src/App.tsx

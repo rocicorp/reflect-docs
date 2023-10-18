@@ -52,7 +52,7 @@ type MyAuthData = AuthData & { access: "read" | "write" };
 
 async function detailedAuthHandler(
   auth: string,
-  roomID: string
+  roomID: string,
 ): Promise<MyAuthData> {
   const response = await fetch(`/reflect-auth?auth=${auth}&roomID=${roomID}`);
   return (await response.json()) as MyAuthData;

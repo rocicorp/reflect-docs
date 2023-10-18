@@ -76,19 +76,85 @@ See [authentication](/authentication) and [mutators](/mutators) to learn more ab
 
 ## Instantiate Reflect
 
-Somewhere in the client-side of your app, create an instance of Reflect:
+In the main entrypoint of the client-side of your app, create an instance of Reflect:
 
-```ts copy
-import { Reflect } from "@rocicorp/reflect/client";
-import { mutators } from "../reflect/mutators.ts";
 
-const r = new Reflect({
-  userID: "someUser",
-  roomID: "myRoom",
-  server: "http://localhost:8080",
-  mutators,
-});
-```
+<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']}>
+  <Tabs.Tab>
+    ```ts copy
+    // add to ./src/main.tsx
+    import { Reflect } from "@rocicorp/reflect/client";
+    import { mutators } from "../reflect/mutators.ts";
+
+    export const r = new Reflect({
+      userID: "someUser",
+      roomID: "myRoom",
+      server: "http://localhost:8080",
+      mutators,
+    });
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```ts copy
+    // add to ./src/index.tsx
+    import { Reflect } from "@rocicorp/reflect/client";
+    import { mutators } from "../reflect/mutators.ts";
+
+    export const r = new Reflect({
+      userID: "someUser",
+      roomID: "myRoom",
+      server: "http://localhost:8080",
+      mutators,
+    });
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```ts copy
+    // add to ./src/main.ts
+    import { Reflect } from "@rocicorp/reflect/client";
+    import { mutators } from "../reflect/mutators.ts";
+
+    export const r = new Reflect({
+      userID: "someUser",
+      roomID: "myRoom",
+      server: "http://localhost:8080",
+      mutators,
+    });
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```ts copy
+    // add to ./src/main.ts
+    import { Reflect } from "@rocicorp/reflect/client";
+    import { mutators } from "../reflect/mutators.ts";
+
+    export const r = new Reflect({
+      userID: "someUser",
+      roomID: "myRoom",
+      server: "http://localhost:8080",
+      mutators,
+    });
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```ts copy
+  // add to ./src/main.ts
+  import { Reflect } from "@rocicorp/reflect/client";
+  import { mutators } from "../reflect/mutators.ts";
+
+  export const r = new Reflect({
+    userID: "someUser",
+    roomID: "myRoom",
+    server: "http://localhost:8080",
+    mutators,
+  });
+  ```
+  </Tabs.Tab>
+</Tabs>
+
+<Callout>
+Don't see your framework of choice? [Let us know](https://discord.reflect.net/) what we should add next.
+</Callout>
 
 <Callout type="info">
   Reflect does not build or run on servers because it depends on DOM APIs. If
@@ -98,14 +164,105 @@ const r = new Reflect({
 </Callout>
 
 ## Change Data with Mutators
+The `/reflect` directory contains a sample `increment` mutator. Call it from your button click event handler:
 
-The `/reflect` directory contains a sample `increment` mutator. Call it from some event handler:
+<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']}>
+  <Tabs.Tab>
+    ```tsx copy {2,6-8,12}
+    //./src/App.tsx
+    import {r} from "./main.tsx";
+    
+    function App() {
 
-```ts copy
-const onClick = () => {
-  r.mutate.increment({ key: "count", delta: 1 });
-};
-```
+      const onClick = () => {
+        r.mutate.increment({ key: "count", delta: 1 });
+      };
+
+      return (
+      //...
+        <button onClick={onClick}></button>
+      //...
+      )
+    }
+
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```tsx copy {3,8-10, 14}
+    //./src/App.tsx
+    import { createSignal } from "solid-js";
+    import { r } from "./index.tsx";
+
+    function App() {
+      const [count, setCount] = createSignal(0);
+
+      const onClick = () => {
+        r.mutate.increment({ key: "count", delta: 1 });
+      };
+
+      return (
+        //...
+          <button onClick={onClick}>count is </button>
+        //...
+      )
+    }
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```vue copy {4,9-11,16}
+    <!-- ./src/components/HelloWorld.vue -->
+    <script setup lang="ts">
+    import { ref } from 'vue'
+    import { r } from '../main'
+    defineProps<{ msg: string }>()
+
+    const count = ref(0)
+
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
+    </script>
+
+    <template>
+        <!-- .... -->
+        <button type="button" @click="onClick">count is {{ count }}</button>
+        <!-- .... -->
+    </template>
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```svelte copy {3,7-9,11}
+    <!-- ./src/lib/Counter.svelte -->
+    <script lang="ts">
+    import {r} from '../main'
+
+    let count: number = 0
+    
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
+    </script>
+    <button on:click={onClick}>
+      count is {count}
+    </button>
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```ts copy {2,4-6,9}
+  //./src/counter.ts
+  import {r} from './main.ts'
+
+  const onClick = () => {
+    r.mutate.increment({ key: "count", delta: 1 });
+  };
+
+  export function setupCounter(element: HTMLButtonElement) {
+    element.addEventListener('click', onClick);
+  }
+
+  ```
+  </Tabs.Tab>
+</Tabs>
 
 ## Render UI with Subscriptions
 
@@ -113,76 +270,142 @@ Use `r.subscribe` or (`useSubscribe` if using React) to monitor Reflect data:
 
 <Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']}>
   <Tabs.Tab>
-    ```ts copy
-    import { useSubscribe } from "@rocicorp/reflect/react";
+  ```tsx copy {2-3, 11-15, 20}
+  // ./src/App.tsx
+  import {r} from "./main.tsx";
+  import { useSubscribe } from "@rocicorp/reflect/react";
+  
+  function App() {
+
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
 
     const count = useSubscribe(
       r,
       async (tx) => (await tx.get<number>("count")) ?? 0,
       0
     );
-    ```
 
+    return (
+    //...
+      <button onClick={onClick}>
+        count is {count}
+      </button>
+    //...
+    )
+  }
+  ```
   </Tabs.Tab>
   <Tabs.Tab>
-    ```ts copy
+    ```tsx copy {3, 13-18, 23}
+    // ./src/App.tsx
     import { createSignal } from "solid-js";
+    import { r } from "./index.tsx";
 
-    const [count, setCount] = createSignal(0);
+    function App() {
+      const [count, setCount] = createSignal(0);
 
-    r.subscribe(
-      (tx) => tx.get("count"),
-      (data) => {
-        setCount((data ?? 0) as number);
-      }
-    );
-    ```
+      const onClick = () => {
+        r.mutate.increment({ key: "count", delta: 1 });
+      };
 
-  </Tabs.Tab>
-  <Tabs.Tab>
-      ```ts copy
-      import { ref } from 'vue'
-
-      const count = ref(0)
 
       r.subscribe(
         (tx) => tx.get("count"),
         (data) => {
-          count.value = (data ?? 0) as number;
-        },
+          setCount((data ?? 0) as number);
+        }
       );
+
+      return (
+        //...
+          <button onClick={onClick}>
+            count is {count()}
+          </button>
+        //...
+      )
+    }
     ```
 
   </Tabs.Tab>
   <Tabs.Tab>
-    ```ts copy
+    ```vue copy {9-14,23}
+    <!-- ./src/components/HelloWorld.vue -->
+    <script setup lang="ts">
+    import { ref } from 'vue'
+    import { r } from '../main'
+    defineProps<{ msg: string }>()
+
+    const count = ref(0)
+
+    r.subscribe(
+        (tx) => tx.get("count"), 
+        (data) => {
+            count.value = (data ?? 0) as number;
+        },  
+    );
+
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
+    </script>
+
+    <template>
+        <!-- .... -->
+        <button type="button" @click="onClick">count is {{ count }}</button>
+        <!-- .... -->
+    </template>
+    ```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```svelte copy {3,7-12,21}
+    <!-- ./src/lib/Counter.svelte -->
+    <script lang="ts">
+    import {r} from '../main'
+
     let count: number = 0
-
+    
     r.subscribe(
-      (tx) => tx.get("count"),
-      (data) => {
-          count = (data ?? 0) as number;
-      }
-    );
+        (tx) => tx.get("count"),
+        (data) => {
+            count = (data ?? 0) as number;
+        }  
+      );
+
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
+
+    </script>
+
+    <button on:click={onClick}>
+      count is {count}
+    </button>
     ```
 
   </Tabs.Tab>
   <Tabs.Tab>
-    ```js copy
-    r.subscribe(
-      (tx) => tx.get("count"),
-      (value) => {
-        myElm.textContent = value ?? 0;
-      }
-    );
-    ````
+    ```js copy {2, 11-14}
+    // ./src/counter.ts
+    import {r} from './main.ts'
+
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
+
+    export function setupCounter(element: HTMLButtonElement) {
+      element.addEventListener('click', onClick);
+
+      r.subscribe(
+        (tx) => tx.get("count"),
+        (count) => (element.innerText = (count ?? 0).toString())
+      );
+    }
+    ```
   </Tabs.Tab>
 </Tabs>
-
-<Callout>
-  Don't see your framework of choice? [Let us
-  know](https://discord.reflect.net/) what we should add next.
-</Callout>
 
 See [Data Modeling](./data-modeling) for more complex data storage needs.
 

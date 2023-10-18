@@ -1,8 +1,14 @@
 import { Callout } from "nextra/components";
+import FeaturedCard from "../components/featuredCard";
+import { Cards, Card } from "nextra/components";
+import { Examples } from "../components/icons/examples";
+import { HowTo } from "../components/icons/howto";
+import { Tutorial } from "../components/icons/tutorial";
+import { Tabs } from "nextra/components";
 
 # Add Reflect to an Existing Project
 
-Reflect works with just about any client-side web framework like React, Svelte, Solid or Vue. Follow these steps to add Reflect to an existing project.
+Reflect works with just about any client-side web framework like React, Svelte, Solid or Vue. These steps show how to add Reflect to a few popular frameworks, but you should be able to adapt them to others.
 
 <Callout type="warning">
   These instructions currently only work for TypeScript-based projects. For
@@ -10,55 +16,396 @@ Reflect works with just about any client-side web framework like React, Svelte, 
   [reflect-starter-vanilla](https://github.com/rocicorp/reflect-starter-vanilla).
 </Callout>
 
-## Install
+## Setup
+
+For this tutorial, we'll use Vite to create a new app. When it asks, choose whatever framework you like.
+
+```bash copy
+npm create vite
+```
+
+## Install Reflect
+
+Run the following command in your project directory:
 
 ```bash copy
 npx @rocicorp/reflect@latest init
 ```
 
-This adds `@rocicorp/reflect` and creates a sample `/reflect` directory containing a basic Reflect server.
+This does three things:
 
-If using React, also do:
+1. Installs `@rocicorp/reflect`
+2. Generates a `reflect.config.json` file
+3. Generates a minimal Reflect server in the `/reflect` directory
 
-```bash copy
-npm add 'replicache-react'
+Otherwise, it doesn't touch your directory at all and is non-destructive.
+
+## Understand the Generated Code
+
+### `reflect.config.json`
+
+The generated `reflect.config.json` file looks like:
+
+```json
+{
+  "server": "reflect/index.ts"
+}
 ```
 
-## Use Reflect
+This tells `reflect dev` and `reflect publish` where the entrypoint to your Reflect server is. The convention is to put your server in the `/reflect` directory, but that's optional.
 
-Instantiate Reflect:
+`reflect.config.json` should be checked into source control, as it contains shared information about the project necessary for the Reflect CLI to work.
 
-```ts copy
-import { Reflect } from "@rocicorp/reflect/client";
-import { mutators } from "../reflect/mutators.ts";
+### `/reflect`
 
-const r = new Reflect({
-  userID: "someUser",
-  roomID: "myRoom",
-  socketOrigin: "ws://localhost:8080",
-  mutators,
-});
+The generated `/reflect` directory contains a sample Reflect server. This is the part of your project that will run hosted on `reflect.net`.
+
+`/reflect/index.ts` exports a `makeOptions` function which is the entrypoint to your server. It looks something like:
+
+```ts
+function makeOptions(): ReflectServerOptions<M> {
+  return {
+    authHandler,
+    mutators,
+    logLevel: "debug",
+  };
+}
 ```
 
-The `/reflect` directory contains a sample `increment` mutator. Call it from some event handler:
+See [authentication](/authentication) and [mutators](/mutators) to learn more about these options.
 
-```ts copy
-const onClick = () => {
-  r.mutate.increment({ key: "count", delta: 1 });
-};
-```
+## Instantiate Reflect
 
-Use `useSubscribe` (or `r.subscribe` outside of React) to monitor Reflect data:
+In the main entrypoint of the client-side of your app, create an instance of Reflect:
 
-```ts copy
-import { useSubscribe } from "replicache-react";
 
-const count = useSubscribe(
-  r,
-  async (tx) => (await tx.get<number>("count")) ?? 0,
-  0
-);
-```
+<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']}>
+  <Tabs.Tab>
+    ```ts copy
+    // add to ./src/main.tsx
+    import { Reflect } from "@rocicorp/reflect/client";
+    import { mutators } from "../reflect/mutators.ts";
+
+    export const r = new Reflect({
+      userID: "someUser",
+      roomID: "myRoom",
+      server: "http://localhost:8080",
+      mutators,
+    });
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```ts copy
+    // add to ./src/index.tsx
+    import { Reflect } from "@rocicorp/reflect/client";
+    import { mutators } from "../reflect/mutators.ts";
+
+    export const r = new Reflect({
+      userID: "someUser",
+      roomID: "myRoom",
+      server: "http://localhost:8080",
+      mutators,
+    });
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```ts copy
+    // add to ./src/main.ts
+    import { Reflect } from "@rocicorp/reflect/client";
+    import { mutators } from "../reflect/mutators.ts";
+
+    export const r = new Reflect({
+      userID: "someUser",
+      roomID: "myRoom",
+      server: "http://localhost:8080",
+      mutators,
+    });
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```ts copy
+    // add to ./src/main.ts
+    import { Reflect } from "@rocicorp/reflect/client";
+    import { mutators } from "../reflect/mutators.ts";
+
+    export const r = new Reflect({
+      userID: "someUser",
+      roomID: "myRoom",
+      server: "http://localhost:8080",
+      mutators,
+    });
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```ts copy
+  // add to ./src/main.ts
+  import { Reflect } from "@rocicorp/reflect/client";
+  import { mutators } from "../reflect/mutators.ts";
+
+  export const r = new Reflect({
+    userID: "someUser",
+    roomID: "myRoom",
+    server: "http://localhost:8080",
+    mutators,
+  });
+  ```
+  </Tabs.Tab>
+</Tabs>
+
+<Callout>
+Don't see your framework of choice? [Let us know](https://discord.reflect.net/) what we should add next.
+</Callout>
+
+<Callout type="info">
+  Reflect does not build or run on servers because it depends on DOM APIs. If
+  you use a full-stack framework, you'll need to ensure Reflect only runs
+  client-side. For example, in Next.js, this can be accomplished by loading
+  Reflect in a `useEffect` hook.
+</Callout>
+
+## Change Data with Mutators
+The `/reflect` directory contains a sample `increment` mutator. Call it from your button click event handler:
+
+<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']}>
+  <Tabs.Tab>
+    ```tsx copy {2,6-8,12}
+    //./src/App.tsx
+    import {r} from "./main.tsx";
+    
+    function App() {
+
+      const onClick = () => {
+        r.mutate.increment({ key: "count", delta: 1 });
+      };
+
+      return (
+      //...
+        <button onClick={onClick}></button>
+      //...
+      )
+    }
+
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```tsx copy {3,8-10, 14}
+    //./src/App.tsx
+    import { createSignal } from "solid-js";
+    import { r } from "./index.tsx";
+
+    function App() {
+      const [count, setCount] = createSignal(0);
+
+      const onClick = () => {
+        r.mutate.increment({ key: "count", delta: 1 });
+      };
+
+      return (
+        //...
+          <button onClick={onClick}>count is </button>
+        //...
+      )
+    }
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```vue copy {4,9-11,16}
+    <!-- ./src/components/HelloWorld.vue -->
+    <script setup lang="ts">
+    import { ref } from 'vue'
+    import { r } from '../main'
+    defineProps<{ msg: string }>()
+
+    const count = ref(0)
+
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
+    </script>
+
+    <template>
+        <!-- .... -->
+        <button type="button" @click="onClick">count is {{ count }}</button>
+        <!-- .... -->
+    </template>
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```svelte copy {3,7-9,11}
+    <!-- ./src/lib/Counter.svelte -->
+    <script lang="ts">
+    import {r} from '../main'
+
+    let count: number = 0
+    
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
+    </script>
+    <button on:click={onClick}>
+      count is {count}
+    </button>
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```ts copy {2,4-6,9}
+  //./src/counter.ts
+  import {r} from './main.ts'
+
+  const onClick = () => {
+    r.mutate.increment({ key: "count", delta: 1 });
+  };
+
+  export function setupCounter(element: HTMLButtonElement) {
+    element.addEventListener('click', onClick);
+  }
+
+  ```
+  </Tabs.Tab>
+</Tabs>
+
+## Render UI with Subscriptions
+
+Use `r.subscribe` or (`useSubscribe` if using React) to monitor Reflect data:
+
+<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']}>
+  <Tabs.Tab>
+  ```tsx copy {2-3, 11-15, 20}
+  // ./src/App.tsx
+  import {r} from "./main.tsx";
+  import { useSubscribe } from "@rocicorp/reflect/react";
+  
+  function App() {
+
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
+
+    const count = useSubscribe(
+      r,
+      async (tx) => (await tx.get<number>("count")) ?? 0,
+      0
+    );
+
+    return (
+    //...
+      <button onClick={onClick}>
+        count is {count}
+      </button>
+    //...
+    )
+  }
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```tsx copy {3, 13-18, 23}
+    // ./src/App.tsx
+    import { createSignal } from "solid-js";
+    import { r } from "./index.tsx";
+
+    function App() {
+      const [count, setCount] = createSignal(0);
+
+      const onClick = () => {
+        r.mutate.increment({ key: "count", delta: 1 });
+      };
+
+
+      r.subscribe(
+        (tx) => tx.get("count"),
+        (data) => {
+          setCount((data ?? 0) as number);
+        }
+      );
+
+      return (
+        //...
+          <button onClick={onClick}>
+            count is {count()}
+          </button>
+        //...
+      )
+    }
+    ```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```vue copy {9-14,23}
+    <!-- ./src/components/HelloWorld.vue -->
+    <script setup lang="ts">
+    import { ref } from 'vue'
+    import { r } from '../main'
+    defineProps<{ msg: string }>()
+
+    const count = ref(0)
+
+    r.subscribe(
+        (tx) => tx.get("count"), 
+        (data) => {
+            count.value = (data ?? 0) as number;
+        },  
+    );
+
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
+    </script>
+
+    <template>
+        <!-- .... -->
+        <button type="button" @click="onClick">count is {{ count }}</button>
+        <!-- .... -->
+    </template>
+    ```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```svelte copy {3,7-12,21}
+    <!-- ./src/lib/Counter.svelte -->
+    <script lang="ts">
+    import {r} from '../main'
+
+    let count: number = 0
+    
+    r.subscribe(
+        (tx) => tx.get("count"),
+        (data) => {
+            count = (data ?? 0) as number;
+        }  
+      );
+
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
+
+    </script>
+
+    <button on:click={onClick}>
+      count is {count}
+    </button>
+    ```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```js copy {2, 11-14}
+    // ./src/counter.ts
+    import {r} from './main.ts'
+
+    const onClick = () => {
+      r.mutate.increment({ key: "count", delta: 1 });
+    };
+
+    export function setupCounter(element: HTMLButtonElement) {
+      element.addEventListener('click', onClick);
+
+      r.subscribe(
+        (tx) => tx.get("count"),
+        (count) => (element.innerText = (count ?? 0).toString())
+      );
+    }
+    ```
+  </Tabs.Tab>
+</Tabs>
 
 See [Data Modeling](./data-modeling) for more complex data storage needs.
 
@@ -90,4 +437,16 @@ Deploy the UI. You can use any hosting provider, we'll use Vercel here:
 npx vercel
 ```
 
-Note that you will have to change the `socketOrigin` in the `Reflect` constructor to point to your remote Reflect server (i.e., `wss://my-app.my-user.reflect-server.net`).
+Note that you will have to change the `server` in the `Reflect` constructor to point to your remote Reflect server (i.e., `https://my-app-my-user.reflect-server.net`).
+
+## Next Steps
+
+<Cards>
+  <Card icon={<HowTo />} title="Learn to use Reflect" href="/rooms" />
+  <Card icon={<Examples />} title="Browse example apps" href="/examples" />
+  <Card
+    icon={<HowTo />}
+    title="Understand Reflect's design"
+    href="/server-authority"
+  />
+</Cards>

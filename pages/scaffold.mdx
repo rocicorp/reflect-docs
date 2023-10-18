@@ -1,6 +1,18 @@
+import { Callout } from "nextra/components";
+import FeaturedCard from "../components/featuredCard";
+import { Cards, Card } from "nextra/components";
+import { Examples } from "../components/icons/examples";
+import { HowTo } from "../components/icons/howto";
+import { Tutorial } from "../components/icons/tutorial";
+
 # Scaffold a New Reflect Project
 
-Follow these instructions to create a simple Reflect starter app based on Vite and React. It takes about 60 seconds (depending on how peppy npm is feeling today).
+Follow these instructions to create a simple Reflect starter app based on Vite and React. It takes about 15 seconds (depending on how peppy npm is feeling today).
+
+<Callout>
+  Not a React fan? See [Add to Existing Project](/add-to-existing) for other
+  frameworks.
+</Callout>
 
 ## Install
 
@@ -38,7 +50,7 @@ npx vite
 Watch the logs from production with:
 
 ```bash copy
-npx reflect tail
+npx reflect tail --room='my-room'
 ```
 
 You can host the app UI just about anywhere since it's just static JS. For example, to use Vercel:
@@ -47,13 +59,19 @@ You can host the app UI just about anywhere since it's just static JS. For examp
 npx vercel
 ```
 
-## Quick Code Tour
+## Next Steps
 
-Here are the key files in this starter app.
-
-- `src/reflect/index.ts` is the entry point for the Reflect server. This is where the mutators are registered and where authentication can be optionally implemented.
-- `src/reflect/client-state.ts` defines the synced data model. This example uses [Rails](https://github.com/rocicorp/rails) to generates handy CRUD functions.
-- `src/reflect/mutators.ts` defines the _mutators_. Mutators are how data is changed in Reflect. A mutator runs immediately (optimistically) on the client, and then later on the server as part of sync.
-- `src/subscriptions.ts` defines the _subscriptions_. Reflect apps are rendered reactively. These subscriptions fire when synced data is changed either locally or by other collaborators.
-
-To learn more about how Reflect works in the big picture, please see [Understand Reflect](/server-authority).
+<Cards>
+  <Card icon={<HowTo />} title="Learn to use Reflect" href="/rooms" />
+  <Card
+    icon={<Tutorial />}
+    title="Add Reflect to existing project"
+    href="/add-to-existing"
+  />
+  <Card icon={<Examples />} title="Browse example apps" href="/examples" />
+  <Card
+    icon={<HowTo />}
+    title="Understand Reflect's design"
+    href="/server-authority"
+  />
+</Cards>

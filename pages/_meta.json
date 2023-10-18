@@ -7,16 +7,22 @@
     "display": "hidden"
   },
   "scaffold": {
-    "title": "Scaffold New Project"
+    "title": "Scaffold New Project",
+    "theme": {
+      "pagination": false
+    }
   },
   "add-to-existing": {
-    "title": "Add to Existing Project"
+    "title": "Add to Existing Project",
+    "theme": {
+      "pagination": false
+    }
   },
   "examples": {
-    "title": "Examples"
-  },
-  "status": {
-    "title": "Project Status"
+    "title": "Examples",
+    "theme": {
+      "pagination": false
+    }
   },
   "-- Learn Reflect": {
     "type": "separator",
@@ -37,8 +43,22 @@
   "authentication": {
     "title": "Authentication"
   },
-  "server-authority": {
-    "title": "Server Authority"
+  "status": {
+    "title": "Project Status"
+  },
+  "-- Other Resources": {
+    "type": "separator",
+    "title": "Other Resources"
+  },
+  "ready-player-two": {
+    "title": "What the Multiplayer Web can Learn from Video Games",
+    "href": "https://rocicorp.dev/blog/ready-player-two",
+    "newWindow": true
+  },
+  "you-may-not-need-a-crdt": {
+    "title": "You May not Need a CRDT",
+    "href": "https://www.youtube.com/watch?v=7Bb0KRLL8FI&t=1895s",
+    "newWindow": true
   },
   "-- Contact Us": {
     "type": "separator",

@@ -12,7 +12,30 @@ r.subsribeToPresence((presentClientIDs) => {
 
 ## Combining presence with data about clients
 
+Presence information is powerful when combined with additional synced data about clients.
+This additional client data is custom to your application.  It is written and read
+like any other Reflect data and can be modeled using the Rails helper library.
 
+For example you might model your client data like so:
+```ts
+import { generate } from "@rocicorp/rails";
+
+type Client = {
+  id: string;
+  name: string;
+  cursor: { x: number, y: number};
+};
+
+export const {
+  put: putClient,
+  get: getClient,
+  init: initClient,
+  update: updateClient,
+  list: listClients,
+} = generate<Client>("client");
+```
+
+You can then filter this client data to just render the currently connected clients:
 ```ts
 let presentClientIDs: ReadonlySet<ClientID> = new Set<ClientID>();
 r.subsribeToPresence((clientIDs) => {
@@ -36,7 +59,7 @@ function render() {
   for (const presentClientID of presentClientIDs) {
     const presentClient = clients[presentClientId];
     if (presentClient) {
-      // render the present client's cursor, presence indicator, etc
+      renderCursor(presentClient);
     }
   }
 }
@@ -70,8 +93,9 @@ return (
     {[...presentClients].map(presentClient => (
       <Cursor
         key={presentClient.id}
-        client={presentClient}
-      />
+        name={presentClient.name}
+        cursor={presentClient.cursor}
+        ></Cursor>
     ))}
   </div>
 );

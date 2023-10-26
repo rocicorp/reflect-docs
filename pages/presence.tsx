@@ -11,8 +11,8 @@ r.subsribeToPresence((presentClientIDs) => {
 ```
 
 <Callout type="info">
-  When a client is disconnected `presentClientIDs` will contain just
-  the client's own clientID.
+  When a client is disconnected, for instance due to losing internet connectivity,
+  `presentClientIDs` will contain just the client's own client ID.
 </Callout>
 
 

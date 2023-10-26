@@ -10,6 +10,12 @@ r.subsribeToPresence((presentClientIDs) => {
 });
 ```
 
+<Callout type="info">
+  When a client is disconnected `presentClientIDs` will contain just
+  the client's own clientID.
+</Callout>
+
+
 ## Combining presence with data about clients
 
 Presence information is powerful when combined with additional synced data about clients.

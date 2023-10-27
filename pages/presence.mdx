@@ -2,6 +2,9 @@ import { Callout } from "nextra/components";
 
 # Presence
 
+Reflect keeps track of the [client](./rooms#clients) currently connected to a room. You can use
+this to show users who is also connected at any point in time.
+
 Use the `subscribeToPresence` method of Reflect to watch for changes to the set of clients connected to the room.
 
 ```ts
@@ -19,7 +22,7 @@ r.subsribeToPresence((presentClientIDs) => {
 
 Presence information is powerful when combined with additional synced data about clients.
 This additional client data is custom to your application. It is written and read
-like any other Reflect data and can be modeled using the Rails helper library.
+like any other Reflect data and can be [modeled using the Rails helper library](./data-modeling).
 
 For example you might model your client data like so:
 
@@ -72,12 +75,19 @@ function render() {
 }
 ```
 
+<Callout type="info">
+  Currently this additional client data is part of the Reflect state
+  permanently, unless you explicitly delete it. In the near future, Reflect will
+  add a feature to automatically delete this additional client data when the
+  client is no-longer in use.
+</Callout>
+
 ## React
 
-In React you can use the `usePrescense` hook in combination with the `useSubscribe` hook.
+In React you can use the `usePresence` hook in combination with the `useSubscribe` hook.
 
 ```ts
-import { usePrescence, useSubscribe } from "@rocicorp/reflect/react";
+import { usePresence, useSubscribe } from "@rocicorp/reflect/react";
 
 const presentClientIDs = usePresence(r);
 const presentClients = useSubscribe(r,
@@ -97,7 +107,7 @@ const presentClients = useSubscribe(r,
 
 return (
   <div>
-    {[...presentClients].map(presentClient => (
+    {presentClients.map(presentClient => (
       <Cursor
         key={presentClient.id}
         name={presentClient.name}

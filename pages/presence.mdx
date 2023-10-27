@@ -2,7 +2,7 @@ import { Callout } from "nextra/components";
 
 # Presence
 
-Reflect keeps track of the [client](./rooms#clients) currently connected to a room. You can use
+Reflect keeps track of the clients currently connected to a room. You can use
 this to show users who is also connected at any point in time.
 
 Use the `subscribeToPresence` method of Reflect to watch for changes to the set of clients connected to the room.
@@ -21,7 +21,7 @@ r.subsribeToPresence((presentClientIDs) => {
 ## Combining presence with data about clients
 
 Presence information is powerful when combined with additional synced data about clients.
-This additional client data is custom to your application. It is written and read
+This additional client data is custom to your application. It is read and written
 like any other Reflect data and can be [modeled using the Rails helper library](./data-modeling).
 
 For example you might model your client data like so:

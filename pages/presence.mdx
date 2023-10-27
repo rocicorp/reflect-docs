@@ -11,25 +11,25 @@ r.subsribeToPresence((presentClientIDs) => {
 ```
 
 <Callout type="info">
-  When a client is disconnected, for instance due to losing internet connectivity,
-  `presentClientIDs` will contain just the client's own client ID.
+  When a client is disconnected, for instance due to losing internet
+  connectivity, `presentClientIDs` will contain just the client's own client ID.
 </Callout>
-
 
 ## Combining presence with data about clients
 
 Presence information is powerful when combined with additional synced data about clients.
-This additional client data is custom to your application.  It is written and read
+This additional client data is custom to your application. It is written and read
 like any other Reflect data and can be modeled using the Rails helper library.
 
 For example you might model your client data like so:
+
 ```ts
 import { generate } from "@rocicorp/rails";
 
 type Client = {
   id: string;
   name: string;
-  cursor: { x: number, y: number};
+  cursor: { x: number; y: number };
 };
 
 export const {
@@ -42,19 +42,20 @@ export const {
 ```
 
 You can then filter this client data to just render the currently connected clients:
+
 ```ts
 let presentClientIDs: ReadonlySet<ClientID> = new Set<ClientID>();
 r.subsribeToPresence((clientIDs) => {
- presentClientIDs = clientIDs;
- render();
+  presentClientIDs = clientIDs;
+  render();
 });
 
 let clients: Record<ClientID, Client> = {};
 r.subscribe(
   async (tx) => {
-    const clientEntries = (await listClients(tx)).map(c => [c.id, c]);
+    const clientEntries = (await listClients(tx)).map((c) => [c.id, c]);
     return Object.fromEntries(clientEntries);
-  }, 
+  },
   (result) => {
     clients = result;
     render();
@@ -73,13 +74,13 @@ function render() {
 
 ## React
 
-In React you can use the `usePrescense` hook in combination with the `useSubscribe`` hook.
+In React you can use the `usePrescense` hook in combination with the `useSubscribe` hook.
 
 ```ts
 import { usePrescence, useSubscribe } from "@rocicorp/reflect/react";
 
 const presentClientIDs = usePresence(r);
-const presentClients = useSubscribe(r, 
+const presentClients = useSubscribe(r,
   async (tx) => {
     const result = [];
     for (const clientID of presentClientIDs) {
@@ -94,7 +95,7 @@ const presentClients = useSubscribe(r,
   [presentClientIDs]
 );
 
-return ( 
+return (
   <div>
     {[...presentClients].map(presentClient => (
       <Cursor

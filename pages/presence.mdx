@@ -3,7 +3,7 @@ import { Callout } from "nextra/components";
 # Presence
 
 Reflect keeps track of the clients currently connected to a room. You can use
-this to show users who is also connected at any point in time.
+this to show users who else is connected at any point in time.
 
 Use the `subscribeToPresence` method of Reflect to watch for changes to the set of clients connected to the room.
 
@@ -15,6 +15,7 @@ r.subsribeToPresence((presentClientIDs) => {
 
 <Callout type="info">
   When a client is offline, it will only see itself as being present.
+  `presentClientIDs` will always contain the client's own client ID.
 </Callout>
 
 ## Combining presence with data about clients

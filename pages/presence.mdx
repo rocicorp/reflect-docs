@@ -51,7 +51,7 @@ You can then filter this client data to just render the currently connected clie
 
 ```ts
 let presentClientIDs: ClientID[] = [];
-r.subsribeToPresence((clientIDs) => {
+r.subscribeToPresence((clientIDs) => {
   presentClientIDs = clientIDs;
 });
 

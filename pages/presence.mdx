@@ -10,7 +10,7 @@ associated client is connected.
 Use the `subscribeToPresence` method of Reflect to watch for changes to the set of clients connected to the room:
 
 ```ts
-r.subsribeToPresence((presentClientIDs) => {
+r.subscribeToPresence((presentClientIDs) => {
   myElm.textContent = `Active Users: ${presentClientIDs.length}`;
 });
 ```

@@ -3,13 +3,15 @@ import { Callout } from "nextra/components";
 # Presence
 
 Reflect keeps track of the clients currently connected to a room. You can use
-this to show users who else is connected at any point in time.
+this to show users who else is connected at any point in time, or to implement
+features like cursors or selection state which should only be visible when the
+associated client is connected.
 
-Use the `subscribeToPresence` method of Reflect to watch for changes to the set of clients connected to the room.
+Use the `subscribeToPresence` method of Reflect to watch for changes to the set of clients connected to the room:
 
 ```ts
 r.subsribeToPresence((presentClientIDs) => {
-  myElm.textContent = `Active Users: ${presentClientIDs.size}`;
+  myElm.textContent = `Active Users: ${presentClientIDs.length}`;
 });
 ```
 
@@ -18,9 +20,10 @@ r.subsribeToPresence((presentClientIDs) => {
   `presentClientIDs` will always contain the client's own client ID.
 </Callout>
 
-## Combining presence with data about clients
+## Per-Client Presence State
 
-Presence information is powerful when combined with additional synced data about clients.
+The `subscribeToPresence` method only tells you the IDs of the clients that are present.
+To do something useful with them, you will combine these IDs with additional synced data about clients.
 This additional client data is custom to your application. It is read and written
 like any other Reflect data and can be [modeled using the Rails helper library](./data-modeling).
 
@@ -47,7 +50,7 @@ export const {
 You can then filter this client data to just render the currently connected clients:
 
 ```ts
-let presentClientIDs: ReadonlySet<ClientID> = new Set<ClientID>();
+let presentClientIDs: ClientID[] = [];
 r.subsribeToPresence((clientIDs) => {
   presentClientIDs = clientIDs;
 });
@@ -55,8 +58,7 @@ r.subsribeToPresence((clientIDs) => {
 let clients: Record<ClientID, Client> = {};
 r.subscribe(
   async (tx) => {
-    const clientEntries = (await listClients(tx)).map((c) => [c.id, c]);
-    return Object.fromEntries(clientEntries);
+    return Object.fromEntries(await listClientEntries(tx));
   },
   (result) => {
     clients = result;
@@ -65,7 +67,7 @@ r.subscribe(
 
 function render() {
   for (const presentClientID of presentClientIDs) {
-    const presentClient = clients[presentClientId];
+    const presentClient = clients[presentClientID];
     if (presentClient) {
       renderCursor(presentClient);
     }
@@ -114,5 +116,8 @@ return (
     ))}
   </div>
 );
-
 ```
+
+## Examples
+
+For a full working example of using presence in Reflect, see [Replidraw](/examples#replidraw).

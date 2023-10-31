@@ -40,6 +40,9 @@
   "data-modeling": {
     "title": "Data Modeling"
   },
+  "presence": {
+    "title": "Presence"
+  },
   "authentication": {
     "title": "Authentication"
   },

@@ -39,12 +39,12 @@ r.subscribe(
 
 ## React
 
-In React, you can also use the `useSubscribe` hook from [`replicache-react`](https://www.npmjs.com/package/replicache-react):
+In React you can use the `useSubscribe` hook:
 
 ```ts
-import { useSubscribe } from "replicache-react";
+import { useSubscribe } from "@rocicorp/reflect/react";
 
-const numTodos = useSubscribe(async (tx) => {
+const numTodos = useSubscribe(r, async (tx) => {
   const todos = await tx.scan({ prefix: "/todo/" }).keys().toArray();
   return todos.length;
 });

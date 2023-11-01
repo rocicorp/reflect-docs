@@ -63,6 +63,11 @@
     "href": "https://www.youtube.com/watch?v=7Bb0KRLL8FI&t=1895s",
     "newWindow": true
   },
+  "releases": {
+    "title": "Releases",
+    "href": "https://replicache.notion.site/Reflect-Releases-4982759e4269479386f8b1122e4edbb1?pvs=4",
+    "newWindow": true
+  },
   "-- Contact Us": {
     "type": "separator",
     "title": "Contact Us"

@@ -1,3 +1,5 @@
+import { Callout } from "nextra/components";
+
 # Authentication
 
 Reflect can control access to rooms by calling out to a separate server.
@@ -18,13 +20,18 @@ import { mutators } from "../src/mutators";
 
 export default function makeOptions() {
   return {
-    authHandler: async (auth: string, roomID: string) {
-      const response = await fetch(`/reflect-auth?auth=${auth}&roomID=${roomID}`);
+    authHandler: async (auth: string, roomID: string, env: Env) {
+      const response = await fetch(
+          `${env.authServerURL}?auth=${auth}&roomID=${roomID}`);
       return (await response.json()) as AuthData;
     },
   };
 }
 ```
+
+<Callout type="info">
+  See [Environment Variables](/env) for more information on the `env` parameter.
+</Callout>
 
 If the user is allowed in the room, return an object matching `{userID: string}` from the `authHandler`. Otherwise, throw an error.
 
@@ -35,8 +42,12 @@ The most common implementation is to call an endpoint on your server, like in th
 But you can also use <a href="https://jwt.io/">JWTs</a> or similar. In that case, the `auth` string would be a JWT which would be verified in the `AuthHandler`:
 
 ```ts
-async function jwtAuthHandler(auth: string, roomID: string): Promise<AuthData> {
-  const decoded = await jwt.verify(auth, publicKey);
+async function jwtAuthHandler(
+  auth: string,
+  roomID: string,
+  env: Env,
+): Promise<AuthData> {
+  const decoded = await jwt.verify(auth, env.pubkey);
   return decoded as AuthData;
 }
 ```
@@ -53,8 +64,11 @@ type MyAuthData = AuthData & { access: "read" | "write" };
 async function detailedAuthHandler(
   auth: string,
   roomID: string,
+  env: Env,
 ): Promise<MyAuthData> {
-  const response = await fetch(`/reflect-auth?auth=${auth}&roomID=${roomID}`);
+  const response = await fetch(
+    `${env.authServerURL}?auth=${auth}&roomID=${roomID}`,
+  );
   return (await response.json()) as MyAuthData;
 }
 ```

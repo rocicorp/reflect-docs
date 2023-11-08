@@ -53,15 +53,11 @@
     "type": "separator",
     "title": "Other Resources"
   },
-  "ready-player-two": {
-    "title": "What the Multiplayer Web can Learn from Video Games",
-    "href": "https://rocicorp.dev/blog/ready-player-two",
-    "newWindow": true
+  "articles": {
+    "title": "Articles"
   },
-  "you-may-not-need-a-crdt": {
-    "title": "You May not Need a CRDT",
-    "href": "https://www.youtube.com/watch?v=7Bb0KRLL8FI&t=1895s",
-    "newWindow": true
+  "videos": {
+    "title": "Videos"
   },
   "status": {
     "title": "Project Status"

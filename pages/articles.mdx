@@ -1,0 +1,37 @@
+import Link from "next/link";
+import FeaturedCard from "../components/featuredCard";
+import { Cards, Card } from "nextra/components";
+import { Examples } from "../components/icons/examples";
+import { HowTo } from "../components/icons/howto";
+import { QuickStarts } from "../components/icons/quickstarts";
+import { Tutorial } from "../components/icons/tutorial";
+import Video from "../components/video";
+
+# Articles
+
+<a
+  href="https://rocicorp.dev/blog/ready-player-two"
+  className="article"
+  style={{
+    backgroundImage:
+      "url(https://rocicorp.dev/blog-content/reflect-beta/sunrise2.jpg)",
+    backgroundSize: "cover",
+    backgroundPositionY: "72%",
+  }}
+>
+  <div
+    style={{
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      margin: "1rem",
+      color: "white",
+      zIndex: 2,
+    }}
+  >
+    <h2 className="nx-font-semibold nx-tracking-tight nx-text-2xl">
+      Ready Player Two
+    </h2>
+    <p>Bringing Game-Style State Synchronization to the Web</p>
+  </div>
+</a>

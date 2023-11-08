@@ -183,6 +183,20 @@ nav a:first-child {
   opacity: 1;
 }
 
+.article {
+  display: block;
+  margin: 1rem 0 2rem;
+  border: 2px solid transparent;
+  transition: border 0.3s;
+  position: relative;
+  overflow: hidden;
+  height: 12rem;
+}
+
+.article:hover {
+  border-color: rgba(252, 32, 138, 1);
+}
+
 h2 {
   border-bottom: none !important;
 }

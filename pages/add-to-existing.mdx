@@ -288,11 +288,7 @@ Use `r.subscribe` or (`useSubscribe` if using React) to monitor Reflect data:
       r.mutate.increment({ key: "count", delta: 1 });
     };
 
-    const count = useSubscribe(
-      r,
-      async (tx) => (await tx.get<number>("count")) ?? 0,
-      0
-    );
+    const count = useSubscribe(r, async (tx) => tx.get<number>("count"), 0);
 
     return (
     //...

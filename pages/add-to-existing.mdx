@@ -1,450 +1,226 @@
-import { Callout } from "nextra/components";
+import Image from "next/image";
 import FeaturedCard from "../components/featuredCard";
 import { Cards, Card } from "nextra/components";
+import { Tutorial } from "../components/icons/tutorial";
 import { Examples } from "../components/icons/examples";
 import { HowTo } from "../components/icons/howto";
-import { Tutorial } from "../components/icons/tutorial";
+import { QuickStarts } from "../components/icons/quickstarts";
+import { Callout } from "nextra/components";
+import { Steps } from "nextra/components";
 import { Tabs } from "nextra/components";
 
 # Add Reflect to an Existing Project
 
-Reflect works with just about any client-side web framework like React, Svelte, Solid or Vue. These steps show how to add Reflect to a few popular frameworks, but you should be able to adapt them to others.
+These steps take about five minutes, and can be run with projects using frameworks likes React, Vue, or Svelte.
 
-<Callout type="warning">
-  These instructions currently only work for TypeScript-based projects. For
-  plain JavaScript, please see
-  [reflect-starter-vanilla](https://github.com/rocicorp/reflect-starter-vanilla).
-</Callout>
+<Steps>
 
-## Setup
-
-For this tutorial, we'll use Vite to create a new app. When it asks, choose whatever framework you like.
+### Install
 
 ```bash copy
-npm create vite
+npm install @rocicorp/reflect@latest
 ```
 
-## Install Reflect
+### Define Mutators
 
-Run the following command in your project directory:
+Mutators are how you make changes to data in Reflect. They are typically defined in their own file called `mutators.ts`. The first argument is always `WriteTransaction`, and the second is up to you.
 
-```bash copy
-npx @rocicorp/reflect@latest init
-```
+```ts filename="mutators.ts" copy
+import { WriteTransaction } from "@rocicorp/reflect";
 
-This does three things:
-
-1. Installs `@rocicorp/reflect`
-2. Generates a `reflect.config.json` file
-3. Generates a minimal Reflect server in the `/reflect` directory
-
-Otherwise, it doesn't touch your directory at all and is non-destructive.
-
-## Understand the Generated Code
-
-### `reflect.config.json`
-
-The generated `reflect.config.json` file looks like:
-
-```json
-{
-  "server": "reflect/index.ts"
-}
-```
-
-This tells `reflect dev` and `reflect publish` where the entrypoint to your Reflect server is. The convention is to put your server in the `/reflect` directory, but that's optional.
-
-`reflect.config.json` should be checked into source control, as it contains shared information about the project necessary for the Reflect CLI to work.
-
-### `/reflect`
-
-The generated `/reflect` directory contains a sample Reflect server. This is the part of your project that will run hosted on `reflect.net`.
-
-`/reflect/index.ts` exports a `makeOptions` function which is the entrypoint to your server. It looks something like:
-
-```ts
-function makeOptions(): ReflectServerOptions<M> {
-  return {
-    authHandler,
-    mutators,
-    logLevel: "debug",
-  };
-}
-```
-
-See [authentication](/authentication) and [mutators](/mutators) to learn more about these options.
-
-## Instantiate Reflect
-
-In the main entrypoint of the client-side of your app, create an instance of Reflect:
-
-<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']} storageKey="tabs_existing">
-  <Tabs.Tab>
-    ```ts copy
-    // add to ./src/main.tsx
-    import { Reflect } from "@rocicorp/reflect/client";
-    import { mutators } from "../reflect/mutators.js";
-
-    export const r = new Reflect({
-      userID: "someUser",
-      roomID: "myRoom",
-      server: "http://localhost:8080",
-      mutators,
-    });
-    ```
-
-  </Tabs.Tab>
-  <Tabs.Tab>
-    ```ts copy
-    // add to ./src/index.tsx
-    import { Reflect } from "@rocicorp/reflect/client";
-    import { mutators } from "../reflect/mutators.js";
-
-    export const r = new Reflect({
-      userID: "someUser",
-      roomID: "myRoom",
-      server: "http://localhost:8080",
-      mutators,
-    });
-    ```
-
-  </Tabs.Tab>
-  <Tabs.Tab>
-    ```ts copy
-    // add to ./src/main.ts
-    import { Reflect } from "@rocicorp/reflect/client";
-    import { mutators } from "../reflect/mutators.js";
-
-    export const r = new Reflect({
-      userID: "someUser",
-      roomID: "myRoom",
-      server: "http://localhost:8080",
-      mutators,
-    });
-    ```
-
-  </Tabs.Tab>
-  <Tabs.Tab>
-    ```ts copy
-    // add to ./src/main.ts
-    import { Reflect } from "@rocicorp/reflect/client";
-    import { mutators } from "../reflect/mutators.js";
-
-    export const r = new Reflect({
-      userID: "someUser",
-      roomID: "myRoom",
-      server: "http://localhost:8080",
-      mutators,
-    });
-    ```
-
-  </Tabs.Tab>
-  <Tabs.Tab>
-  ```js copy
-  // add to ./src/main.ts
-  import { Reflect } from "@rocicorp/reflect/client";
-  import { mutators } from "../reflect/mutators.js";
-
-export const r = new Reflect({
-  userID: "someUser",
-  roomID: "myRoom",
-  server: "http://localhost:8080",
-  mutators,
-});
-
-````
-</Tabs.Tab>
-</Tabs>
-
-<Callout>
-Don't see your framework of choice? [Let us know](https://discord.reflect.net/) what we should add next.
-</Callout>
-
-<Callout type="info">
-Reflect does not build or run on servers because it depends on DOM APIs. If
-you use a full-stack framework, you'll need to ensure Reflect only runs
-client-side. For example, in Next.js, this can be accomplished by loading
-Reflect in a `useEffect` hook.
-</Callout>
-
-## Change Data with Mutators
-The `/reflect` directory contains a sample `increment` mutator. Call it from your button click event handler:
-
-<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']} storageKey="tabs_existing">
-<Tabs.Tab>
-  ```tsx copy {2,6-8,12}
-  //./src/App.tsx
-  import {r} from "./main.jsx";
-
-  function App() {
-
-    const onClick = () => {
-      r.mutate.increment({ key: "count", delta: 1 });
-    };
-
-    return (
-    //...
-      <button onClick={onClick}></button>
-    //...
-    )
-  }
-
-  ```
-</Tabs.Tab>
-<Tabs.Tab>
-  ```tsx copy {3,8-10, 14}
-  //./src/App.tsx
-  import { createSignal } from "solid-js";
-  import { r } from "./index.jsx";
-
-  function App() {
-    const [count, setCount] = createSignal(0);
-
-    const onClick = () => {
-      r.mutate.increment({ key: "count", delta: 1 });
-    };
-
-    return (
-      //...
-        <button onClick={onClick}>
-          count is {count()}
-        </button>
-      //...
-    )
-  }
-  ```
-</Tabs.Tab>
-<Tabs.Tab>
-  ```vue copy {4,9-11,16}
-  <!-- ./src/components/HelloWorld.vue -->
-  <script setup lang="ts">
-  import { ref } from 'vue'
-  import { r } from '../main'
-  defineProps<{ msg: string }>()
-
-  const count = ref(0)
-
-  const onClick = () => {
-    r.mutate.increment({ key: "count", delta: 1 });
-  };
-  </script>
-
-  <template>
-      <!-- .... -->
-      <button type="button" @click="onClick">count is {{ count }}</button>
-      <!-- .... -->
-  </template>
-  ```
-</Tabs.Tab>
-<Tabs.Tab>
-  ```svelte copy {3,7-9,11}
-  <!-- ./src/lib/Counter.svelte -->
-  <script lang="ts">
-  import {r} from '../main'
-
-  let count: number = 0
-
-  const onClick = () => {
-    r.mutate.increment({ key: "count", delta: 1 });
-  };
-  </script>
-  <button on:click={onClick}>
-    count is {count}
-  </button>
-  ```
-</Tabs.Tab>
-<Tabs.Tab>
-```ts copy {2,4-6,9}
-//./src/counter.ts
-import {r} from './main.js'
-
-const onClick = () => {
-  r.mutate.increment({ key: "count", delta: 1 });
+export const mutators = {
+  increment,
 };
 
-export function setupCounter(element: HTMLButtonElement) {
-  element.addEventListener('click', onClick);
+async function increment(tx: WriteTransaction, delta: number) {
+  const value = (await tx.get<number>("count")) ?? 0;
+  await tx.set("count", value + delta);
 }
+```
 
-````
+<Callout type="info">
+  JavaScript is supported too, just remove the types from the code snippets and
+  change the file extension!
+</Callout>
+
+### Build Your UI
+
+Instantiate Reflect and register your mutators.
+
+```ts copy
+import { mutators } from "./mutators";
+
+const r = new Reflect({
+  roomID: "myRoom",
+  userID: "myUser",
+  mutators,
+});
+```
+
+Call `r.mutate.foo()` anywhere in your app to make changes to synced data, and render your UI reactively via subscriptions.
+
+<Tabs items={['Vanilla', 'React', 'Solid', 'Svelte', 'Vue']} storageKey="tabs_existing">
+  <Tabs.Tab>
+    ```ts
+    myButton.onclick = () => {
+      void r.mutate.increment(1);
+    };
+
+    r.subscribe(
+      (tx) => tx.get<number>("count"),
+      (count) => element.textContent = count,
+    );
+    ```
+
+</Tabs.Tab>
+  <Tabs.Tab>
+    ```tsx copy {5,8-9}
+    import { useSubscribe } from "@rocicorp/reflect/react";
+
+    function MyComponent() {
+      const onClick = () => {
+        void r.mutate.increment(1);
+      };
+
+      const count = useSubscribe(
+        r, (tx) => tx.get<number>("count"), 0);
+
+      return <button onClick={onClick}>{count}</buttondiv>;
+    }
+    ```
 
   </Tabs.Tab>
-</Tabs>
-
-## Render UI with Subscriptions
-
-Use `r.subscribe` or (`useSubscribe` if using React) to monitor Reflect data:
-
-<Tabs items={['React',  'Solid', 'Vue', 'Svelte', 'Vanilla']} storageKey="tabs_existing">
   <Tabs.Tab>
-  ```tsx copy {3, 11-15, 20}
-  // ./src/App.tsx
-  import {r} from "./main.jsx";
-  import { useSubscribe } from "@rocicorp/reflect/react";
-  
-  function App() {
+    ```tsx  copy {5,8-11}
+    function App() {
+      const [count, setCount] = createSignal(0);
+
+      const onClick = () => {
+        r.mutate.increment({ key: "count", delta: 1 });
+      };
+
+      r.subscribe(
+        (tx) => tx.get<number>("count"),
+        (data) => setCount(data ?? 0);
+      );
+
+      return <button onClick={onClick}>{count}</button>
+    }
+    ```
+
+</Tabs.Tab>
+  <Tabs.Tab>
+    ```svelte  copy {5,8-11}
+    <script lang="ts">
+    let count: number = 0
 
     const onClick = () => {
       r.mutate.increment({ key: "count", delta: 1 });
     };
 
-    const count = useSubscribe(r, async (tx) => tx.get<number>("count"), 0);
+    r.subscribe(
+      (tx) => tx.get<number>("count"),
+      (data) => count = (data ?? 0),
+    );
+    </script>
 
-    return (
-    //...
-      <button onClick={onClick}>
-        count is {count}
-      </button>
-    //...
-    )
+    <button on:click={onClick}>{count}</button>
+    ```
 
-}
-
-````
 </Tabs.Tab>
-<Tabs.Tab>
-  ```tsx copy {13-18, 23}
-  // ./src/App.tsx
-  import { createSignal } from "solid-js";
-  import { r } from "./index.jsx";
-
-  function App() {
-    const [count, setCount] = createSignal(0);
+  <Tabs.Tab>
+    ```vue  copy {5,8-11}
+    <script setup lang="ts">
+    const count = ref(0)
 
     const onClick = () => {
       r.mutate.increment({ key: "count", delta: 1 });
     };
 
-
     r.subscribe(
-      (tx) => tx.get("count"),
-      (data) => {
-        setCount((data ?? 0) as number);
-      }
+      (tx) => tx.get<number>("count"),
+      (data) => count.value = data ?? 0;
     );
+    </script>
 
-    return (
-      //...
-        <button onClick={onClick}>
-          count is {count()}
-        </button>
-      //...
-    )
-  }
-  ```
+    <template>
+      <button @click="onClick">{{ count }}</button>
+    </template>
+    ```
 
-</Tabs.Tab>
-<Tabs.Tab>
-  ```vue copy {9-14}
-  <!-- ./src/components/HelloWorld.vue -->
-  <script setup lang="ts">
-  import { ref } from 'vue'
-  import { r } from '../main'
-  defineProps<{ msg: string }>()
-
-  const count = ref(0)
-
-  r.subscribe(
-      (tx) => tx.get("count"),
-      (data) => {
-          count.value = (data ?? 0) as number;
-      },
-  );
-
-  const onClick = () => {
-    r.mutate.increment({ key: "count", delta: 1 });
-  };
-  </script>
-
-  <template>
-      <!-- .... -->
-      <button type="button" @click="onClick">count is {{ count }}</button>
-      <!-- .... -->
-  </template>
-  ```
-
-</Tabs.Tab>
-<Tabs.Tab>
-  ```svelte copy {3,7-12,21}
-  <!-- ./src/lib/Counter.svelte -->
-  <script lang="ts">
-  import {r} from '../main'
-
-  let count: number = 0
-
-  r.subscribe(
-      (tx) => tx.get("count"),
-      (data) => {
-          count = (data ?? 0) as number;
-      }
-    );
-
-  const onClick = () => {
-    r.mutate.increment({ key: "count", delta: 1 });
-  };
-
-  </script>
-
-  <button on:click={onClick}>
-    count is {count}
-  </button>
-  ```
-
-</Tabs.Tab>
-<Tabs.Tab>
-  ```js copy {2, 11-14}
-  // ./src/counter.ts
-  import {r} from './main.js'
-
-  const onClick = () => {
-    r.mutate.increment({ key: "count", delta: 1 });
-  };
-
-  export function setupCounter(element: HTMLButtonElement) {
-    element.addEventListener('click', onClick);
-
-    r.subscribe(
-      (tx) => tx.get("count"),
-      (count) => (element.textContent = (count ?? 0).toString())
-    );
-  }
-  ```
 </Tabs.Tab>
 </Tabs>
 
-See [Data Modeling](./data-modeling) for more complex data storage needs.
+### Sync
 
-## Develop
+Reflect runs your mutators on the server-side too. This is how it achieves [server-authority](https://rocicorp.dev/blog/ready-player-two).
 
-Start the local dev environment:
+To register your mutators with the server, create a new directory called `reflect-server` and add an `index.ts` file to it. This will be the entrypoint to your server code.
+
+```ts filename="reflect-server/index.ts" copy
+import { mutators } from "../mutators";
+
+export function makeOptions() {
+  return {
+    mutators,
+  };
+}
+```
+
+Your Reflect server will run in a bare JS environment without the DOM. Add a `tsconfig.json` file that tells TypeScript about this:
+
+```json filename="reflect-server/tsconfig.json"
+{
+  "compilerOptions": {
+    "lib": ["esnext"],
+    "moduleResolution": "node",
+    "declaration": true,
+    "incremental": true
+  },
+  "include": ["**/*.ts"]
+}
+```
+
+### Develop
+
+Run the development server and update the Reflect constructor to talk to it:
 
 ```bash copy
 npx reflect dev
-````
-
-In a different tab, start the UI dev server:
-
-```bash copy
-npm run dev
 ```
 
-## Publish
+```ts copy {2}
+const r = new Reflect({
+  server: "http://localhost:3000",
+  roomID: "myRoom",
+  mutators,
+});
+```
 
-Deploy the Reflect server to [reflect.net](https://reflect.net/):
+Now your app should sync changes to Reflect state live across tabs and browsers on the local machine.
+
+### Deploy
+
+To sync between clients on different computers, deploy your server to `reflect-server.net`:
 
 ```bash copy
 npx reflect publish
 ```
 
-Deploy the UI. You can use any hosting provider, we'll use Vercel here:
+And update your Reflect constructor to talk to the production server instead:
 
-```bash copy
-npx vercel
+```ts copy {2}
+const r = new Reflect({
+  server: "https://my-app-my-team.reflect-server.net",
+  roomID: "myRoom",
+  mutators,
 ```
 
-Note that you will have to change the `server` in the `Reflect` constructor to point to your remote Reflect server (i.e., `https://my-app-my-user.reflect-server.net`).
+</Steps>
 
 ## Next Steps
+
+You now know the essential principles of Reflect 🎉. Now it's time to learn more about how to use it in your app.
 
 <Cards>
   <Card icon={<HowTo />} title="Learn to use Reflect" href="/rooms" />
@@ -452,6 +228,8 @@ Note that you will have to change the `server` in the `Reflect` constructor to p
   <Card
     icon={<HowTo />}
     title="Understand Reflect's design"
-    href="/server-authority"
+    href="https://rocicorp.dev/blog/ready-player-two"
   />
 </Cards>
+
+Have a question? Feel free to [reach out to us](mailto://hi@reflect.net).

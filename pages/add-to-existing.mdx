@@ -26,7 +26,7 @@ npm install @rocicorp/reflect@latest
 Mutators are how you make changes to data in Reflect. They are typically defined in their own file called `mutators.ts`. The first argument is always `WriteTransaction`, and the second is up to you.
 
 ```ts filename="mutators.ts" copy
-import { WriteTransaction } from "@rocicorp/reflect";
+import type { WriteTransaction } from "@rocicorp/reflect";
 
 export const mutators = {
   increment,
@@ -48,6 +48,7 @@ async function increment(tx: WriteTransaction, delta: number) {
 Instantiate Reflect and register your mutators.
 
 ```ts copy
+import { Reflect } from "@rocicorp/reflect/client";
 import { mutators } from "./mutators";
 
 const r = new Reflect({
@@ -96,57 +97,58 @@ Call `r.mutate.foo()` anywhere in your app to make changes to synced data, and r
       const [count, setCount] = createSignal(0);
 
       const onClick = () => {
-        r.mutate.increment({ key: "count", delta: 1 });
+        r.mutate.increment(1);
       };
 
       r.subscribe(
         (tx) => tx.get<number>("count"),
-        (data) => setCount(data ?? 0);
+        (data) => setCount(data ?? 0),
       );
 
       return <button onClick={onClick}>{count}</button>
     }
-    ```
+
+````
 
 </Tabs.Tab>
-  <Tabs.Tab>
-    ```svelte  copy {5,8-11}
-    <script lang="ts">
-    let count: number = 0
+<Tabs.Tab>
+  ```svelte  copy {5,8-11}
+  <script lang="ts">
+  let count: number = 0
 
-    const onClick = () => {
-      r.mutate.increment({ key: "count", delta: 1 });
-    };
+  const onClick = () => {
+    r.mutate.increment(1);
+  };
 
-    r.subscribe(
-      (tx) => tx.get<number>("count"),
-      (data) => count = (data ?? 0),
-    );
-    </script>
+  r.subscribe(
+    (tx) => tx.get<number>("count"),
+    (data) => count = (data ?? 0),
+  );
+  </script>
 
-    <button on:click={onClick}>{count}</button>
-    ```
+  <button on:click={onClick}>{count}</button>
+  ```
 
 </Tabs.Tab>
-  <Tabs.Tab>
-    ```vue  copy {5,8-11}
-    <script setup lang="ts">
-    const count = ref(0)
+<Tabs.Tab>
+  ```vue  copy {5,8-11}
+  <script setup lang="ts">
+  const count = ref(0)
 
-    const onClick = () => {
-      r.mutate.increment({ key: "count", delta: 1 });
-    };
+  const onClick = () => {
+    r.mutate.increment(1);
+  };
 
-    r.subscribe(
-      (tx) => tx.get<number>("count"),
-      (data) => count.value = data ?? 0;
-    );
-    </script>
+  r.subscribe(
+    (tx) => tx.get<number>("count"),
+    (data) => count.value = data ?? 0,
+  );
+  </script>
 
-    <template>
-      <button @click="onClick">{{ count }}</button>
-    </template>
-    ```
+  <template>
+    <button @click="onClick">{{ count }}</button>
+  </template>
+  ```
 
 </Tabs.Tab>
 </Tabs>
@@ -160,16 +162,16 @@ To register your mutators with the server, create a new directory called `reflec
 ```ts filename="reflect-server/index.ts" copy
 import { mutators } from "../mutators";
 
-export function makeOptions() {
-  return {
-    mutators,
-  };
+export default function makeOptions() {
+return {
+  mutators,
+};
 }
-```
+````
 
 Your Reflect server will run in a bare JS environment without the DOM. Add a `tsconfig.json` file that tells TypeScript about this:
 
-```json filename="reflect-server/tsconfig.json"
+```json filename="reflect-server/tsconfig.json" copy
 {
   "compilerOptions": {
     "lib": ["esnext"],
@@ -178,6 +180,14 @@ Your Reflect server will run in a bare JS environment without the DOM. Add a `ts
     "incremental": true
   },
   "include": ["**/*.ts"]
+}
+```
+
+Finally, add a `/reflect.config.json` file in the root of your project, to tell Reflect where to find your server:
+
+```json filename="/reflect.config.json" copy
+{
+  "server": "./reflect-server/index.ts"
 }
 ```
 
@@ -191,10 +201,16 @@ npx reflect dev
 
 ```ts copy {2}
 const r = new Reflect({
-  server: "http://localhost:3000",
+  server: "http://localhost:8080",
   roomID: "myRoom",
   mutators,
 });
+```
+
+Then **in a separate tab**, run your app:
+
+```bash copy
+npm run dev
 ```
 
 Now your app should sync changes to Reflect state live across tabs and browsers on the local machine.

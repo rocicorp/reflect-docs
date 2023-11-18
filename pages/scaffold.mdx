@@ -4,6 +4,7 @@ import { Cards, Card } from "nextra/components";
 import { Examples } from "../components/icons/examples";
 import { HowTo } from "../components/icons/howto";
 import { Tutorial } from "../components/icons/tutorial";
+import { Steps } from "nextra/components";
 
 # Scaffold a New Reflect Project
 
@@ -14,13 +15,15 @@ Follow these instructions to create a simple Reflect starter app based on Vite a
   frameworks.
 </Callout>
 
-## Install
+<Steps>
+
+### Install
 
 ```bash copy
 npx @rocicorp/reflect@latest create my-app
 ```
 
-## Develop
+### Develop
 
 Reflect has a fully local development server (`npx reflect dev`) for fast iteration.
 
@@ -33,7 +36,7 @@ npm run watch
 
 Open [http://localhost:5173/](http://localhost:5173/) in two tabs to see it in action.
 
-## Publish
+### Publish
 
 When you are happy with your app, publish the Reflect server to [reflect.net](https://reflect.net/):
 
@@ -58,6 +61,8 @@ You can host the app UI just about anywhere since it's just static JS. For examp
 ```bash copy
 npx vercel
 ```
+
+</Steps>
 
 ## Next Steps
 

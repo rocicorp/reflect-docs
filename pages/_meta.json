@@ -1,93 +1,40 @@
 {
-  "-- Get Started": {
-    "type": "separator",
+  "index": {
+    "display": "hidden",
+    "theme": {
+      "pagination": false
+    }
+  },
+  "start": {
     "title": "Get Started"
   },
-  "index": {
-    "display": "hidden"
+  "concepts": {
+    "title": "Core Concepts"
   },
-  "scaffold": {
-    "title": "Scaffold New Project",
-    "theme": {
-      "pagination": false
+  "how": {
+    "title": "How To"
+  },
+  "resources": {
+    "title": "More Resources"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "type": "menu",
+    "items": {
+      "Email": {
+        "title": "Email",
+        "href": "mailto:hi@reflect.net"
+      },
+      "Twitter": {
+        "title": "Twitter",
+        "href": "https://twitter.com/hello_reflect",
+        "newWindow": true
+      },
+      "Discord": {
+        "title": "Discord",
+        "href": "https://discord.reflect.net/",
+        "newWindow": true
+      }
     }
-  },
-  "add-to-existing": {
-    "title": "Add to Existing Project",
-    "theme": {
-      "pagination": false
-    }
-  },
-  "examples": {
-    "title": "Examples",
-    "theme": {
-      "pagination": false
-    }
-  },
-  "-- Learn Reflect": {
-    "type": "separator",
-    "title": "Learn Reflect"
-  },
-  "rooms": {
-    "title": "Rooms"
-  },
-  "mutators": {
-    "title": "Mutators"
-  },
-  "subscriptions": {
-    "title": "Subscriptions"
-  },
-  "data-modeling": {
-    "title": "Data Modeling"
-  },
-  "presence": {
-    "title": "Presence"
-  },
-  "authentication": {
-    "title": "Authentication"
-  },
-  "env": {
-    "title": "Environment Variables"
-  },
-  "-- Other Resources": {
-    "type": "separator",
-    "title": "Other Resources"
-  },
-  "articles": {
-    "title": "Articles"
-  },
-  "videos": {
-    "title": "Videos"
-  },
-  "status": {
-    "title": "Project Status"
-  },
-  "releases": {
-    "title": "Releases",
-    "href": "https://replicache.notion.site/Reflect-Releases-4982759e4269479386f8b1122e4edbb1?pvs=4",
-    "newWindow": true
-  },
-  "-- Contact Us": {
-    "type": "separator",
-    "title": "Contact Us"
-  },
-  "Email": {
-    "title": "Email ↪",
-    "href": "mailto:hi@reflect.net",
-    "newWindow": true
-  },
-  "Twitter": {
-    "title": "Twitter ↪",
-    "href": "https://twitter.com/hello_reflect",
-    "newWindow": true
-  },
-  "Discord": {
-    "title": "Discord ↪",
-    "href": "https://discord.reflect.net/",
-    "newWindow": true
-  },
-  "-- Rocicorp": {
-    "type": "separator",
-    "title": "© 2023 Rocicorp, LLC"
   }
 }

@@ -1,0 +1,8 @@
+{
+  "auth": {
+    "title": "Authentication"
+  },
+  "env": {
+    "title": "Environment Variables"
+  }
+}

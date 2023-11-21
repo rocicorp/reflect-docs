@@ -1,0 +1,17 @@
+{
+  "rooms": {
+    "title": "Rooms"
+  },
+  "mutators": {
+    "title": "Mutators"
+  },
+  "subscriptions": {
+    "title": "Subscriptions"
+  },
+  "model": {
+    "title": "Data Modeling"
+  },
+  "presence": {
+    "title": "Presence"
+  }
+}

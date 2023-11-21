@@ -25,7 +25,7 @@ r.subscribeToPresence((presentClientIDs) => {
 The `subscribeToPresence` method only tells you the IDs of the clients that are present.
 To do something useful with them, you will combine these IDs with additional synced data about clients.
 This additional client data is custom to your application. It is read and written
-like any other Reflect data and can be [modeled using the Rails helper library](./data-modeling).
+like any other Reflect data and can be [modeled using the Rails helper library](./model).
 
 For example you might model your client data like so:
 
@@ -120,4 +120,4 @@ return (
 
 ## Examples
 
-For a full working example of using presence in Reflect, see [Draw](/examples#draw).
+For a full working example of using presence in Reflect, see [Draw](/start/examples#draw).

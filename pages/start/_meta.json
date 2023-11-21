@@ -5,7 +5,7 @@
       "pagination": false
     }
   },
-  "add-to-existing": {
+  "add": {
     "title": "Add to Existing Project",
     "theme": {
       "pagination": false

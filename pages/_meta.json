@@ -5,16 +5,16 @@
       "pagination": false
     }
   },
-  "getstarted": {
+  "start": {
     "title": "Get Started"
   },
   "concepts": {
     "title": "Core Concepts"
   },
-  "howto": {
+  "how": {
     "title": "How To"
   },
-  "other": {
+  "resources": {
     "title": "More Resources"
   },
   "contact": {

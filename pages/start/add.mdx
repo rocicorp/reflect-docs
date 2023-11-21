@@ -23,7 +23,9 @@ npm install @rocicorp/reflect@latest
 
 ### Define Mutators
 
-Mutators are how you make changes to data in Reflect. They are typically defined in their own file called `mutators.ts`. The first argument is always `WriteTransaction`, and the second is up to you.
+Mutators are how you make changes to data in Reflect. They are typically defined in their own file called `mutators.ts`. Create this file anywhere in your project.
+
+The first argument for each is always `WriteTransaction`, and the second is up to you.
 
 ```ts filename="mutators.ts" copy
 import type { WriteTransaction } from "@rocicorp/reflect";
@@ -49,7 +51,7 @@ Instantiate Reflect and register your mutators.
 
 ```ts copy
 import { Reflect } from "@rocicorp/reflect/client";
-import { mutators } from "./mutators";
+import { mutators } from "./path/to/mutators";
 
 const r = new Reflect({
   roomID: "myRoom",
@@ -105,7 +107,7 @@ Call `r.mutate.foo()` anywhere in your app to make changes to synced data, and r
         (data) => setCount(data ?? 0),
       );
 
-      return <button onClick={onClick}>{count}</button>
+      return <button onClick={onClick}>{count()}</button>
     }
 
 ````
@@ -157,15 +159,15 @@ Call `r.mutate.foo()` anywhere in your app to make changes to synced data, and r
 
 Reflect runs your mutators on the server-side too. This is how it achieves [server-authority](https://rocicorp.dev/blog/ready-player-two).
 
-To register your mutators with the server, create a new directory called `reflect-server` and add an `index.ts` file to it. This will be the entrypoint to your server code.
+To register your mutators with the server, create a new directory called `reflect-server` anywhere in your project, and add an `index.ts` file to it. This will be the entrypoint to your server code.
 
 ```ts filename="reflect-server/index.ts" copy
-import { mutators } from "../mutators";
+import { mutators } from "../path/to/mutators";
 
 export default function makeOptions() {
-return {
-  mutators,
-};
+  return {
+    mutators,
+  };
 }
 ````
 
@@ -187,7 +189,7 @@ Finally, add a `/reflect.config.json` file in the root of your project, to tell 
 
 ```json filename="/reflect.config.json" copy
 {
-  "server": "./reflect-server/index.ts"
+  "server": "./path/to/reflect-server/index.ts"
 }
 ```
 

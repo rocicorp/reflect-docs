@@ -1,0 +1,17 @@
+{
+  "Email": {
+    "title": "Email ↪",
+    "href": "mailto:hi@reflect.net",
+    "newWindow": true
+  },
+  "Twitter": {
+    "title": "Twitter ↪",
+    "href": "https://twitter.com/hello_reflect",
+    "newWindow": true
+  },
+  "Discord": {
+    "title": "Discord ↪",
+    "href": "https://discord.reflect.net/",
+    "newWindow": true
+  }
+}

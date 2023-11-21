@@ -1,0 +1,20 @@
+{
+  "scaffold": {
+    "title": "Scaffold New Project",
+    "theme": {
+      "pagination": false
+    }
+  },
+  "add-to-existing": {
+    "title": "Add to Existing Project",
+    "theme": {
+      "pagination": false
+    }
+  },
+  "examples": {
+    "title": "Examples",
+    "theme": {
+      "pagination": false
+    }
+  }
+}

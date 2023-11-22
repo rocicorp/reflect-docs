@@ -4,5 +4,8 @@
   },
   "env": {
     "title": "Environment Variables"
+  },
+  "usage": {
+    "title": "Usage Monitoring"
   }
 }

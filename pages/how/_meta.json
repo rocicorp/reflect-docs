@@ -8,6 +8,9 @@
   "github": {
     "title": "GitHub Integration"
   },
+  "overflow": {
+    "title": "Room Overflow"
+  },
   "usage": {
     "title": "Usage Monitoring"
   }

@@ -1,0 +1,61 @@
+import { Steps } from "nextra/components";
+
+# GitHub Integration
+
+You can automatically deploy your Reflect app using GitHub Actions.
+
+<Steps>
+
+### Generate an API Key
+
+```bash
+npx reflect key create my-api-key
+```
+
+### Create Secret
+
+In your GitHub repo, go to Settings → Secrets and Variables → New Repository Secret.
+
+Create a new secret named `REFLECT_AUTH_KEY` with the value of the API key you generated above.
+
+### Create GitHub Action
+
+In your GitHub repo, go to Actions → New Workflow → set up a workflow yourself.
+
+Paste the following into the editor:
+
+```yaml
+name: Deploy Reflect
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: npm install
+        run: |
+          npm install
+
+      - name: publish
+        env:
+          REFLECT_AUTH_KEY: ${{ secrets.REFLECT_AUTH_KEY }}
+        run: |
+          npx reflect publish --auth-key-from-env=REFLECT_AUTH_KEY
+```
+
+</Steps>

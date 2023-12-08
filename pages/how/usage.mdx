@@ -1,29 +1,10 @@
-import { Callout } from "nextra/components";
-
 # Usage Monitoring
 
 You can get information about your app's usage with the `npx reflect usage` command.
 
-```
-$ npx reflect usage --help
- 
-npx reflect usage
- 
-📊 Show usage summary (connection time), with monthly, daily, or hourly breakdowns
- 
-Options:
-  -v, --version  Show version number  [boolean]
-      --year     Show summary of a given year, with monthly totals. Defaults to the current year.  [number]
-      --month    Show summary of a given month, with daily totals.  [number] [choices: 1, 2 … 12]
-      --day      Show summary of a given day of the month, with hourly totals.  [number] [choices: 1, 2 … 31]
-      --today    Equivalent to --month=<current-month> --day=<current-day>.  [boolean]
-  -h, --help     Show help  [boolean]
-```
+<img src="/usage.png"/>
 
-<Callout type="info">
-The metric currently reported by `usage` is _connected client minutes_ – the total amount of time all clients were connected in the period. This is different than the metric <a href="https://reflect.net/#pricing">we bill by</a> which is the number of minutes rooms were active. This will be fixed in an upcoming release.
-
-</Callout>
+See `npx reflect usage --help` for more information.
 
 ## Granularity
 

@@ -5,6 +5,9 @@
   "env": {
     "title": "Environment Variables"
   },
+  "github": {
+    "title": "GithHub Integration"
+  },
   "usage": {
     "title": "Usage Monitoring"
   }

@@ -3,6 +3,7 @@ const BUNDLED_LANGUAGES = shiki.BUNDLED_LANGUAGES;
 const getHighlighter = shiki.getHighlighter;
 
 const nextConfig = {
+  transpilePackages: ["react-tweet"],
   mdxOptions: {
     rehypePrettyCodeOptions: {
       getHighlighter: (options) =>

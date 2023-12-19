@@ -1,0 +1,173 @@
+import { Callout } from "nextra/components";
+import Link from "next/link";
+import { Steps } from "nextra/components";
+import { Tweet} from "react-tweet"
+
+# Text Editing
+
+Reflect supports high-quality collaborative text editing via the popular [Yjs](https://yjs.dev) library. All editors and tools built on Yjs are supported, including [CodeMirror](https://codemirror.net/), [Monaco](https://microsoft.github.io/monaco-editor/), [TipTap](https://www.tiptap.dev/), [Quill](https://quilljs.com/), and many others.
+
+When running on Reflect, Yjs gets some extra powers too. For example, you can easily add server-side validation to your Yjs docs with Reflect's mutators.
+
+{/*
+To learn more see, the launch post:
+
+<div style={{display:'flex', justifyContent: 'center'}}>
+  <Tweet id="1714682920495919520"/>
+</div>
+*/}
+
+## Get Started
+
+These steps assume you already have a project with Reflect setup. To quickly create one see [Scaffold a New Project](/start/scaffold).
+
+<Steps>
+
+### Install
+
+```bash copy
+npm install yjs reflect-yjs
+```
+
+### Instantiate Reflect
+
+Create a Reflect instance as normal, but add the Yjs-specific mutators from `reflect-yjs` to your own:
+
+```ts filename="my-app.ts" copy {2-3,11}
+import { Reflect } from "@rocicorp/reflect";
+import { Provider, mutators as yjsMutators } from "reflect-yjs";
+import * as Y from "yjs";
+import {mutators} from "./my-mutators.ts"
+
+const r = new  Reflect({
+  roomID,
+  userID,
+  mutators: {
+    ...mutators,
+    ...yjsMutators
+  }
+});
+```
+
+### Register Yjs mutators with your Reflect server
+
+Just like your own mutators, the mutators from `reflect-yjs` run on both the client and server.
+
+```ts filename="reflect-server/index.ts" copy {2,8}
+import { mutators } from "../my-mutators.ts";
+import { mutators as yjsMutators } from "reflect-yjs";
+
+export default function makeOptions() {
+  return {
+    mutators: {
+      ...mutators,
+      ...yjsMutators
+    }
+  };
+}
+
+```
+
+### Create a Yjs document and bind it to Reflect
+
+The `Provider` from `reflect-yjs` sends Yjs changes to and from the server using Reflect.
+
+```ts copy filename="my-app.ts"
+const yDoc = new Y.Doc();
+const yProvider = new Provider(r, "mydoc", yDoc);
+```
+
+### Use Yjs
+
+At this point, Yjs is ready to go. You can use it directly, but more likely you will connect it to some text editor. For example to use it with [TipTap](https://www.tiptap.dev/), first install the TipTap libraries:
+
+```bash copy
+npm add @tiptap/react @tiptap/extension-document @tiptap/extension-paragraph \
+  @tiptap/extension-text @tiptap/extension-collaboration
+```
+
+Then create a TipTap editor and bind it to Yjs:
+
+```tsx copy filename="index.tsx"
+// ...
+
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
+import Collaboration from "@tiptap/extension-collaboration";
+import { EditorContent, useEditor } from "@tiptap/react";
+
+// ...
+
+function App() {
+  const editor = useEditor({
+    extensions: [
+      Document,
+      Paragraph,
+      Text,
+      Collaboration.configure({
+        document: yDoc,
+      }),
+    ],
+  });
+
+  // Render app.
+  return (
+    <>
+      Type something:
+      <EditorContent
+        editor={editor}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "stretch",
+          width: 500,
+          border: "1px solid black",
+        }}
+      />
+    </>
+  );
+}
+```
+
+For a complete working example of the TipTap editor on Reflect, see [Type](/start/examples#type). For examples using other editors, see the [GitHub repo](https://github.com/rocicorp/reflect-yjs/tree/main/examples).
+
+You can also consult the [documentation for Yjs](https://docs.yjs.dev/) itself.
+
+</Steps>
+
+## Validation
+
+You can apply server-side validation to Yjs documents, just like other Reflect data. In your Reflect server, override the default `updateYJS` mutator to provide a validator:
+
+```ts filename="reflect-server/index.ts" copy
+import {regex} from 'badwords-list';
+
+function makeOptions() {
+  return {
+    mutators: {
+      ...yjsMutators,
+      updateYJS: updateYJS({
+        validator: doc => {
+          const text = doc.getText('monaco');
+          const string = text.toString();
+          let match: RegExpExecArray | null = null;
+          while ((match = regex.exec(string)) !== null) {
+            const badWordLength = match[0].length;
+            text.delete(match.index, badWordLength);
+            text.insert(match.index, '*'.repeat(badWordLength));
+          }
+        },
+      }),
+    },
+  };
+}
+```
+
+<Callout>
+Not seeing what you're looking for? We're planning to improve the Yjs server-side API. Find us on [Discord](https://discord.reflect.net/) to let us know what you're missing.
+</Callout>
+
+## Limits
+
+YJs documents are limited to 1MB. This is not a fundamental limit, but a function of some details of our messaging infrastructure. If this is a problem for you let us know, it can be fixed.

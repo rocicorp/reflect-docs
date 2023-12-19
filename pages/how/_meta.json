@@ -11,6 +11,9 @@
   "overflow": {
     "title": "Room Overflow"
   },
+  "text": {
+    "title": "Text Editing"
+  },
   "usage": {
     "title": "Usage Monitoring"
   }

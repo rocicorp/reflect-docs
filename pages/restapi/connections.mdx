@@ -1,0 +1,50 @@
+# Connection Commands
+
+## Invalidate all connections
+
+Invalidates all user sessions in all rooms. Active clients will immediately
+try to reconnect and auth.
+
+### Request
+
+**`POST`** `https://api.reflect-server.net/v1/apps/{app-id}/connections/all:invalidate`
+
+### Response
+
+```typescript
+type InvalidateConnectionsResult = {};
+```
+
+Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#responses)
+
+## Invalidate room connections
+
+Invalidates all user sessions in a room. Affected active clients will immediately
+try to reconnect and auth.
+
+### Request
+
+**`POST`** `https://api.reflect-server.net/v1/apps/{app-id}/connections/rooms/{uri-encoded-room-id}:invalidate`
+
+### Response
+
+```typescript
+type InvalidateConnectionsResult = {};
+```
+
+Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#responses)
+
+## Invalidate user connections
+
+Invalidates all of a user's sessions. Affected active clients will immediately
+try to reconnect and auth.
+
+### Request
+
+**`POST`** `https://api.reflect-server.net/v1/apps/{app-id}/connections/user/{uri-encoded-user-id}:invalidate`
+
+### Response
+
+```typescript
+type InvalidateConnectionsResult = {};
+```

@@ -1,0 +1,53 @@
+import { Steps } from "nextra/components";
+
+# Reflect REST API
+
+## API Base URL
+
+```
+https://api.reflect-server.net/
+```
+
+## Authentication
+
+<Steps>
+
+### Generate an API Key
+
+```bash
+npx reflect key create my-api-key
+```
+
+### Set the `Authorization` Header
+
+Pass the value of the key in the `Authorization` header of the request:
+
+```
+Authorization: Basic {key-value}
+```
+
+</Steps>
+
+## Responses
+
+Success responses use HTTP status `200` with the following JSON response body format:
+
+```typescript
+type SuccessResponse<T> = {
+  result: T;
+  error: null;
+};
+```
+
+Error responses use HTTP status `4xx` with the following JSON response body format:
+
+```typescript
+type ErrorResponse = {
+  result: null;
+  error: {
+    code: number;  // HTTP status code
+    resource: 'rooms' | 'connections' | ...;
+    message: string;  // Human-readable message
+  }
+}
+```

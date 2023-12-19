@@ -1,0 +1,128 @@
+# Room Commands
+
+## Get room
+
+### Request
+
+**`GET`** `https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}`
+
+### Response
+
+```typescript
+type GetRoomResult = {
+  roomID: string;
+  jurisdiction: "" | "eu";
+  status: "open" | "closed" | "deleted";
+};
+```
+
+Full response type: [`SuccessResponse<GetRoomResult>`](overview#responses)
+
+## List rooms
+
+### Request
+
+**`GET`** `https://api.reflect-server.net/v1/apps/{app-id}/rooms`
+
+(All query parameters are optional.)
+
+| Query Parameter | Description                                                                            |
+| :-------------- | :------------------------------------------------------------------------------------- |
+| `startKey`      | The earliest `roomID` to list (inclusive).<br/>Mutually exclusive with `startAfterKey` |
+| `startAfterKey` | The `roomID` after which to list (exclusive).<br/>Mutually exclusive with `startKey`   |
+| `maxResults`    | The maximum number of results to return.<br/>The implementation may cap this value.    |
+
+### Response
+
+Rooms are returned in lexicographical `roomID` order.
+
+```typescript
+type ListRoomsResult = {
+  results: GetRoomResult[];
+  numResults: number;
+  more: boolean;
+};
+```
+
+Full response type: [`SuccessResponse<ListRoomsResult>`](overview#responses)
+
+## Create room
+
+A room is automatically if no room exists. This explicitly creates a room.
+
+### Request
+
+**`POST`** `https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}:create`
+
+JSON Body:
+
+```typescript
+{
+  jurisdiction: "" | "eu";
+}
+```
+
+### Response
+
+```typescript
+type CreateRoomResult = {};
+```
+
+Full response type: [`SuccessResponse<CreateRoomResult>`](overview#responses)
+
+## Close room
+
+A room is closed if it should no longer accept connections from users.
+A closed room is never re-opened and its `roomID` can never be re-used.
+Closing a room does not delete its data. Closing a room only prevents users from
+connecting to the room, it does not log out users who may currently be connected.
+A call to close the room should likely be followed by a call to
+[invalidate room connections](connections#invalidate-room-connections),
+which logs users out.
+
+### Request
+
+**`POST`** `https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}:close`
+
+JSON Body:
+
+```typescript
+{
+  jurisdiction: "" | "eu";
+}
+```
+
+### Response
+
+```typescript
+type CloseRoomResult = {};
+```
+
+Full response type: [`SuccessResponse<CloseRoomResult>`](overview#responses)
+
+## Delete room
+
+A room is deleted if it no longer accepts connections from users and all its data has been deleted.
+This condition is permanent. The `roomID` will not be re-usable. In order to be deleted, a room must
+first be [closed](#close-room). It should also have had its users logged out via
+[invalidate room connections](connections#invalidate-room-connections).
+
+### Request
+
+**`POST`** `https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}:delete`
+
+JSON Body:
+
+```typescript
+{
+  jurisdiction: "" | "eu";
+}
+```
+
+### Response
+
+```typescript
+type DeleteRoomResult = {};
+```
+
+Full response type: [`SuccessResponse<DeleteRoomResult>`](overview#responses)

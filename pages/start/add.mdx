@@ -92,7 +92,7 @@ Call `r.mutate.foo()` anywhere in your app to make changes to synced data, and r
       const count = useSubscribe(
         r, (tx) => tx.get<number>("count"), 0);
 
-      return <button onClick={onClick}>{count}</buttondiv>;
+      return <button onClick={onClick}>{count}</button>;
     }
     ```
 

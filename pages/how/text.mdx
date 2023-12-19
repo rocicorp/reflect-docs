@@ -126,9 +126,7 @@ You can also consult the [documentation for Yjs](https://docs.yjs.dev/) itself.
 
 ## Validation
 
-You can apply server-side validation to Yjs documents, just like other Reflect data.
-
-In your Reflect server, override the default `updateYJS` mutator to provide a validator:
+You can apply server-side validation to Yjs documents, just like other Reflect data. In your Reflect server, override the default `updateYJS` mutator to provide a validator:
 
 ```ts filename="reflect-server/index.ts" copy
 import {regex} from 'badwords-list';
@@ -153,6 +151,10 @@ function makeOptions() {
   };
 }
 ```
+
+<Callout>
+Not seeing what you're looking for? We're planning to improve the Yjs server-side API. Find us on [Discord](https://discord.reflect.net/) to let us know what you're missing.
+</Callout>
 
 ## Limits
 

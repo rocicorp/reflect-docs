@@ -70,6 +70,10 @@ type GetRoomResult = {
 type ListRoomsResult = {
   results: GetRoomResult[];
   numResults: number;
+  /**
+   * Whether there are more rooms (lexicographically) after the returned results.
+   * These can be fetched with `startAfterKey={room-id-of-last-result}`.
+   */
   more: boolean;
 };
 ```

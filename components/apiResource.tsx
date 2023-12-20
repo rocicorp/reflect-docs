@@ -17,10 +17,10 @@ const APIResource = ({ method, path }: APIResourceProps): JSX.Element => {
           <span className="line">
             <span className={style.method}>{method} </span>
             <span className={style.baseURL}>
-              https://api.reflect-server.net
+              https://api.reflect-server.net/v1
             </span>
             <span className={style.path}>
-              {tokenize(`/v1/apps/{app-id}${path}`).map((part) => (
+              {tokenize(`/apps/{app-id}${path}`).map((part) => (
                 <span className={part.startsWith("{") ? style.placeHolder : ""}>
                   {part}
                 </span>

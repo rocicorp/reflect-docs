@@ -1,4 +1,4 @@
-import { Callout } from "nextra/components";
+import { Callout, Tabs } from "nextra/components";
 
 # Connection Commands
 
@@ -17,11 +17,18 @@ try to reconnect and auth.
 
 ### Response
 
+
+<Tabs items={['200']}>
+<Tabs.Tab>
+
 ```typescript
 type InvalidateConnectionsResult = {};
 ```
 
 Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#responses)
+
+</Tabs.Tab>
+</Tabs>
 
 ## Invalidate room connections
 
@@ -38,12 +45,24 @@ try to reconnect and auth.
 
 ### Response
 
+<Tabs items={['200', '4xx']}>
+<Tabs.Tab>
+
 ```typescript
 type InvalidateConnectionsResult = {};
 ```
 
 Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#responses)
 
+
+</Tabs.Tab>
+<Tabs.Tab>
+| Code | Resource | Description         |
+| :--- | :------- | :------------------ |
+| 404  | `rooms`  | Room not found      |
+
+</Tabs.Tab>
+</Tabs>
 ## Invalidate user connections
 
 Invalidates all of a user's sessions. Affected active clients will immediately
@@ -59,6 +78,15 @@ try to reconnect and auth.
 
 ### Response
 
+
+<Tabs items={['200']}>
+<Tabs.Tab>
+
 ```typescript
 type InvalidateConnectionsResult = {};
 ```
+
+Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#responses)
+
+</Tabs.Tab>
+</Tabs>

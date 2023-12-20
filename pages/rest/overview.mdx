@@ -1,4 +1,4 @@
-import { Steps } from "nextra/components";
+import { Steps, Tabs } from "nextra/components";
 
 # Reflect REST API
 
@@ -30,24 +30,45 @@ Authorization: Basic {key-value}
 
 ## Responses
 
+<Tabs items={['200', '4xx', '5xx']}>
+<Tabs.Tab>
+
 Success responses use HTTP status `200` with the following JSON response body format:
 
 ```typescript
 type SuccessResponse<T> = {
   result: T;
-  error: null;
 };
 ```
 
-Error responses use HTTP status `4xx` with the following JSON response body format:
+See command documentation for the result type `T`.
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+Errors arising from problems with the request or with the state of the
+system use HTTP status `4xx` with the following JSON response body format:
 
 ```typescript
 type ErrorResponse = {
-  result: null;
   error: {
-    code: number;  // HTTP status code
-    resource: 'rooms' | 'connections' | ...;
-    message: string;  // Human-readable message
+    /** The HTTP status code */
+    code: number;
+    /** The resource to which the error is relevant */
+    resource: 'request' | 'rooms' | 'connections' | ...;
+    /** A human-readable message */
+    message: string;
   }
 }
 ```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+Server errors use HTTP status `5xx` and have no defined body format.
+
+Clients may use exponential backoff to retry server errors, with a recommended
+minimum of 1 second delay and maximum of 5 retries.
+
+</Tabs.Tab>
+</Tabs>

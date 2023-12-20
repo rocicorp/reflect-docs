@@ -1,4 +1,5 @@
 import { Callout, Tabs } from "nextra/components";
+import APIResource from "../../components/apiResource";
 
 # Room Commands
 
@@ -8,9 +9,7 @@ import { Callout, Tabs } from "nextra/components";
 
 ### Request
 
-```http
-GET https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}
-```
+<APIResource method="GET" path="/rooms/{uri-encoded-room-id}" />
 
 ### Response
 
@@ -44,9 +43,7 @@ Full response type: [ErrorResponse](overview#4xx)
 
 ### Request
 
-```http
-GET https://api.reflect-server.net/v1/apps/{app-id}/rooms
-```
+<APIResource method="GET" path="/rooms" />
 
 (All query parameters are optional.)
 
@@ -105,9 +102,7 @@ A room is automatically created if no room exists. This call can be used to expl
 
 ### Request
 
-```http
-POST https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}:create
-```
+<APIResource method="POST" path="/rooms/{uri-encoded-room-id}:create" />
 
 **JSON Body**:
 
@@ -157,9 +152,7 @@ Closing a room does not delete its data. Use the
 
 ### Request
 
-```http
-POST https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}:close
-```
+<APIResource method="POST" path="/rooms/{uri-encoded-room-id}:close" />
 
 ### Response
 
@@ -195,9 +188,7 @@ have had its users logged out via [invalidate room connections](connections#inva
 
 ### Request
 
-```http
-POST https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}:delete
-```
+<APIResource method="POST" path="/rooms/{uri-encoded-room-id}:delete" />
 
 ### Response
 

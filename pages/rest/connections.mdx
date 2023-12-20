@@ -1,4 +1,5 @@
 import { Callout, Tabs } from "nextra/components";
+import APIResource from "../../components/apiResource";
 
 # Connection Commands
 
@@ -7,15 +8,11 @@ import { Callout, Tabs } from "nextra/components";
 Invalidates all user sessions in all rooms. Active clients will immediately
 try to reconnect and auth.
 
-<Callout emoji="🔑">
-  API key permission: `connections:invalidate`
-</Callout>
+<Callout emoji="🔑">API key permission: `connections:invalidate`</Callout>
 
 ### Request
 
-```http
-POST https://api.reflect-server.net/v1/apps/{app-id}/connections/all:invalidate
-```
+<APIResource method="POST" path="/connections/all:invalidate" />
 
 ### Response
 
@@ -36,15 +33,11 @@ Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#20
 Invalidates all user sessions in a room. Affected active clients will immediately
 try to reconnect and auth.
 
-<Callout emoji="🔑">
-  API key permission: `connections:invalidate`
-</Callout>
+<Callout emoji="🔑">API key permission: `connections:invalidate`</Callout>
 
 ### Request
 
-```http
-POST https://api.reflect-server.net/v1/apps/{app-id}/connections/rooms/{uri-encoded-room-id}:invalidate
-```
+<APIResource method="POST" path="/connections/rooms/{uri-encoded-room-id}:invalidate" />
 
 ### Response
 
@@ -72,15 +65,11 @@ Full response type: [ErrorResponse](overview#4xx)
 Invalidates all of a user's sessions. Affected active clients will immediately
 try to reconnect and auth.
 
-<Callout emoji="🔑">
-  API key permission: `connections:invalidate`
-</Callout>
+<Callout emoji="🔑">API key permission: `connections:invalidate`</Callout>
 
 ### Request
 
-```http
-POST https://api.reflect-server.net/v1/apps/{app-id}/connections/user/{uri-encoded-user-id}:invalidate
-```
+<APIResource method="POST" path="/connections/users/{uri-encoded-user-id}:invalidate" />
 
 ### Response
 

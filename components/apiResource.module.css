@@ -1,0 +1,16 @@
+.baseURL {
+  color: #444444;
+}
+
+.method {
+  color: lab(47.8876% 63.025 42.31);
+  font-weight: bold;
+}
+
+.path {
+  font-weight: bold;
+}
+
+.placeHolder {
+  color: #6f42c1;
+}

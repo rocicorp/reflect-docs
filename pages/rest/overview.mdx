@@ -77,7 +77,7 @@ type ErrorResponse = {
 
 ### 5xx
 
-`5xx` server errors and have no defined body format.
+`5xx` server errors have no defined body format.
 
 Clients may use exponential backoff to retry server errors, with a recommended
 minimum of 1 second delay and maximum of 5 retries.

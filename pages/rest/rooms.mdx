@@ -132,7 +132,8 @@ existing connections unchanged. A call to [invalidate room connections](connecti
 should be used to close existing connections.
 
 A closed room is never re-opened and its `roomID` can never be re-used.
-Closing a room, however, does not delete its data. Use the
+
+Closing a room does not delete its data. Use the
 [delete room](#delete-room) call to delete room data.
 
 <Callout emoji="🔑">API key permission: `rooms:close`</Callout>
@@ -167,6 +168,7 @@ Full response type: [`SuccessResponse<CloseRoomResult>`](overview#responses)
 ## Delete room
 
 Deleting a room deletes all of its data. The condition is permanent.
+
 In order to be deleted, a room must first be [closed](#close-room). It should also
 have had its users logged out via [invalidate room connections](connections#invalidate-room-connections).
 

@@ -4,7 +4,7 @@ import { Callout, Tabs } from "nextra/components";
 
 ## Get room
 
-<Callout emoji="🔑">Required API Key Permission: `rooms:read`</Callout>
+<Callout emoji="🔑">API key permission: `rooms:read`</Callout>
 
 ### Request
 
@@ -38,7 +38,7 @@ Full response type: [`SuccessResponse<GetRoomResult>`](overview#responses)
 
 ## List rooms
 
-<Callout emoji="🔑">Required API Key Permission: `rooms:read`</Callout>
+<Callout emoji="🔑">API key permission: `rooms:read`</Callout>
 
 ### Request
 
@@ -89,7 +89,7 @@ Full response type: [`SuccessResponse<ListRoomsResult>`](overview#responses)
 
 A room is automatically created if no room exists. This call can be used to explicitly create a room.
 
-<Callout emoji="🔑">Required API Key Permission: `rooms:create`</Callout>
+<Callout emoji="🔑">API key permission: `rooms:create`</Callout>
 
 ### Request
 
@@ -135,7 +135,7 @@ A closed room is never re-opened and its `roomID` can never be re-used.
 Closing a room, however, does not delete its data. Use the
 [delete room](#delete-room) call to delete room data.
 
-<Callout emoji="🔑">Required API Key Permission: `rooms:close`</Callout>
+<Callout emoji="🔑">API key permission: `rooms:close`</Callout>
 
 ### Request
 
@@ -170,7 +170,7 @@ Deleting a room deletes all of its data. The condition is permanent.
 In order to be deleted, a room must first be [closed](#close-room). It should also
 have had its users logged out via [invalidate room connections](connections#invalidate-room-connections).
 
-<Callout emoji="🔑">Required API Key Permission: `rooms:delete`</Callout>
+<Callout emoji="🔑">API key permission: `rooms:delete`</Callout>
 
 ### Request
 

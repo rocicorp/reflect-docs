@@ -26,7 +26,7 @@ POST https://api.reflect-server.net/v1/apps/{app-id}/connections/all:invalidate
 type InvalidateConnectionsResult = {};
 ```
 
-Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#responses)
+Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#200)
 
 </Tabs.Tab>
 </Tabs>
@@ -55,7 +55,7 @@ POST https://api.reflect-server.net/v1/apps/{app-id}/connections/rooms/{uri-enco
 type InvalidateConnectionsResult = {};
 ```
 
-Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#responses)
+Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#200)
 
 </Tabs.Tab>
 <Tabs.Tab>
@@ -63,7 +63,7 @@ Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#re
 | :--- | :------- | :------------------ |
 | 404  | `rooms`  | Room not found      |
 
-[ErrorResponse format](overview#4xx)
+Full response type: [ErrorResponse](overview#4xx)
 
 </Tabs.Tab>
 </Tabs>
@@ -91,7 +91,7 @@ POST https://api.reflect-server.net/v1/apps/{app-id}/connections/user/{uri-encod
 type InvalidateConnectionsResult = {};
 ```
 
-Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#responses)
+Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#200)
 
 </Tabs.Tab>
 </Tabs>

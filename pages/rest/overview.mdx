@@ -1,4 +1,4 @@
-import { Steps } from "nextra/components";
+import { Callout, Steps } from "nextra/components";
 
 # Reflect REST API
 
@@ -28,7 +28,19 @@ Authorization: Basic {key-value}
 
 </Steps>
 
+## Requests
+
+<Callout type="warning">
+Request parsing is strict. Unless included in the command specification,
+query strings and request bodies must be empty / unset.
+</Callout>
+
 ## Responses
+
+
+<Callout type="warning">
+Clients must be tolerant of unknown fields in responses.
+</Callout>
 
 ### 200
 

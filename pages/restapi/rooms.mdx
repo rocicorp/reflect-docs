@@ -94,14 +94,6 @@ which logs users out.
 
 **`POST`** `https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}:close`
 
-JSON Body:
-
-```typescript
-{
-  jurisdiction: "" | "eu";
-}
-```
-
 ### Response
 
 ```typescript
@@ -122,14 +114,6 @@ first be [closed](#close-room). It should also have had its users logged out vi
 ### Request
 
 **`POST`** `https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}:delete`
-
-JSON Body:
-
-```typescript
-{
-  jurisdiction: "" | "eu";
-}
-```
 
 ### Response
 

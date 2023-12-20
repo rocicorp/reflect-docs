@@ -33,7 +33,7 @@ Authorization: Basic {key-value}
 <Tabs items={['200', '4xx', '5xx']}>
 <Tabs.Tab>
 
-Success responses use HTTP status `200` with the following JSON response body format:
+Success responses use the following JSON response body format:
 
 ```typescript
 type SuccessResponse<T> = {
@@ -41,13 +41,14 @@ type SuccessResponse<T> = {
 };
 ```
 
-See command documentation for the result type `T`.
+Consult the documentation for each command for the result type `T`.
 
 </Tabs.Tab>
 <Tabs.Tab>
 
-Errors arising from problems with the request or with the state of the
-system use HTTP status `4xx` with the following JSON response body format:
+`4xx` errors arise from problems with the request and/or the state of the system.
+
+The returned JSON response body provides details about the error:
 
 ```typescript
 type ErrorResponse = {
@@ -65,7 +66,7 @@ type ErrorResponse = {
 </Tabs.Tab>
 <Tabs.Tab>
 
-Server errors use HTTP status `5xx` and have no defined body format.
+`5xx` server errors and have no defined body format.
 
 Clients may use exponential backoff to retry server errors, with a recommended
 minimum of 1 second delay and maximum of 5 retries.

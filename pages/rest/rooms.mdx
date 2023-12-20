@@ -28,6 +28,7 @@ Full response type: [`SuccessResponse<GetRoomResult>`](overview#200)
 
 </Tabs.Tab>
 <Tabs.Tab>
+
 | Code | Resource | Description    |
 | :--- | :------- | :------------- |
 | 404  | `rooms`  | Room not found |
@@ -57,6 +58,7 @@ Full response type: [ErrorResponse](overview#4xx)
 
 <Tabs items={['200', '4xx']}>
 <Tabs.Tab>
+
 Rooms are returned in lexicographical `roomID` order.
 
 ```typescript
@@ -85,6 +87,7 @@ Full response type: [`SuccessResponse<ListRoomsResult>`](overview#200)
 
 </Tabs.Tab>
 <Tabs.Tab>
+
 | Code | Resource   | Description         | 
 | :--- | :--------- | :------------------ |
 | 400  | `request`  | Invalid query parameters  |
@@ -111,7 +114,7 @@ A room is automatically created if no room exists. This call can be used to expl
 ```typescript
 type CreateRoomRequest = {
   jurisdiction: "" | "eu";
-}
+};
 ```
 
 ### Response
@@ -167,6 +170,7 @@ Full response type: [`SuccessResponse<CloseRoomResult>`](overview#200)
 
 </Tabs.Tab>
 <Tabs.Tab>
+
 | Code | Resource | Description         |
 | :--- | :------- | :------------------ |
 | 404  | `rooms`  | Room not found      |
@@ -203,6 +207,7 @@ Full response type: [`SuccessResponse<DeleteRoomResult>`](overview#200)
 
 </Tabs.Tab>
 <Tabs.Tab>
+
 | Code | Resource | Description         |
 | :--- | :------- | :------------------ |
 | 404  | `rooms`  | Room not found      |

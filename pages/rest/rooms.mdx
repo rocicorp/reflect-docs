@@ -105,10 +105,10 @@ A room is automatically created if no room exists. This call can be used to expl
 POST https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}:create
 ```
 
-JSON Body:
+**JSON Body**:
 
 ```typescript
-{
+type CreateRoomRequest = {
   jurisdiction: "" | "eu";
 }
 ```

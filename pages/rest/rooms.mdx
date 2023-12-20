@@ -16,6 +16,7 @@ GET https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}
 
 <Tabs items={['200', '4xx']}>
 <Tabs.Tab>
+
 ```typescript
 type GetRoomResult = {
   roomID: string;
@@ -181,7 +182,6 @@ POST https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}
 
 <Tabs items={['200', '4xx']}>
 <Tabs.Tab>
-
 
 ```typescript
 type DeleteRoomResult = {};

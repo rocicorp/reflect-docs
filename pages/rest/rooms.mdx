@@ -54,7 +54,7 @@ GET https://api.reflect-server.net/v1/apps/{app-id}/rooms
 | :-------------- | :------------------------------------------------------------------------------------- |
 | `startKey`      | The earliest `roomID` to list (inclusive).<br/>Mutually exclusive with `startAfterKey` |
 | `startAfterKey` | The `roomID` after which to list (exclusive).<br/>Mutually exclusive with `startKey`   |
-| `maxResults`    | The maximum number of results to return.<br/>The implementation may cap this value.    |
+| `maxResults`    | The maximum number of results to return.<br/>The server caps this value to an internal maximum.    |
 
 ### Response
 
@@ -74,7 +74,10 @@ type ListRoomsResult = {
   numResults: number;
   /**
    * Whether there are more rooms (lexicographically) after the returned results.
-   * These can be fetched with `startAfterKey={room-id-of-last-result}`.
+   * Note that this can arise even if the client did not specify `maxResults`, as
+   * the server enforces an internal maximum.
+   *
+   * More results can be fetched with `startAfterKey={room-id-of-last-result}`.
    */
   more: boolean;
 };

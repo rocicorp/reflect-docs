@@ -1,4 +1,4 @@
-import { Steps, Tabs } from "nextra/components";
+import { Steps } from "nextra/components";
 
 # Reflect REST API
 
@@ -30,8 +30,7 @@ Authorization: Basic {key-value}
 
 ## Responses
 
-<Tabs items={['200', '4xx', '5xx']}>
-<Tabs.Tab>
+### 200
 
 Success responses use the following JSON response body format:
 
@@ -43,8 +42,7 @@ type SuccessResponse<T> = {
 
 Consult the documentation for each command for the result type `T`.
 
-</Tabs.Tab>
-<Tabs.Tab>
+### 4xx
 
 `4xx` errors arise from problems with the request and/or the state of the system.
 
@@ -63,13 +61,9 @@ type ErrorResponse = {
 }
 ```
 
-</Tabs.Tab>
-<Tabs.Tab>
+### 5xx
 
 `5xx` server errors and have no defined body format.
 
 Clients may use exponential backoff to retry server errors, with a recommended
 minimum of 1 second delay and maximum of 5 retries.
-
-</Tabs.Tab>
-</Tabs>

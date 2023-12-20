@@ -49,6 +49,7 @@ Success responses use the following JSON response body format:
 ```typescript
 type SuccessResponse<T> = {
   result: T;
+  error: null;
 };
 ```
 
@@ -62,6 +63,7 @@ The returned JSON response body provides details about the error:
 
 ```typescript
 type ErrorResponse = {
+  result: null;
   error: {
     /** The HTTP status code */
     code: number;

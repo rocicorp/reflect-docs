@@ -77,7 +77,8 @@ type ListRoomsResult = {
    * Note that this can arise even if the client did not specify `maxResults`, as
    * the server enforces an internal maximum.
    *
-   * More results can be fetched with `startAfterKey={room-id-of-last-result}`.
+   * More results can be fetched with a `?startAfterKey={room-id-of-last-result}`
+   * query.
    */
   more: boolean;
 };

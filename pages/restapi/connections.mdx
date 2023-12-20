@@ -1,9 +1,15 @@
+import { Callout } from "nextra/components";
+
 # Connection Commands
 
 ## Invalidate all connections
 
 Invalidates all user sessions in all rooms. Active clients will immediately
 try to reconnect and auth.
+
+<Callout emoji="🔑">
+  Required API Key Permission: `connections:invalidate`
+</Callout>
 
 ### Request
 
@@ -22,6 +28,10 @@ Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#re
 Invalidates all user sessions in a room. Affected active clients will immediately
 try to reconnect and auth.
 
+<Callout emoji="🔑">
+  Required API Key Permission: `connections:invalidate`
+</Callout>
+
 ### Request
 
 **`POST`** `https://api.reflect-server.net/v1/apps/{app-id}/connections/rooms/{uri-encoded-room-id}:invalidate`
@@ -38,6 +48,10 @@ Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#re
 
 Invalidates all of a user's sessions. Affected active clients will immediately
 try to reconnect and auth.
+
+<Callout emoji="🔑">
+  Required API Key Permission: `connections:invalidate`
+</Callout>
 
 ### Request
 

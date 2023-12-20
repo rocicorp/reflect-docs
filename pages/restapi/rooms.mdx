@@ -1,6 +1,10 @@
+import { Callout } from "nextra/components";
+
 # Room Commands
 
 ## Get room
+
+<Callout emoji="🔑">Required API Key Permission: `rooms:read`</Callout>
 
 ### Request
 
@@ -19,6 +23,8 @@ type GetRoomResult = {
 Full response type: [`SuccessResponse<GetRoomResult>`](overview#responses)
 
 ## List rooms
+
+<Callout emoji="🔑">Required API Key Permission: `rooms:read`</Callout>
 
 ### Request
 
@@ -50,6 +56,8 @@ Full response type: [`SuccessResponse<ListRoomsResult>`](overview#responses)
 
 A room is automatically if no room exists. This explicitly creates a room.
 
+<Callout emoji="🔑">Required API Key Permission: `rooms:create`</Callout>
+
 ### Request
 
 **`POST`** `https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}:create`
@@ -80,6 +88,8 @@ A call to close the room should likely be followed by a call to
 [invalidate room connections](connections#invalidate-room-connections),
 which logs users out.
 
+<Callout emoji="🔑">Required API Key Permission: `rooms:close`</Callout>
+
 ### Request
 
 **`POST`** `https://api.reflect-server.net/v1/apps/{app-id}/rooms/{uri-encoded-room-id}:close`
@@ -106,6 +116,8 @@ A room is deleted if it no longer accepts connections from users and all its d
 This condition is permanent. The `roomID` will not be re-usable. In order to be deleted, a room must
 first be [closed](#close-room). It should also have had its users logged out via
 [invalidate room connections](connections#invalidate-room-connections).
+
+<Callout emoji="🔑">Required API Key Permission: `rooms:delete`</Callout>
 
 ### Request
 

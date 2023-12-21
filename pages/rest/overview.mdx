@@ -2,6 +2,9 @@ import { Callout, Steps } from "nextra/components";
 
 # REST API
 
+Reflect's REST API empowers you to build automations and
+integrate Reflect with your existing backend systems.
+
 ## Base URL
 
 ```http
@@ -17,6 +20,9 @@ https://api.reflect-server.net/
 ```bash
 npx reflect key create my-api-key
 ```
+
+Each key is associated with a set of fine-grained permissions that authorize it
+for API endpoints. Consult the documentation for each endpoint for its required permission.
 
 ### Set the `Authorization` Header
 
@@ -53,7 +59,7 @@ type SuccessResponse<T> = {
 };
 ```
 
-Consult the documentation for each command for the result type `T`.
+Consult the documentation for each endpoint for the result type `T`.
 
 ### 4xx
 

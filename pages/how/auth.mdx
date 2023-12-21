@@ -95,3 +95,14 @@ const mutators = {
 Instead of simply skipping an unauthorized mutation, you can also perform different logic, for example making some similar change which is allowed.
 
 Because Reflect is server-authoritative, whatever the server does will be synced to all clients, overriding any optimistic results. It's not possible for a client to "hack" their way into making a mutation that the server doesn't allow.
+
+## Invalidation
+
+Authentications may need to be invalidated, for example because the credentials associated with the JWT
+have changed, or the `AuthData` associated with the user needs to be updated.
+
+Invalidation can be done via the [REST API](/rest/connections), which provides endpoints
+for invalidating connections by user or room.
+
+When a connection is invalidated, the Reflect client will automatically attempt to reconnect,
+allowing the `authHandler` to validate and initialize a new session.

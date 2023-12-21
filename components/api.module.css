@@ -14,3 +14,7 @@
 .placeHolder {
   color: #6f42c1;
 }
+
+.permission {
+  font-weight: bold;
+}

@@ -1,15 +1,15 @@
-import { Callout, Tabs } from "nextra/components";
-import APIResource from "../../components/apiResource";
+import { Tabs } from "nextra/components";
+import { Permission, Resource } from "../../components/api";
 
 # Room Commands
 
 ## Get room
 
-<Callout emoji="🔑">API key permission: `rooms:read`</Callout>
+<Permission name="rooms:read" />
 
 ### Request
 
-<APIResource method="GET" path="/rooms/{uri-encoded-room-id}" />
+<Resource method="GET" path="/rooms/{uri-encoded-room-id}" />
 
 ### Response
 
@@ -40,11 +40,11 @@ Full response type: [ErrorResponse](overview#4xx)
 
 ## List rooms
 
-<Callout emoji="🔑">API key permission: `rooms:read`</Callout>
+<Permission name="rooms:read" />
 
 ### Request
 
-<APIResource method="GET" path="/rooms" />
+<Resource method="GET" path="/rooms" />
 
 (All query parameters are optional.)
 
@@ -99,13 +99,14 @@ Full response type: [ErrorResponse](overview#4xx)
 
 ## Create room
 
-A room is automatically created if no room exists. This call can be used to explicitly create a room.
+A room is automatically created if it does not exist when a Reflect client connects to it.
+This call can be used to explicitly create a room.
 
-<Callout emoji="🔑">API key permission: `rooms:create`</Callout>
+<Permission name="rooms:create" />
 
 ### Request
 
-<APIResource method="POST" path="/rooms/{uri-encoded-room-id}:create" />
+<Resource method="POST" path="/rooms/{uri-encoded-room-id}:create" />
 
 **JSON Body**:
 
@@ -151,11 +152,11 @@ A closed room is never re-opened and its `roomID` can never be re-used.
 Closing a room does not delete its data. Use the
 [delete room](#delete-room) call to delete room data.
 
-<Callout emoji="🔑">API key permission: `rooms:close`</Callout>
+<Permission name="rooms:close" />
 
 ### Request
 
-<APIResource method="POST" path="/rooms/{uri-encoded-room-id}:close" />
+<Resource method="POST" path="/rooms/{uri-encoded-room-id}:close" />
 
 ### Response
 
@@ -188,11 +189,11 @@ Deleting a room deletes all of its data. The condition is permanent.
 In order to be deleted, a room must first be [closed](#close-room). It should also
 have had its users logged out via [invalidate room connections](connections#invalidate-room-connections).
 
-<Callout emoji="🔑">API key permission: `rooms:delete`</Callout>
+<Permission name="rooms:delete" />
 
 ### Request
 
-<APIResource method="POST" path="/rooms/{uri-encoded-room-id}:delete" />
+<Resource method="POST" path="/rooms/{uri-encoded-room-id}:delete" />
 
 ### Response
 

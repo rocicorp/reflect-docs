@@ -1,5 +1,5 @@
-import { Callout, Tabs } from "nextra/components";
-import APIResource from "../../components/apiResource";
+import { Tabs } from "nextra/components";
+import { Permission, Resource } from "../../components/api";
 
 # Connection Commands
 
@@ -8,11 +8,11 @@ import APIResource from "../../components/apiResource";
 Invalidates all user sessions in all rooms. Active clients will immediately
 try to reconnect and auth.
 
-<Callout emoji="🔑">API key permission: `connections:invalidate`</Callout>
+<Permission name="connections:invalidate" />
 
 ### Request
 
-<APIResource method="POST" path="/connections/all:invalidate" />
+<Resource method="POST" path="/connections/all:invalidate" />
 
 ### Response
 
@@ -33,11 +33,11 @@ Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#20
 Invalidates all user sessions in a room. Affected active clients will immediately
 try to reconnect and auth.
 
-<Callout emoji="🔑">API key permission: `connections:invalidate`</Callout>
+<Permission name="connections:invalidate" />
 
 ### Request
 
-<APIResource method="POST" path="/connections/rooms/{uri-encoded-room-id}:invalidate" />
+<Resource method="POST" path="/connections/rooms/{uri-encoded-room-id}:invalidate" />
 
 ### Response
 
@@ -66,11 +66,11 @@ Full response type: [ErrorResponse](overview#4xx)
 Invalidates all of a user's sessions. Affected active clients will immediately
 try to reconnect and auth.
 
-<Callout emoji="🔑">API key permission: `connections:invalidate`</Callout>
+<Permission name="connections:invalidate" />
 
 ### Request
 
-<APIResource method="POST" path="/connections/users/{uri-encoded-user-id}:invalidate" />
+<Resource method="POST" path="/connections/users/{uri-encoded-user-id}:invalidate" />
 
 ### Response
 

@@ -1,11 +1,12 @@
-import style from "./apiResource.module.css";
+import { Callout } from "nextra/components";
+import style from "./api.module.css";
 
-type APIResourceProps = {
+type ResourceProps = {
   method: string;
   path: string;
 };
 
-const APIResource = ({ method, path }: APIResourceProps): JSX.Element => {
+export const Resource = ({ method, path }: ResourceProps): JSX.Element => {
   // The hard-coded styling is copied from the result of a markdown codeblock.
   return (
     <div className="nextra-code-block nx-relative nx-mt-6 first:nx-mt-0">
@@ -54,4 +55,20 @@ function tokenize(path: string): string[] {
   return tokens;
 }
 
-export default APIResource;
+type PermissionProps = {
+  name: string;
+};
+
+export const Permission = ({ name }: PermissionProps): JSX.Element => {
+  return (
+    <Callout emoji="🔑">
+      <a href="/rest/overview#generate-an-api-key">API key permission</a>{" "}
+      <code
+        className="nx-border-black nx-border-opacity-[0.04] nx-bg-opacity-[0.03] nx-bg-black nx-break-words nx-rounded-md nx-border nx-py-0.5 nx-px-[.25em] nx-text-[.9em] dark:nx-border-white/10 dark:nx-bg-white/10"
+        dir="ltr"
+      >
+        <span className={style.permission}>{name}</span>
+      </code>
+    </Callout>
+  );
+};

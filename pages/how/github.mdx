@@ -9,7 +9,7 @@ You can automatically deploy your Reflect app using GitHub Actions.
 ### Generate an API Key
 
 ```bash
-npx reflect key create my-api-key
+npx reflect keys create my-api-key
 ```
 
 ### Create Secret
@@ -33,7 +33,7 @@ on:
       - main
 
 env:
-  NODE_VERSION: '18.x'
+  NODE_VERSION: "18.x"
 
 jobs:
   deploy:
@@ -45,7 +45,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: npm install
         run: |

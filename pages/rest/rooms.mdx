@@ -48,11 +48,11 @@ Full response type: [ErrorResponse](overview#4xx)
 
 (All query parameters are optional.)
 
-| Query Parameter | Description                                                                            |
-| :-------------- | :------------------------------------------------------------------------------------- |
-| `startKey`      | The earliest `roomID` to list (inclusive).<br/>Mutually exclusive with `startAfterKey` |
-| `startAfterKey` | The `roomID` after which to list (exclusive).<br/>Mutually exclusive with `startKey`   |
-| `maxResults`    | The maximum number of results to return.<br/>The server caps this value to an internal maximum.    |
+| Query Parameter | Description                                                                                     |
+| :-------------- | :---------------------------------------------------------------------------------------------- |
+| `startKey`      | The earliest `roomID` to list (inclusive).<br/>Mutually exclusive with `startAfterKey`          |
+| `startAfterKey` | The `roomID` after which to list (exclusive).<br/>Mutually exclusive with `startKey`            |
+| `maxResults`    | The maximum number of results to return.<br/>The server caps this value to an internal maximum. |
 
 ### Response
 
@@ -88,9 +88,9 @@ Full response type: [`SuccessResponse<ListRoomsResult>`](overview#200)
 </Tabs.Tab>
 <Tabs.Tab>
 
-| Code | Resource   | Description         | 
-| :--- | :--------- | :------------------ |
-| 400  | `request`  | Invalid query parameters  |
+| Code | Resource  | Description              |
+| :--- | :-------- | :----------------------- |
+| 400  | `request` | Invalid query parameters |
 
 Full response type: [ErrorResponse](overview#4xx)
 
@@ -114,7 +114,7 @@ This call can be used to explicitly create a room.
 
 ```typescript
 type CreateRoomRequest = {
-  jurisdiction: "" | "eu";
+  jurisdiction?: "eu";
 };
 ```
 
@@ -172,10 +172,10 @@ Full response type: [`SuccessResponse<CloseRoomResult>`](overview#200)
 </Tabs.Tab>
 <Tabs.Tab>
 
-| Code | Resource | Description         |
-| :--- | :------- | :------------------ |
-| 404  | `rooms`  | Room not found      |
-| 409  | `rooms`  | Room is not open    |
+| Code | Resource | Description      |
+| :--- | :------- | :--------------- |
+| 404  | `rooms`  | Room not found   |
+| 409  | `rooms`  | Room is not open |
 
 Full response type: [ErrorResponse](overview#4xx)
 
@@ -209,10 +209,10 @@ Full response type: [`SuccessResponse<DeleteRoomResult>`](overview#200)
 </Tabs.Tab>
 <Tabs.Tab>
 
-| Code | Resource | Description         |
-| :--- | :------- | :------------------ |
-| 404  | `rooms`  | Room not found      |
-| 409  | `rooms`  | Room is not closed  |
+| Code | Resource | Description        |
+| :--- | :------- | :----------------- |
+| 404  | `rooms`  | Room not found     |
+| 409  | `rooms`  | Room is not closed |
 
 Full response type: [ErrorResponse](overview#4xx)
 

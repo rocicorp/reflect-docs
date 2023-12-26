@@ -17,6 +17,7 @@ Next, provide an `authHandler` in the server entrypoint that validates the auth 
 
 ```ts filename="/reflect/index.ts"
 import { mutators } from "../src/mutators";
+import type { AuthData } from '@rocicorp/reflect'
 
 export default function makeOptions() {
   return {
@@ -43,6 +44,8 @@ The most common implementation is to call an endpoint on your server, like in th
 But you can also use <a href="https://jwt.io/">JWTs</a> or similar. In that case, the `auth` string would be a JWT which would be verified in the `AuthHandler`:
 
 ```ts
+import type { AuthData } from '@rocicorp/reflect'
+
 async function jwtAuthHandler(
   auth: string,
   roomID: string,
@@ -60,6 +63,8 @@ Returning `{userID: string}` from the `AuthHandler` allows a user into a room.
 It is also possible to control whether each individual mutation is allowed. To do so, return additional data as part of the `AuthData` object:
 
 ```ts
+import type { AuthData } from '@rocicorp/reflect'
+
 type MyAuthData = AuthData & { access: "read" | "write" };
 
 async function detailedAuthHandler(

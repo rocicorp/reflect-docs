@@ -82,11 +82,13 @@ const mutators = {
       {nodeID, content}: {nodeID: string, content: string}) {
     const node = await getNode(tx, nodeID);
     const auth = tx.auth as MyAuthData;
-    if (auth === undefined || // auth is always undefined on client
-        auth.access === 'write') {
+    if (typeof window !== 'undefined') {
+     // `auth` is always undefined on client
+     // Allow the mutation
+    }
+    // On the server, check for the user access level
+    if (auth.access === 'write') {
       // Allow the mutation
-    } else {
-      console.error("Access denied");
     }
   }
 }

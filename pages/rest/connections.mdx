@@ -19,7 +19,7 @@ try to reconnect and auth.
 <Tabs items={['200']}>
 <Tabs.Tab>
 
-```typescript
+```typescript copy
 type InvalidateConnectionsResult = {};
 ```
 
@@ -37,14 +37,17 @@ try to reconnect and auth.
 
 ### Request
 
-<Resource method="POST" path="/connections/rooms/{uri-encoded-room-id}:invalidate" />
+<Resource
+  method="POST"
+  path="/connections/rooms/{uri-encoded-room-id}:invalidate"
+/>
 
 ### Response
 
 <Tabs items={['200', '4xx']}>
 <Tabs.Tab>
 
-```typescript
+```typescript copy
 type InvalidateConnectionsResult = {};
 ```
 
@@ -53,9 +56,9 @@ Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#20
 </Tabs.Tab>
 <Tabs.Tab>
 
-| Code | Resource | Description         |
-| :--- | :------- | :------------------ |
-| 404  | `rooms`  | Room not found      |
+| Code | Resource | Description    |
+| :--- | :------- | :------------- |
+| 404  | `rooms`  | Room not found |
 
 Full response type: [ErrorResponse](overview#4xx)
 
@@ -70,14 +73,17 @@ try to reconnect and auth.
 
 ### Request
 
-<Resource method="POST" path="/connections/users/{uri-encoded-user-id}:invalidate" />
+<Resource
+  method="POST"
+  path="/connections/users/{uri-encoded-user-id}:invalidate"
+/>
 
 ### Response
 
 <Tabs items={['200']}>
 <Tabs.Tab>
 
-```typescript
+```typescript copy
 type InvalidateConnectionsResult = {};
 ```
 

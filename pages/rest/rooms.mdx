@@ -3,41 +3,6 @@ import { Permission, Resource } from "../../components/api";
 
 # Room Commands
 
-## Get room
-
-<Permission name="rooms:read" />
-
-### Request
-
-<Resource method="GET" path="/rooms/{uri-encoded-room-id}" />
-
-### Response
-
-<Tabs items={['200', '4xx']}>
-<Tabs.Tab>
-
-```typescript
-type GetRoomResult = {
-  roomID: string;
-  jurisdiction: "" | "eu";
-  status: "open" | "closed" | "deleted";
-};
-```
-
-Full response type: [`SuccessResponse<GetRoomResult>`](overview#200)
-
-</Tabs.Tab>
-<Tabs.Tab>
-
-| Code | Resource | Description    |
-| :--- | :------- | :------------- |
-| 404  | `rooms`  | Room not found |
-
-Full response type: [ErrorResponse](overview#4xx)
-
-</Tabs.Tab>
-</Tabs>
-
 ## List rooms
 
 <Permission name="rooms:read" />
@@ -61,7 +26,7 @@ Full response type: [ErrorResponse](overview#4xx)
 
 Rooms are returned in lexicographical `roomID` order.
 
-```typescript
+```typescript copy
 type GetRoomResult = {
   roomID: string;
   jurisdiction: "" | "eu";
@@ -97,6 +62,41 @@ Full response type: [ErrorResponse](overview#4xx)
 </Tabs.Tab>
 </Tabs>
 
+## Get room
+
+<Permission name="rooms:read" />
+
+### Request
+
+<Resource method="GET" path="/rooms/{uri-encoded-room-id}" />
+
+### Response
+
+<Tabs items={['200', '4xx']}>
+<Tabs.Tab>
+
+```typescript copy
+type GetRoomResult = {
+  roomID: string;
+  jurisdiction: "" | "eu";
+  status: "open" | "closed" | "deleted";
+};
+```
+
+Full response type: [`SuccessResponse<GetRoomResult>`](overview#200)
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+| Code | Resource | Description    |
+| :--- | :------- | :------------- |
+| 404  | `rooms`  | Room not found |
+
+Full response type: [ErrorResponse](overview#4xx)
+
+</Tabs.Tab>
+</Tabs>
+
 ## Create room
 
 A room is automatically created if it does not exist when a Reflect client connects to it.
@@ -112,7 +112,7 @@ This call can be used to explicitly create a room.
 
 (required)
 
-```typescript
+```typescript copy
 type CreateRoomRequest = {
   jurisdiction?: "eu";
 };
@@ -123,7 +123,7 @@ type CreateRoomRequest = {
 <Tabs items={['200', '4xx']}>
 <Tabs.Tab>
 
-```typescript
+```typescript copy
 type CreateRoomResult = {};
 ```
 
@@ -163,7 +163,7 @@ Closing a room does not delete its data. Use the
 <Tabs items={['200', '4xx']}>
 <Tabs.Tab>
 
-```typescript
+```typescript copy
 type CloseRoomResult = {};
 ```
 
@@ -200,7 +200,7 @@ have had its users logged out via [invalidate room connections](connections#inva
 <Tabs items={['200', '4xx']}>
 <Tabs.Tab>
 
-```typescript
+```typescript copy
 type DeleteRoomResult = {};
 ```
 

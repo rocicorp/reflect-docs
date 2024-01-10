@@ -7,7 +7,7 @@ integrate Reflect with your existing backend systems.
 
 ## Base URL
 
-```http
+```http copy
 https://api.reflect-server.net/
 ```
 
@@ -17,7 +17,7 @@ https://api.reflect-server.net/
 
 ### Generate an API key
 
-```bash
+```bash copy
 npx reflect keys create my-api-key
 ```
 
@@ -31,7 +31,7 @@ permissions and deleting (revoking) them.
 
 Pass the value of the key in the `Authorization` header of the request:
 
-```http
+```http copy
 Authorization: Basic {key-value}
 ```
 
@@ -54,10 +54,9 @@ Authorization: Basic {key-value}
 
 Success responses use the following JSON response body format:
 
-```typescript
+```typescript copy
 type SuccessResponse<T> = {
   result: T;
-  error: null;
 };
 ```
 
@@ -69,9 +68,8 @@ Consult the documentation for each endpoint for the result type `T`.
 
 The returned JSON response body provides details about the error:
 
-```typescript
+```typescript copy
 type ErrorResponse = {
-  result: null;
   error: {
     /** The HTTP status code */
     code: number;

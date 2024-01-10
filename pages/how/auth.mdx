@@ -81,14 +81,12 @@ const mutators = {
   editNodeContent: async (tx: WriteTransaction,
       {nodeID, content}: {nodeID: string, content: string}) {
     const node = await getNode(tx, nodeID);
-    const auth = tx.auth as MyAuthData;
-    if (typeof window !== 'undefined') {
-     // `auth` is always undefined on client
-     // Allow the mutation
-    }
-    // On the server, check for the user access level
-    if (auth.access === 'write') {
-      // Allow the mutation
+    const auth = tx.auth as MyAuthData | undefined;
+    // tx.auth is undefined on client. On server it should always be defined.
+    if (tx.location === 'client' || auth!.access === 'write') {
+      // allow mutation
+    } else {
+      console.error("Access denied");
     }
   }
 }

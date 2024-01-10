@@ -1,0 +1,87 @@
+import { Tabs } from "nextra/components";
+import { Permission, Resource } from "../../components/api";
+
+# Connection Commands
+
+## Invalidate all connections
+
+Invalidates all user sessions in all rooms. Active clients will immediately
+try to reconnect and auth.
+
+<Permission name="connections:invalidate" />
+
+### Request
+
+<Resource method="POST" path="/connections/all:invalidate" />
+
+### Response
+
+<Tabs items={['200']}>
+<Tabs.Tab>
+
+```typescript
+type InvalidateConnectionsResult = {};
+```
+
+Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#200)
+
+</Tabs.Tab>
+</Tabs>
+
+## Invalidate room connections
+
+Invalidates all user sessions in a room. Affected active clients will immediately
+try to reconnect and auth.
+
+<Permission name="connections:invalidate" />
+
+### Request
+
+<Resource method="POST" path="/connections/rooms/{uri-encoded-room-id}:invalidate" />
+
+### Response
+
+<Tabs items={['200', '4xx']}>
+<Tabs.Tab>
+
+```typescript
+type InvalidateConnectionsResult = {};
+```
+
+Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#200)
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+| Code | Resource | Description         |
+| :--- | :------- | :------------------ |
+| 404  | `rooms`  | Room not found      |
+
+Full response type: [ErrorResponse](overview#4xx)
+
+</Tabs.Tab>
+</Tabs>
+## Invalidate user connections
+
+Invalidates all of a user's sessions. Affected active clients will immediately
+try to reconnect and auth.
+
+<Permission name="connections:invalidate" />
+
+### Request
+
+<Resource method="POST" path="/connections/users/{uri-encoded-user-id}:invalidate" />
+
+### Response
+
+<Tabs items={['200']}>
+<Tabs.Tab>
+
+```typescript
+type InvalidateConnectionsResult = {};
+```
+
+Full response type: [`SuccessResponse<InvalidateConnectionsResult>`](overview#200)
+
+</Tabs.Tab>
+</Tabs>

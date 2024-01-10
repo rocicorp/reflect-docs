@@ -1,0 +1,220 @@
+import { Tabs } from "nextra/components";
+import { Permission, Resource } from "../../components/api";
+
+# Room Commands
+
+## Get room
+
+<Permission name="rooms:read" />
+
+### Request
+
+<Resource method="GET" path="/rooms/{uri-encoded-room-id}" />
+
+### Response
+
+<Tabs items={['200', '4xx']}>
+<Tabs.Tab>
+
+```typescript
+type GetRoomResult = {
+  roomID: string;
+  jurisdiction: "" | "eu";
+  status: "open" | "closed" | "deleted";
+};
+```
+
+Full response type: [`SuccessResponse<GetRoomResult>`](overview#200)
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+| Code | Resource | Description    |
+| :--- | :------- | :------------- |
+| 404  | `rooms`  | Room not found |
+
+Full response type: [ErrorResponse](overview#4xx)
+
+</Tabs.Tab>
+</Tabs>
+
+## List rooms
+
+<Permission name="rooms:read" />
+
+### Request
+
+<Resource method="GET" path="/rooms" />
+
+(All query parameters are optional.)
+
+| Query Parameter | Description                                                                                     |
+| :-------------- | :---------------------------------------------------------------------------------------------- |
+| `startKey`      | The earliest `roomID` to list (inclusive).<br/>Mutually exclusive with `startAfterKey`          |
+| `startAfterKey` | The `roomID` after which to list (exclusive).<br/>Mutually exclusive with `startKey`            |
+| `maxResults`    | The maximum number of results to return.<br/>The server caps this value to an internal maximum. |
+
+### Response
+
+<Tabs items={['200', '4xx']}>
+<Tabs.Tab>
+
+Rooms are returned in lexicographical `roomID` order.
+
+```typescript
+type GetRoomResult = {
+  roomID: string;
+  jurisdiction: "" | "eu";
+  status: "open" | "closed" | "deleted";
+};
+
+type ListRoomsResult = {
+  results: GetRoomResult[];
+  numResults: number;
+  /**
+   * Whether there are more rooms (lexicographically) after the returned results.
+   * Note that this can arise even if the client did not specify `maxResults`, as
+   * the server enforces an internal maximum.
+   *
+   * More results can be fetched with a `?startAfterKey={room-id-of-last-result}`
+   * query.
+   */
+  more: boolean;
+};
+```
+
+Full response type: [`SuccessResponse<ListRoomsResult>`](overview#200)
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+| Code | Resource  | Description              |
+| :--- | :-------- | :----------------------- |
+| 400  | `request` | Invalid query parameters |
+
+Full response type: [ErrorResponse](overview#4xx)
+
+</Tabs.Tab>
+</Tabs>
+
+## Create room
+
+A room is automatically created if it does not exist when a Reflect client connects to it.
+This call can be used to explicitly create a room.
+
+<Permission name="rooms:create" />
+
+### Request
+
+<Resource method="POST" path="/rooms/{uri-encoded-room-id}:create" />
+
+**JSON Body**:
+
+(required)
+
+```typescript
+type CreateRoomRequest = {
+  jurisdiction?: "eu";
+};
+```
+
+### Response
+
+<Tabs items={['200', '4xx']}>
+<Tabs.Tab>
+
+```typescript
+type CreateRoomResult = {};
+```
+
+Full response type: [`SuccessResponse<CreateRoomResult>`](overview#200)
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+| Code | Resource | Description         |
+| :--- | :------- | :------------------ |
+| 409  | `rooms`  | Room already exists |
+
+Full response type: [ErrorResponse](overview#4xx)
+
+</Tabs.Tab>
+</Tabs>
+
+## Close room
+
+Closing a room prevents it from accepting new connections from users, but leaves
+existing connections unchanged. A call to [invalidate room connections](connections#invalidate-room-connections)
+should be used to close existing connections.
+
+A closed room is never re-opened and its `roomID` can never be re-used.
+
+Closing a room does not delete its data. Use the
+[delete room](#delete-room) call to delete room data.
+
+<Permission name="rooms:close" />
+
+### Request
+
+<Resource method="POST" path="/rooms/{uri-encoded-room-id}:close" />
+
+### Response
+
+<Tabs items={['200', '4xx']}>
+<Tabs.Tab>
+
+```typescript
+type CloseRoomResult = {};
+```
+
+Full response type: [`SuccessResponse<CloseRoomResult>`](overview#200)
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+| Code | Resource | Description      |
+| :--- | :------- | :--------------- |
+| 404  | `rooms`  | Room not found   |
+| 409  | `rooms`  | Room is not open |
+
+Full response type: [ErrorResponse](overview#4xx)
+
+</Tabs.Tab>
+</Tabs>
+
+## Delete room
+
+Deleting a room deletes all of its data. The condition is permanent.
+
+In order to be deleted, a room must first be [closed](#close-room). It should also
+have had its users logged out via [invalidate room connections](connections#invalidate-room-connections).
+
+<Permission name="rooms:delete" />
+
+### Request
+
+<Resource method="POST" path="/rooms/{uri-encoded-room-id}:delete" />
+
+### Response
+
+<Tabs items={['200', '4xx']}>
+<Tabs.Tab>
+
+```typescript
+type DeleteRoomResult = {};
+```
+
+Full response type: [`SuccessResponse<DeleteRoomResult>`](overview#200)
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+| Code | Resource | Description        |
+| :--- | :------- | :----------------- |
+| 404  | `rooms`  | Room not found     |
+| 409  | `rooms`  | Room is not closed |
+
+Full response type: [ErrorResponse](overview#4xx)
+
+</Tabs.Tab>
+</Tabs>

@@ -1,0 +1,91 @@
+import { Callout, Steps } from "nextra/components";
+
+# REST API
+
+Reflect's REST API empowers you to build automations and
+integrate Reflect with your existing backend systems.
+
+## Base URL
+
+```http
+https://api.reflect-server.net/
+```
+
+## Authorization
+
+<Steps>
+
+### Generate an API key
+
+```bash
+npx reflect keys create my-api-key
+```
+
+Each key is associated with a set of fine-grained permissions that authorize it
+for API endpoints. The documentation for each endpoint indicates its required permission.
+
+Run `npx reflect keys --help` for details on how to manage keys, including changing their
+permissions and deleting (revoking) them.
+
+### Set the `Authorization` Header
+
+Pass the value of the key in the `Authorization` header of the request:
+
+```http
+Authorization: Basic {key-value}
+```
+
+</Steps>
+
+## Requests
+
+<Callout type="warning">
+  Request parsing is strict. Unless included in the command specification, query
+  strings and request bodies must be empty / unset.
+</Callout>
+
+## Responses
+
+<Callout type="warning">
+  Clients must be tolerant of unspecified fields in responses.
+</Callout>
+
+### 200
+
+Success responses use the following JSON response body format:
+
+```typescript
+type SuccessResponse<T> = {
+  result: T;
+  error: null;
+};
+```
+
+Consult the documentation for each endpoint for the result type `T`.
+
+### 4xx
+
+`4xx` errors arise from problems with the request and/or the state of the system.
+
+The returned JSON response body provides details about the error:
+
+```typescript
+type ErrorResponse = {
+  result: null;
+  error: {
+    /** The HTTP status code */
+    code: number;
+    /** The resource to which the error is relevant */
+    resource: 'request' | 'rooms' | 'connections' | ...;
+    /** A human-readable message */
+    message: string;
+  }
+}
+```
+
+### 5xx
+
+`5xx` server errors have no defined body format.
+
+Clients may use exponential backoff to retry server errors, with a recommended
+minimum of 1 second delay and maximum of 5 retries.

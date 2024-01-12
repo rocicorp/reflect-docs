@@ -39,7 +39,9 @@ export const Resource = ({
           </code>
         </pre>
       </div>
-      <p className="nx-mt-6 nx-leading-7 first:nx-mt-0">Example:</p>
+      <p className="nx-mt-6 nx-leading-7 first:nx-mt-0">
+        <h4>Example</h4>
+      </p>
       <div className="nextra-code-block nx-relative nx-mt-6 first:nx-mt-0">
         <pre
           className="nx-bg-primary-700/5 nx-mb-4 nx-overflow-x-auto nx-rounded-xl nx-subpixel-antialiased dark:nx-bg-primary-300/10 nx-text-[.9em] contrast-more:nx-border contrast-more:nx-border-primary-900/20 contrast-more:nx-contrast-150 contrast-more:dark:nx-border-primary-100/40 nx-py-4"

@@ -106,7 +106,11 @@ This call can be used to explicitly create a room.
 
 ### Request
 
-<Resource method="POST" path="/rooms/{uri-encoded-room-id}:create" />
+<Resource
+  method="POST"
+  path="/rooms/{uri-encoded-room-id}:create"
+  body='{"jurisdiction":"eu"}'
+/>
 
 **JSON Body**:
 

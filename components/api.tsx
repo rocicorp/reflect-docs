@@ -62,7 +62,7 @@ export const Resource = ({
             </span>
             <span className="line">
               {"     "}
-              -H 'Authorization: Basic &#123;api-key&#125;'{" "}
+              -H 'Authorization: Basic &#123;api-key&#125;'
               {body ? <span className={style.bashSlash}> \</span> : ""}
             </span>
             {body ? (

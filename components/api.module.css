@@ -18,3 +18,15 @@
 .permission {
   font-weight: bold;
 }
+
+.bash {
+  color: #22863a;
+}
+
+.bashCommand {
+  color: #6f42c1;
+}
+
+.bashSlash {
+  color: #414141;
+}

@@ -45,7 +45,6 @@ export const {
   init: initClient,
   update: updateClient,
   list: listClients,
-  listEntries: listClientEntries,
 } = generatePresence<Client>("client");
 ```
 
@@ -61,13 +60,14 @@ let clients: Record<ClientID, Client> = {};
 r.subscribe(
   async (tx) => {
     const result: Record<ClientID, Client> = {};
-    for (const [{ clientID }, client] of await listClientEntries(tx)) {
-      result[clientID] = client;
+    for (const client of await listClients(tx)) {
+      result[client.clientID] = client;
     }
     return result;
   },
   (result) => {
     clients = result;
+    render();
   },
 );
 
@@ -99,7 +99,7 @@ const presentClients = useSubscribe(r,
   async (tx) => {
     const result = [];
     for (const clientID of presentClientIDs) {
-      const presentClient = await getClient(tx, clientID);
+      const presentClient = await getClient(tx, {clientID});
       if (presentClient) {
         result.push(presentClient);
       }

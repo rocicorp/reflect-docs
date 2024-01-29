@@ -22,10 +22,11 @@ r.subscribeToPresence((presentClientIDs) => {
 
 ## Presence State
 
-The `subscribeToPresence` method only tells you the client IDs of the clients that are present.
-To do something useful with them, you will combine these client IDs with additional synced data about clients.
-This additional client data is custom to your application. It is read and written
-like any other Reflect data and can be [modeled using the Rails helper library](./model).
+The `subscribeToPresence` method only tells you the `clientID`s of the clients
+that are present. To do something useful with them, you will combine these
+`clientID`s with additional synced data about clients. This additional client
+data is custom to your application. It is read and written like any other
+Reflect data and can be [modeled using the Rails helper library](./model).
 
 For example you might model your client data like so:
 
@@ -34,7 +35,6 @@ import { generatePresence } from "@rocicorp/rails";
 
 type Client = {
   clientID: string;
-  id: string;
   name: string;
   cursor: { x: number; y: number };
 };

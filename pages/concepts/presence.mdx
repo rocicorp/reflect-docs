@@ -20,37 +20,45 @@ r.subscribeToPresence((presentClientIDs) => {
   `presentClientIDs` will always contain the client's own client ID.
 </Callout>
 
-## Per-Client Presence State
+## Presence State
 
-The `subscribeToPresence` method only tells you the IDs of the clients that are present.
-To do something useful with them, you will combine these IDs with additional synced data about clients.
-This additional client data is custom to your application. It is read and written
-like any other Reflect data and can be [modeled using the Rails helper library](./model).
+The `subscribeToPresence` method only tells you the `clientID`s of the clients
+that are present. To do something useful with them, you will combine these
+`clientID`s with additional synced data about clients. This additional client
+data is custom to your application. It is read and written like any other
+Reflect data and can be [modeled using the Rails helper library](./model).
+
+<Callout type="info">
+  Presence state uses a special key space that the Reflect server knows about.
+  The key space for this starts with `-/p/${clientID}/`. When a client is known
+  to not be able to connect again the Reflect server will remove all keys in
+  this key space.
+</Callout>
 
 For example you might model your client data like so:
 
 ```ts
-import { generate } from "@rocicorp/rails";
+import { generatePresence } from "@rocicorp/rails";
 
 type Client = {
-  id: string;
+  clientID: string;
   name: string;
   cursor: { x: number; y: number };
 };
 
 export const {
-  put: putClient,
+  set: setClient,
   get: getClient,
   init: initClient,
   update: updateClient,
   list: listClients,
-} = generate<Client>("client");
+} = generatePresence<Client>("client");
 ```
 
 You can then filter this client data to just render the currently connected clients:
 
 ```ts
-let presentClientIDs: ClientID[] = [];
+let presentClientIDs: readonly ClientID[] = [];
 r.subscribeToPresence((clientIDs) => {
   presentClientIDs = clientIDs;
 });
@@ -58,10 +66,15 @@ r.subscribeToPresence((clientIDs) => {
 let clients: Record<ClientID, Client> = {};
 r.subscribe(
   async (tx) => {
-    return Object.fromEntries(await listClientEntries(tx));
+    const result: Record<ClientID, Client> = {};
+    for (const client of await listClients(tx)) {
+      result[client.clientID] = client;
+    }
+    return result;
   },
   (result) => {
     clients = result;
+    render();
   },
 );
 
@@ -75,13 +88,6 @@ function render() {
 }
 ```
 
-<Callout type="info">
-  Currently this additional client data is part of the Reflect state
-  permanently, unless you explicitly delete it. In the near future, Reflect will
-  add a feature to automatically delete this additional client data when the
-  client is no-longer in use.
-</Callout>
-
 ## React
 
 In React you can use the `usePresence` hook in combination with the `useSubscribe` hook.
@@ -94,7 +100,7 @@ const presentClients = useSubscribe(r,
   async (tx) => {
     const result = [];
     for (const clientID of presentClientIDs) {
-      const presentClient = await getClient(tx, clientID);
+      const presentClient = await getClient(tx, {clientID});
       if (presentClient) {
         result.push(presentClient);
       }

@@ -28,6 +28,13 @@ that are present. To do something useful with them, you will combine these
 data is custom to your application. It is read and written like any other
 Reflect data and can be [modeled using the Rails helper library](./model).
 
+<Callout type="info">
+  Presence state uses a special key space that the Reflect server knows about.
+  The key space for this starts with `-/p/${clientID}/`. When a client is known
+  to not be able to connect again the Reflect server will remove all keys in
+  this key space.
+</Callout>
+
 For example you might model your client data like so:
 
 ```ts
@@ -80,12 +87,6 @@ function render() {
   }
 }
 ```
-
-<Callout type="info">
-  The reason to use `generatePresence` over the normal `generate` method is that
-  the state will be removed by the Reflect server when it knows the client is
-  never going to connect again.
-</Callout>
 
 ## React
 

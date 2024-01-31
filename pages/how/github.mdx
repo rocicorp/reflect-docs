@@ -66,7 +66,10 @@ jobs:
 ### Create Github Action for Deploying Previews for Pull Requests
 
 The following will publish a preview of each pull request to:
-`https://${reflect-app-name}-${branch-name}-${team-name}.reflect-server.net`.
+`https://${reflect-app-name}-${branch-name}-${reflect-team-name}.reflect-server.net`. Where
+`reflect-app-name` is the value you set for you github REFLECT_APP_NAME variable,
+`branch-name` is the name of the pull request's branch, and `reflect-team-name` is
+the github username you used to log in to Reflect's CLI.
 
 In your GitHub repo, go to Actions → New Workflow → set up a workflow yourself.
 

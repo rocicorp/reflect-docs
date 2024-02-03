@@ -28,22 +28,25 @@ Create another environment variable named `REFLECT_APP_NAME` with the value of t
 
 Add the following two files to the root of your repository:
 
-```json file=vercel.json
+```json filename="vercel.json"
 {
   "buildCommand": "npm run build && node publish-reflect.js"
 }
 ```
 
-```js file=publish-reflect.js
+```js filename="publish-reflect.js"
 const { spawn } = require("child_process");
 const fs = require("fs");
 
+// We're going to generate a unique Reflect app name for each preview like:
+// <appname>-<refname>.
 const appBaseName = getEnv(process.env.REFLECT_APP_NAME, "REFLECT_APP_NAME");
 const refName = getEnv(
   process.env.VERCEL_GIT_COMMIT_REF,
   "VERCEL_GIT_COMMIT_REF"
 );
 
+// Reflect app names have limited allowed chars.
 const appName = `${appBaseName}-${refName}`
   .toLowerCase()
   .replace(/^[^a-z]/, "")
@@ -58,6 +61,9 @@ async function publish() {
     `--app=${appName}`,
     "--auth-key-from-env=REFLECT_AUTH_KEY",
   ]);
+
+  // This is kind of a hack :)
+  // We will provide an improved way to get the URL in the future.
   const lines = output.toString().split("\n");
   const success = lines.findIndex((line) =>
     line.includes("🎁 Published successfully to:")

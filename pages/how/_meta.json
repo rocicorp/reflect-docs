@@ -16,5 +16,8 @@
   },
   "usage": {
     "title": "Usage Monitoring"
+  },
+  "vercel": {
+    "title": "Vercel Integration"
   }
 }

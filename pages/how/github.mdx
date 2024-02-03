@@ -9,14 +9,18 @@ You can automatically deploy your Reflect app using GitHub Actions.
 ### Generate an API Key
 
 ```bash
-npx reflect keys create my-api-key
+npx reflect keys create my-github-actions-api-key
 ```
+
+For Permissions select `app:publish` and for Authorized Apps select `(created apps)`.
 
 ### Create Secret
 
-In your GitHub repo, go to Settings → Secrets and Variables → New Repository Secret.
+In your GitHub repo, go to Settings → Secrets and Variables → Actions.
 
-Create a new secret named `REFLECT_AUTH_KEY` with the value of the API key you generated above.
+Use "New repository secret" to create a new secret named `REFLECT_API_KEY` with the value of the API key you generated above.
+
+Use "New repository variable" to create a new variable named `REFLECT_APP_NAME` with the value of the name of your Reflect app.
 
 ### Create GitHub Action
 
@@ -53,9 +57,10 @@ jobs:
 
       - name: publish
         env:
-          REFLECT_AUTH_KEY: ${{ secrets.REFLECT_AUTH_KEY }}
+          REFLECT_AUTH_KEY: ${{ secrets.REFLECT_API_KEY }}
+          REFLECT_APP_NAME: ${{ vars.REFLECT_APP_NAME }}
         run: |
-          npx reflect publish --auth-key-from-env=REFLECT_AUTH_KEY
+          npx reflect publish --app=$REFLECT_APP_NAME --auth-key-from-env=REFLECT_API_KEY
 ```
 
 </Steps>

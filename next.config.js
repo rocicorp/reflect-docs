@@ -28,6 +28,20 @@ const nextConfig = {
         }),
     },
   },
+  async redirects() {
+    return [
+      {
+        source: "/how/github",
+        destination: "/how/cd",
+        permanent: true,
+      },
+      {
+        source: "/how/vercel",
+        destination: "/how/cd",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 const withNextra = require("nextra")({

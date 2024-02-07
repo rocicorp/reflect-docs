@@ -1,0 +1,142 @@
+import { Callout } from "nextra/components";
+import { Steps } from "nextra/components";
+import { Examples } from "../../components/icons/examples";
+
+# Continuous Deployment
+
+If you host your application with a service like Netlify or Vercel, you can publish a separate Reflect app for each branch/preview. Changes to data or mutators in one branch won't affect other branches or production.
+
+<Callout type="info">
+These instructions work for Netlify and Vercel. If you use a different approach for continuous deployment, you can use them as a guide but the details will be different.
+</Callout>
+
+## Setup
+
+<Steps>
+
+### Generate a Reflect API Key
+
+```bash copy
+npx reflect keys create my-vercel-api-key
+```
+
+For Permissions select `app:publish` and for Authorized Apps select `(created apps)`.
+
+### Create Environment Variables
+
+In your hosting service, create two new environment variables:
+
+1. `REFLECT_AUTH_KEY` with the value of the key you generated above.
+2. `REFLECT_APP_NAME` with the value of the name of your Reflect app.
+
+How to do this depends on your service. In Vercel, go to **Settings → Environment Variables**. In Netlify, go to **Site Configuration → General → Environment Variables**. Other hosting providers will have similar options.
+
+### Add `publish-reflect.js` to your Project
+
+Add the following file to your project. This script publishes a Reflect app with a name derived from the current branch name, then creates (or appends to) an `.env` file an environment variable with the URL of the published Reflect app.
+
+```js copy filename="publish-reflect.js"
+const { spawn } = require("child_process");
+const fs = require("fs");
+const { text } = require("stream/consumers");
+
+const appBaseName = requireEnv({
+  REFLECT_APP_NAME: process.env.REFLECT_APP_NAME,
+});
+const refName = requireEnv({
+  HEAD: process.env.HEAD,
+  VERCEL_GIT_COMMIT_REF: process.env.VERCEL_GIT_COMMIT_REF,
+});
+
+// Reflect app names have to start with a lower-case letter and can only
+// contain lower-case letters, numbers, and hyphens.
+const appName = `${appBaseName}-${refName}`
+  .toLowerCase()
+  .replace(/^[^a-z]/, "")
+  .replace(/[^a-z0-9-]/g, "-");
+
+publish();
+
+async function publish() {
+  const output = await runCommand("npx", [
+    "reflect",
+    "publish",
+    "--reflect-channel=canary",
+    `--app=${appName}`,
+    "--auth-key-from-env=REFLECT_AUTH_KEY",
+  ]);
+
+  // Ick. A future version of Reflect will add an --output=json to avoid this.
+  const lines = output.toString().split("\n");
+  const success = lines.findIndex((line) =>
+    line.includes("🎁 Published successfully to:")
+  );
+  const url = lines[success + 1];
+
+  fs.writeFileSync("./.env", `NEXT_PUBLIC_REFLECT_SERVER=${url}`);
+}
+
+// Run a command and return its output, but also echo that output to the console.
+function runCommand(command, args) {
+  console.log("running command: " + command + " " + args.join(" "));
+
+  const child = spawn(command, args, { stdio: [null, "pipe", "inherit"] });
+  child.stdout.pipe(process.stdout);
+
+  return new Promise((resolve, reject) => {
+    const output = text(child.stdout);
+    child.on("close", (code) => {
+      if (code !== 0) {
+        reject(new Error(`Command failed with exit code ${code}`));
+      } else {
+        resolve(output);
+      }
+    });
+  });
+}
+
+function requireEnv(kv) {
+  const ret = Object.values(kv).find((v) => v);
+  if (!ret) {
+    throw new Error(
+      `Required environment variable not found. One of [${Object.keys(
+        kv
+      )}] must be set.`
+    );
+  }
+  return ret;
+}
+```
+
+<Callout>
+**Note:** `publish-reflect.js` writes the environment variable `NEXT_PUBLIC_REFLECT_SERVER`. If you use a different framework than Next.js you will have to write the correct environment variable for that framework. For example, for Vite it would be `VITE_REFLECT_SERVER`.
+</Callout>
+
+### Call `publish-reflect.js` before Building
+
+In your hosting service, modify your app's build settings to invoke `publish-reflect.js` before building your app:
+
+<p style={{margin:'1em 0', border:'1px solid #ddd'}}><img src="/cd-build-settings.png"/></p>
+
+How to do this depends on your service. In Vercel, within your project, go to **Settings → General → Build & Development Settings → Build Command**. In Netlify, go to **Site Configuration → General → Build & Deploy → Build Settings → Build command**. Other hosting providers will have similar options.
+
+### Use Generated Environment Variable
+
+Update your app to use the `NEXT_PUBLIC_REFLECT_SERVER` environment variable, or whatever environment variable you chose:
+
+```ts copy
+const r = new Reflect<M>({
+  server: process.env.NEXT_PUBLIC_REFLECT_SERVER!,
+  // ...
+});
+```
+
+</Steps>
+
+## Examples
+
+Most of our example apps run on Vercel and use continuous deployment. You can look at them for more examples of how to integrate:
+
+- [Draw](https://github.com/rocicorp/reflect-draw/blob/main/publish-reflect.js) uses Next.js on Vercel.
+- [Todo](https://github.com/rocicorp/reflect-todo/blob/main/publish-reflect.js) uses Vite/React on Vercel.
+- [Loop](https://github.com/rocicorp/reflect-loop/blob/main/publish-reflect.js) is a more interesting Next.js/Vercel project that uses multiple Reflect apps which all have to be published together.

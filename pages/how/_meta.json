@@ -2,11 +2,11 @@
   "auth": {
     "title": "Authentication"
   },
+  "cd": {
+    "title": "Continuous Deployment"
+  },
   "env": {
     "title": "Environment Variables"
-  },
-  "github": {
-    "title": "GitHub Integration"
   },
   "overflow": {
     "title": "Room Overflow"
@@ -16,8 +16,5 @@
   },
   "usage": {
     "title": "Usage Monitoring"
-  },
-  "vercel": {
-    "title": "Vercel Integration"
   }
 }

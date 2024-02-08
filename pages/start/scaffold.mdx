@@ -44,19 +44,19 @@ Open [http://localhost:5173/](http://localhost:5173/) in two tabs to see it in a
 When you are happy with your app, publish the Reflect server to [reflect.net](https://reflect.net/):
 
 ```bash copy
-npx reflect publish
+npx reflect publish --app my-app
 ```
 
-This writes a local `.env` file containing the URL of the live server, so once it's done you can run against prodution with just:
+This will output the URL for the published app. Set the environment variable for REFLECT_URL, and you can run against prodution with:
 
 ```bash copy
-npx vite
+VITE_REFLECT_URL=https://your-app-name.reflect-server.net npx vite
 ```
 
 Watch the logs from production with:
 
 ```bash copy
-npx reflect tail --room='my-room'
+npx reflect tail --room='my-room' --app my-app
 ```
 
 You can host the app UI just about anywhere since it's just static JS. For example, to use Vercel:

@@ -189,20 +189,13 @@ Your Reflect server will run in a bare JS environment without the DOM. Add a `ts
 }
 ```
 
-Finally, add a `/reflect.config.json` file in the root of your project, to tell Reflect where to find your server:
-
-```json filename="/reflect.config.json" copy
-{
-  "server": "./path/to/reflect-server/index.ts"
-}
-```
 
 ### Develop
 
-Run the development server and update the Reflect constructor to talk to it:
+Run the development server, suppplying reflect-server index.ts, and update the Reflect constructor to talk to it:
 
 ```bash copy
-npx reflect dev
+npx reflect dev --server-path ./path/to/reflect-server/index.ts
 ```
 
 ```ts copy {2}

@@ -1,0 +1,29 @@
+# Local first
+
+Reflect features robust local-first support.
+
+To enable simply specify the option `kvStore: 'idb'` when constructing the
+Reflect client.
+
+```ts
+import { Reflect } from "@rocicorp/reflect";
+import { mutators } from "./my-mutators.ts";
+
+const r = new Reflect({
+  roomID,
+  userID,
+  mutators,
+  kvStore: "idb",
+});
+```
+
+By setting this to `'idb'` the data is persisted on the client using
+`IndexedDB`, enabling:
+
+1.  New tabs load and sync faster, as Reflect will initially return the locally persisted state and only the difference between the persisted state and the rooms current state is synced.
+2.  A tab can go offline and continue to operate for hours to days, then sync up smoothly when it reconnects.
+3.  Changes sync across tabs in the same browser profile, even while offline.
+4.  If your application has a way to start while offline (ie Service Worker, or Electron shell), you can start it offline and see changes made in a previous session.
+
+Note that the potential for serious conflicts grows the longer users are disconnected from each other.
+While you control how conflicts are resolved and Reflect will converge all clients to the same state, it is hard to always produce a resolution users would be happy with.

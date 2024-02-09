@@ -18,7 +18,7 @@ const r = new Reflect({
 ```
 
 By setting this to `'idb'` the data is persisted on the client using
-`IndexedDB`. This enables a number of benefits:
+`IndexedDB`. This enables a number of features:
 
 1.  New tabs load and sync faster, as Reflect will initially return the locally persisted state and only the difference between the persisted state and the rooms current state is synced.
 2.  Changes sync across tabs in the same browser profile, even while offline.

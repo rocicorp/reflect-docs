@@ -5,6 +5,9 @@
   "cd": {
     "title": "Continuous Deployment"
   },
+  "github": {
+    "title": "GitHub Integration"
+  },
   "env": {
     "title": "Environment Variables"
   },
@@ -13,6 +16,9 @@
   },
   "text": {
     "title": "Text Editing"
+  },
+  "local-first": {
+    "title": "Local First"
   },
   "usage": {
     "title": "Usage Monitoring"

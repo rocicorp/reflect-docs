@@ -26,4 +26,4 @@ By setting this to `'idb'` the data is persisted on the client using
 4.  A tab can go offline and continue to operate for hours to days, then sync up smoothly when it reconnects.
 
 Note that the potential for serious conflicts grows the longer users are disconnected from each other.
-While you control how conflicts are resolved and Reflect will converge all clients to the same state, it is hard to always produce a resolution users would be happy with.
+While you control how conflicts are resolved via your mutator logic and Reflect ensures all clients converge to the same state, it is hard to always produce a resolution users would be happy with.

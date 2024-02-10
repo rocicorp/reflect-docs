@@ -3,13 +3,10 @@
     "title": "Authentication"
   },
   "cd": {
-    "title": "Continuous Deployment"
+    "title": "Auto Deploy / Previews"
   },
   "env": {
     "title": "Environment Variables"
-  },
-  "github": {
-    "title": "GitHub Integration"
   },
   "local-first": {
     "title": "Local First"

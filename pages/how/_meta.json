@@ -3,10 +3,13 @@
     "title": "Authentication"
   },
   "cd": {
-    "title": "Continuous Deployment"
+    "title": "Auto Deploy / Previews"
   },
   "env": {
     "title": "Environment Variables"
+  },
+  "local-first": {
+    "title": "Local First"
   },
   "overflow": {
     "title": "Room Overflow"

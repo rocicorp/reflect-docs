@@ -2,12 +2,14 @@ import { Callout } from "nextra/components";
 import { Steps } from "nextra/components";
 import { Examples } from "../../components/icons/examples";
 
-# Continuous Deployment
+# Automatic Deployments and Previews
 
 If you host your application with a service like Netlify or Vercel, you can publish a separate Reflect app for each branch/preview. Changes to data or mutators in one branch won't affect other branches or production.
 
 <Callout type="info">
-These instructions work for Netlify and Vercel. If you use a different approach for continuous deployment, you can use them as a guide but the details will be different.
+  These instructions work for Netlify and Vercel. If you use a different
+  approach for continuous deployment, you can use them as a guide but the
+  details will be different.
 </Callout>
 
 ## Setup
@@ -69,7 +71,7 @@ async function publish() {
   // Ick. A future version of Reflect will add an --output=json to avoid this.
   const lines = output.toString().split("\n");
   const success = lines.findIndex((line) =>
-    line.includes("🎁 Published successfully to:")
+    line.includes("🎁 Published successfully to:"),
   );
   const url = lines[success + 1];
 
@@ -100,8 +102,8 @@ function requireEnv(kv) {
   if (!ret) {
     throw new Error(
       `Required environment variable not found. One of [${Object.keys(
-        kv
-      )}] must be set.`
+        kv,
+      )}] must be set.`,
     );
   }
   return ret;
@@ -109,14 +111,19 @@ function requireEnv(kv) {
 ```
 
 <Callout>
-**Note:** `publish-reflect.js` writes the environment variable `NEXT_PUBLIC_REFLECT_SERVER`. If you use a different framework than Next.js you will have to write the correct environment variable for that framework. For example, for Vite it would be `VITE_REFLECT_SERVER`.
+  **Note:** `publish-reflect.js` writes the environment variable
+  `NEXT_PUBLIC_REFLECT_SERVER`. If you use a different framework than Next.js
+  you will have to write the correct environment variable for that framework.
+  For example, for Vite it would be `VITE_REFLECT_SERVER`.
 </Callout>
 
 ### Call `publish-reflect.js` before Building
 
 In your hosting service, modify your app's build settings to invoke `publish-reflect.js` before building your app:
 
-<p style={{margin:'1em 0', border:'1px solid #ddd'}}><img src="/cd-build-settings.png"/></p>
+<p style={{ margin: "1em 0", border: "1px solid #ddd" }}>
+  <img src="/cd-build-settings.png" />
+</p>
 
 How to do this depends on your service. In Vercel, within your project, go to **Settings → General → Build & Development Settings → Build Command**. In Netlify, go to **Site Configuration → General → Build & Deploy → Build Settings → Build command**. Other hosting providers will have similar options.
 

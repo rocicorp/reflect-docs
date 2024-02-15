@@ -13,11 +13,12 @@ import { Permission, Resource } from "../../components/api";
 
 (All query parameters are optional.)
 
-| Query Parameter | Description                                                                                     |
-| :-------------- | :---------------------------------------------------------------------------------------------- |
-| `startKey`      | The earliest `roomID` to list (inclusive).<br/>Mutually exclusive with `startAfterKey`          |
-| `startAfterKey` | The `roomID` after which to list (exclusive).<br/>Mutually exclusive with `startKey`            |
-| `maxResults`    | The maximum number of results to return.<br/>The server caps this value to an internal maximum. |
+| Query Parameter | Description                                                                                                                                                   |
+| :-------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `startKey`      | The earliest `roomID` to list (inclusive).<br/>Mutually exclusive with `startAfterKey` and `roomID`                                                           |
+| `startAfterKey` | The `roomID` after which to list (exclusive).<br/>Mutually exclusive with `startKey` and `roomID`                                                             |
+| `roomID`        | The ID of a room to specifically list.<br/>May be specified multiple times to list multiple rooms.<br/>Mutually exclusive with `startKey` and `startAfterKey` |
+| `maxResults`    | The maximum number of results to return.<br/>The server caps this value to an internal maximum.                                                               |
 
 ### Response
 
@@ -62,41 +63,6 @@ Full response type: [ErrorResponse](overview#4xx)
 </Tabs.Tab>
 </Tabs>
 
-## Get room
-
-<Permission name="rooms:read" />
-
-### Request
-
-<Resource method="GET" path="/rooms/{uri-encoded-room-id}" />
-
-### Response
-
-<Tabs items={['200', '4xx']}>
-<Tabs.Tab>
-
-```typescript copy
-type GetRoomResult = {
-  roomID: string;
-  jurisdiction: "" | "eu";
-  status: "open" | "closed" | "deleted";
-};
-```
-
-Full response type: [`SuccessResponse<GetRoomResult>`](overview#200)
-
-</Tabs.Tab>
-<Tabs.Tab>
-
-| Code | Resource | Description    |
-| :--- | :------- | :------------- |
-| 404  | `rooms`  | Room not found |
-
-Full response type: [ErrorResponse](overview#4xx)
-
-</Tabs.Tab>
-</Tabs>
-
 ## Create room
 
 A room is automatically created if it does not exist when a Reflect client connects to it.
@@ -108,7 +74,7 @@ This call can be used to explicitly create a room.
 
 <Resource
   method="POST"
-  path="/rooms/{uri-encoded-room-id}:create"
+  path="/rooms:create?roomID={room-id}"
   body='{"jurisdiction":"eu"}'
 />
 
@@ -160,7 +126,7 @@ Closing a room does not delete its data. Use the
 
 ### Request
 
-<Resource method="POST" path="/rooms/{uri-encoded-room-id}:close" />
+<Resource method="POST" path="/rooms:close?roomID={room-id}" />
 
 ### Response
 
@@ -197,7 +163,7 @@ have had its users logged out via [invalidate room connections](connections#inva
 
 ### Request
 
-<Resource method="POST" path="/rooms/{uri-encoded-room-id}:delete" />
+<Resource method="POST" path="/rooms:delete?roomID={room-id}" />
 
 ### Response
 

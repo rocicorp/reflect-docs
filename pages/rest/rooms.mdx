@@ -114,13 +114,12 @@ Full response type: [ErrorResponse](overview#4xx)
 ## Close room
 
 Closing a room prevents it from accepting new connections from users, but leaves
-existing connections unchanged. A call to [invalidate room connections](connections#invalidate-room-connections)
-should be used to close existing connections.
+existing connections unchanged.
+
+To close existing connections, call [invalidate room connections](connections#invalidate-room-connections)
+or [delete room](rooms#delete-room), the latter of which will also delete room data.
 
 A closed room is never re-opened and its `roomID` can never be re-used.
-
-Closing a room does not delete its data. Use the
-[delete room](#delete-room) call to delete room data.
 
 <Permission name="rooms:close" />
 
@@ -154,10 +153,9 @@ Full response type: [ErrorResponse](overview#4xx)
 
 ## Delete room
 
-Deleting a room deletes all of its data. The condition is permanent.
+Closes all connections to a room and deletes all of its data. The condition is permanent.
 
-In order to be deleted, a room must first be [closed](#close-room). It should also
-have had its users logged out via [invalidate room connections](connections#invalidate-room-connections).
+In order to be deleted, a room must first be [closed](#close-room).
 
 <Permission name="rooms:delete" />
 

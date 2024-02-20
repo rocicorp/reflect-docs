@@ -63,6 +63,51 @@ Full response type: [ErrorResponse](overview#4xx)
 </Tabs.Tab>
 </Tabs>
 
+## Get room contents
+
+<Permission name="rooms:read" />
+
+### Request
+
+<Resource method="GET" path="/rooms/contents?roomID={room-id}" />
+
+### Response
+
+<Tabs items={['200', '4xx']}>
+<Tabs.Tab>
+
+```typescript copy
+type JSONValue =
+  | null
+  | string
+  | boolean
+  | number
+  | Array<JSONValue>
+  | JSONObject;
+
+type JSONObject = { [key: string]: JSONValue | undefined };
+
+type GetRoomContentsResult = {
+  contents: {
+    [key: string]: JSONValue;
+  };
+};
+```
+
+Full response type: [`SuccessResponse<GetRoomContentsResult>`](overview#200)
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+| Code | Resource | Description    |
+| :--- | :------- | :------------- |
+| 404  | `rooms`  | Room not found |
+
+Full response type: [ErrorResponse](overview#4xx)
+
+</Tabs.Tab>
+</Tabs>
+
 ## Create room
 
 A room is automatically created if it does not exist when a Reflect client connects to it.

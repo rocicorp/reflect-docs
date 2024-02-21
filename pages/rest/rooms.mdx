@@ -90,9 +90,7 @@ type JSONValue =
 type JSONObject = { [key: string]: JSONValue | undefined };
 
 type GetRoomContentsResult = {
-  contents: {
-    [key: string]: JSONValue;
-  };
+  contents: Record<string, JSONValue>;
 };
 ```
 

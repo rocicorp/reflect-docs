@@ -11,13 +11,14 @@ import { Permission, Resource } from "../../components/api";
 
 <Resource method="GET" path="/rooms" />
 
-(All query parameters are optional.)
+#### Optional query parameters
 
-| Query Parameter | Description                                                                                     |
-| :-------------- | :---------------------------------------------------------------------------------------------- |
-| `startKey`      | The earliest `roomID` to list (inclusive).<br/>Mutually exclusive with `startAfterKey`          |
-| `startAfterKey` | The `roomID` after which to list (exclusive).<br/>Mutually exclusive with `startKey`            |
-| `maxResults`    | The maximum number of results to return.<br/>The server caps this value to an internal maximum. |
+| Query Parameter | Description                                                                                                                                                   |
+| :-------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `startKey`      | The earliest `roomID` to list (inclusive).<br/>Mutually exclusive with `startAfterKey` and `roomID`                                                           |
+| `startAfterKey` | The `roomID` after which to list (exclusive).<br/>Mutually exclusive with `startKey` and `roomID`                                                             |
+| `roomID`        | The ID of a room to specifically list.<br/>May be specified multiple times to list multiple rooms.<br/>Mutually exclusive with `startKey` and `startAfterKey` |
+| `maxResults`    | The maximum number of results to return.<br/>The server caps this value to an internal maximum.                                                               |
 
 ### Response
 
@@ -62,13 +63,15 @@ Full response type: [ErrorResponse](overview#4xx)
 </Tabs.Tab>
 </Tabs>
 
-## Get room
+## Get room contents
+
+Returns the entire current content of the room as a single JSON Object.
 
 <Permission name="rooms:read" />
 
 ### Request
 
-<Resource method="GET" path="/rooms/{uri-encoded-room-id}" />
+<Resource method="GET" path="/rooms/contents?roomID={room-id}" />
 
 ### Response
 
@@ -76,14 +79,22 @@ Full response type: [ErrorResponse](overview#4xx)
 <Tabs.Tab>
 
 ```typescript copy
-type GetRoomResult = {
-  roomID: string;
-  jurisdiction: "" | "eu";
-  status: "open" | "closed" | "deleted";
+type JSONValue =
+  | null
+  | string
+  | boolean
+  | number
+  | Array<JSONValue>
+  | JSONObject;
+
+type JSONObject = Record<string, JSONValue>;
+
+type GetRoomContentsResult = {
+  contents: JSONObject;
 };
 ```
 
-Full response type: [`SuccessResponse<GetRoomResult>`](overview#200)
+Full response type: [`SuccessResponse<GetRoomContentsResult>`](overview#200)
 
 </Tabs.Tab>
 <Tabs.Tab>
@@ -91,6 +102,7 @@ Full response type: [`SuccessResponse<GetRoomResult>`](overview#200)
 | Code | Resource | Description    |
 | :--- | :------- | :------------- |
 | 404  | `rooms`  | Room not found |
+| 410  | `rooms`  | Room deleted   |
 
 Full response type: [ErrorResponse](overview#4xx)
 
@@ -108,7 +120,7 @@ This call can be used to explicitly create a room.
 
 <Resource
   method="POST"
-  path="/rooms/{uri-encoded-room-id}:create"
+  path="/rooms:create?roomID={room-id}"
   body='{"jurisdiction":"eu"}'
 />
 
@@ -148,19 +160,18 @@ Full response type: [ErrorResponse](overview#4xx)
 ## Close room
 
 Closing a room prevents it from accepting new connections from users, but leaves
-existing connections unchanged. A call to [invalidate room connections](connections#invalidate-room-connections)
-should be used to close existing connections.
+existing connections unchanged.
+
+To close existing connections, call [invalidate room connections](connections#invalidate-room-connections)
+or [delete room](rooms#delete-room), the latter of which will also delete room data.
 
 A closed room is never re-opened and its `roomID` can never be re-used.
-
-Closing a room does not delete its data. Use the
-[delete room](#delete-room) call to delete room data.
 
 <Permission name="rooms:close" />
 
 ### Request
 
-<Resource method="POST" path="/rooms/{uri-encoded-room-id}:close" />
+<Resource method="POST" path="/rooms:close?roomID={room-id}" />
 
 ### Response
 
@@ -188,16 +199,15 @@ Full response type: [ErrorResponse](overview#4xx)
 
 ## Delete room
 
-Deleting a room deletes all of its data. The condition is permanent.
+Closes all connections to a room and deletes all of its data. The condition is permanent.
 
-In order to be deleted, a room must first be [closed](#close-room). It should also
-have had its users logged out via [invalidate room connections](connections#invalidate-room-connections).
+In order to be deleted, a room must first be [closed](#close-room).
 
 <Permission name="rooms:delete" />
 
 ### Request
 
-<Resource method="POST" path="/rooms/{uri-encoded-room-id}:delete" />
+<Resource method="POST" path="/rooms:delete?roomID={room-id}" />
 
 ### Response
 

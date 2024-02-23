@@ -6,10 +6,14 @@ import { Examples } from "../../components/icons/examples";
 
 If you host your application with a service like Netlify or Vercel, you can publish a separate Reflect app for each branch/preview. Changes to data or mutators in one branch won't affect other branches or production.
 
-<Callout type="info">
-  These instructions work for Netlify and Vercel. If you use a different
-  approach for continuous deployment, you can use them as a guide but the
-  details will be different.
+These instructions work for Netlify and Vercel. If you use a different
+approach for continuous deployment, you can use them as a guide but the
+details will be different.
+
+<Callout type="warning">
+  If you use Vercel, you need to use Node v20 or later. You can set this in the
+  "Settings" page of your Vercel project. The older Node image that Vercel is
+  using has an outdated coreutils package that does not work with `npx reflect publish`.
 </Callout>
 
 ## Setup

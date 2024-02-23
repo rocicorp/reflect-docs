@@ -68,7 +68,7 @@ Call `r.mutate.foo()` anywhere in your app to make changes to synced data, and r
 
 <Tabs items={['Vanilla', 'React', 'Solid', 'Svelte', 'Vue']} storageKey="tabs_existing">
   <Tabs.Tab>
-    ```ts
+    ```ts copy {2,5-7}
     myButton.onclick = () => {
       void r.mutate.increment(1);
     };
@@ -98,7 +98,7 @@ Call `r.mutate.foo()` anywhere in your app to make changes to synced data, and r
 
   </Tabs.Tab>
   <Tabs.Tab>
-    ```tsx  copy {5,8-11}
+    ```tsx copy {5,8-11}
     function App() {
       const [count, setCount] = createSignal(0);
 
@@ -118,7 +118,7 @@ Call `r.mutate.foo()` anywhere in your app to make changes to synced data, and r
 
 </Tabs.Tab>
 <Tabs.Tab>
-  ```svelte  copy {5,8-11}
+  ```svelte copy {5,8-11}
   <script lang="ts">
   let count: number = 0
 
@@ -137,7 +137,7 @@ Call `r.mutate.foo()` anywhere in your app to make changes to synced data, and r
 
 </Tabs.Tab>
 <Tabs.Tab>
-  ```vue  copy {5,8-11}
+  ```vue copy {5,8-11}
   <script setup lang="ts">
   const count = ref(0)
 
@@ -163,9 +163,9 @@ Call `r.mutate.foo()` anywhere in your app to make changes to synced data, and r
 
 Reflect runs your mutators on the server-side too. This is how it achieves [server-authority](https://rocicorp.dev/blog/ready-player-two).
 
-To register your mutators with the server, create a new directory called `reflect-server` anywhere in your project, and add an `index.ts` file to it. This will be the entrypoint to your server code.
+To register your mutators with the server, create a new directory at the root of your project called `/reflect-server`, and add an `index.ts` file to it. This will be the entrypoint to your server code.
 
-```ts filename="reflect-server/index.ts" copy
+```ts filename="/reflect-server/index.ts" copy
 import { mutators } from "../path/to/mutators";
 
 export default function makeOptions() {
@@ -175,27 +175,15 @@ export default function makeOptions() {
 }
 ````
 
-Your Reflect server will run in a bare JS environment without the DOM. Add a `tsconfig.json` file that tells TypeScript about this:
-
-```json filename="reflect-server/tsconfig.json" copy
-{
-  "compilerOptions": {
-    "lib": ["esnext"],
-    "moduleResolution": "node",
-    "declaration": true,
-    "incremental": true
-  },
-  "include": ["**/*.ts"]
-}
-```
-
-
 ### Develop
 
-Run the development server:
+Run the development Reflect server:
+
 ```bash copy
-npx reflect dev --server-path ./path/to/reflect-server/index.ts
+npx reflect dev
 ```
+
+Update your Reflect constructor to talk to it:
 
 ```ts copy {2}
 const r = new Reflect({
@@ -218,10 +206,10 @@ Now your app should sync changes to Reflect state live across tabs and browsers 
 To sync between clients on different computers, deploy your server to `reflect-server.net`:
 
 ```bash copy
-npx reflect publish
+npx reflect publish --app my-app
 ```
 
-And update your Reflect constructor to talk to the production server instead:
+This will output the URL of your server on reflect-server.net. Update your Reflect constructor to talk to the production server instead:
 
 ```ts copy {2}
 const r = new Reflect({
